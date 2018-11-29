@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# venu
+/venu
+
+# eclipse
+.project
+.pydevproject
+.settings/
