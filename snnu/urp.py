@@ -9,6 +9,7 @@ from snnu.tool.GUI import CaptchaGUI
 from snnu.tool.Table import table_to_list
 from snnu.exceptions import AuthenticationException
 
+
 class Urp(API):
     """陕师大Urp教务
 
@@ -23,14 +24,17 @@ class Urp(API):
         HOST = "http://219.244.71.113"
 
         SELECTED_COURSES = HOST + '/xkAction.do?actionType=6'
-        CAPTCHA = HOST + '/validateCodeAction.do'     # 教务系统验证码
-        LOGIN = HOST + '/loginAction.do'        # 教务系统登录
-
+        OLD_COURSES = HOST + '/lnkbcxAction.do'  # 历年课表
+        CAPTCHA = HOST + '/validateCodeAction.do'  # 教务系统验证码
+        LOGIN = HOST + '/loginAction.do'  # 教务系统登录
+        GRADE = HOST + '/bxqcjcxAction.do' # 本学期成绩
+        ALL_GRADE = HOST + '/gradeLnAllAction.do?type=ln&oper=qbinfo' # 全部及格成绩
+        
     def __init__(self, account=None, password=None):
         super(Urp, self).__init__()
         if account and password:
             self.account = account
-            self.password=password
+            self.password = password
             self.login(account, password)
 
     def get_courses(self):
@@ -56,14 +60,6 @@ class Urp(API):
                                 'numOfClass': '2', 
                                 'campus': '长安校区', 
                                 'buildings': '长安文津楼', 
-                                'room': '1511'}, 
-                            {
-                                'week': '1,3,5,7,9,11,13,15,17周上', 
-                                'day': '5', 
-                                'timeOfClass': '1', 
-                                'numOfClass': '2', 
-                                'campus': '长安校区', 
-                                'buildings': '长安文津楼', 
                                 'room': '1511'
                             }
                         ]
@@ -73,10 +69,10 @@ class Urp(API):
         soup = self.get_soup(method='get', url=self.URLs.SELECTED_COURSES)
         tables = soup.findAll("table", attrs={'id' : "user"})
         table = tables[1]
-        table_list = table_to_list(table, remove_index_list=[8,9])# 0,6虽不用,不可写
+        table_list = table_to_list(table, remove_index_list=[8, 9])  # 0,6虽不用,不可写
         courses = []
         temp_dic = {}
-        keys=['周次','星期','节次','节数','校区','教学楼','教室']
+        keys = ['周次', '星期', '节次', '节数', '校区', '教学楼', '教室']
         for dic in table_list:
             dic_len = len(dic)
             if dic_len > 9:
@@ -91,10 +87,10 @@ class Urp(API):
                                 'info': []
                     })
             else:
-                dic=dict(zip(keys,[dic[key] for key in dic.keys()]))
+                dic = dict(zip(keys, [dic[key] for key in dic.keys()]))
             for key in dic.keys():
                 if key in keys:
-                    temp_dic={
+                    temp_dic = {
                             'week':dic['周次'],
                             'day':dic['星期'],
                             'timeOfClass':dic['节次'],
@@ -105,9 +101,59 @@ class Urp(API):
                         }
                     
             courses[-1]['info'].append(temp_dic)
-            temp_dic={}
+            temp_dic = {}
         return courses
+    
+    def get_old_courses(self, year, semester):
+        """
+        获取指定学期的课表
 
+        :param year: 学年 格式为 "2017-2018"
+        :param semester: 学期 数字1或2
+        :return: 参照例子
+
+        >>> u.get_old_courses(year='2017-2018', semester=1)
+        [
+            {
+                'id': '1241416', 
+                'name': '算法设计与分析', 
+                'number': '01', 
+                'credits': 3.0, 
+                'attributes': '必修', 
+                'teacher': '王小明*', 
+                'status': '置入', 
+                'info': [
+                            {
+                                'week': '1-18周上', 
+                                'day': '2', 
+                                'timeOfClass': '1', 
+                                'numOfClass': '2', 
+                                'campus': '长安校区', 
+                                'buildings': '长安文津楼', 
+                                'room': '1511'
+                            }
+                        ]
+            }
+        ]
+        """
+        return ""
+
+    def get_grade(self):
+        """
+        获取本学期的成绩
+        """
+        return ""
+    
+    def get_all_grades(self,year,semester): 
+        """
+        获取指定学期的已及格成绩
+
+        :param year: 学年 格式为 "2017-2018"
+        :param semester: 学期 数字1或2
+        :return: 参照例子
+        """
+        return ""
+    
     def login(self, account, password):
         # FIXME: 登录不可靠
         image = self.get_image(self.URLs.CAPTCHA)
@@ -155,6 +201,9 @@ class Urp(API):
 
 
 if __name__ == '__main__':
-    c=Urp("xx","xx")
-    print(c.get_courses())
+#     c = Urp("xx", "xx")
+#     print(c.get_courses())
+    with open("temp.html","r") as f:
+        r=f.read()
+    
     
