@@ -14,7 +14,7 @@ import tkinter
 from bs4 import BeautifulSoup
 from snnu.tool.Table import table_to_list
 from snnu.tool.Image import ImageBinarization
-import pytesseract
+from snnu.utils.captcha.base import ImageToString
 
 host = 'http://219.244.71.113/'
 url_captcha = host + 'validateCodeAction.do'
@@ -168,20 +168,21 @@ def GetIpList():
         ip_list.append(dic['IP'] + ':' + dic['端口'])
     return ip_list[:6]
 
-def ImageToString(content):
+def Ocr(content):
     '''
     使用ocr将图片识别为字符串
     '''
     im = Image.open(BytesIO(content))
     im=ImageBinarization(im,140)
-    value=str(pytesseract.image_to_string(im,lang='eng',config='validcode'))
-    value=value.replace(' ','')
+    value=ImageToString(im)
     return value
 
 def OcrMark():
     '''
     使用Ocr标记验证码图片
     '''
+    if not os.path.exists('captchas'):
+        os.mkdir('captchas')
     data = {
         "zjh1":"" ,
         "tips":"",
@@ -200,7 +201,7 @@ def OcrMark():
         num+=1
         s=requests.session()
         v=s.get(url_captcha)
-        value=ImageToString(v.content)
+        value=Ocr(v.content)
         data['v_yzm']=value
         r = s.post(url_login, data=data)
         if "你输入的验证码错误" in r.text:

@@ -1,2 +1,1 @@
-from snnu.utils.urp import *
-__all__ = ['Urp']
+from snnu.utils import captcha

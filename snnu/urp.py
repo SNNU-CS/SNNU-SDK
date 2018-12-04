@@ -5,10 +5,10 @@ Created on Nov 29, 2018
 '''
 
 from snnu.base import API
-from snnu.tool.GUI import CaptchaGUI
+# from snnu.tool.GUI import CaptchaGUI
 from snnu.tool.Table import table_to_list
 from snnu.exceptions import AuthenticationException
-
+from snnu.utils.captcha import UrpCaptcha
 
 class Urp(API):
     """陕师大Urp教务
@@ -157,7 +157,8 @@ class Urp(API):
     def login(self, account, password):
         # FIXME: 登录不可靠
         image = self.get_image(self.URLs.CAPTCHA)
-        captcha_code = CaptchaGUI(image)
+#         captcha_code = CaptchaGUI(image)
+        captcha_code=UrpCaptcha(image)
         data = {
             "zjh1":"" ,
             "tips":"",
@@ -175,7 +176,7 @@ class Urp(API):
             # 如果验证码错误，尝试递归重复登录
             return self.login(account, password)
         result['success'] = not result['code']
-        print(result)
+#         print(result)
         if result['success']:
             self.verify = True
         else:
@@ -203,7 +204,5 @@ class Urp(API):
 if __name__ == '__main__':
 #     c = Urp("xx", "xx")
 #     print(c.get_courses())
-    with open("temp.html","r") as f:
-        r=f.read()
     
     
