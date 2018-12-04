@@ -72,3 +72,14 @@ def rotate_img(image):
             final_angle = angle
     image = image.rotate(final_angle, expand=False)
     return image
+
+def ImageBinarization(im,threshold):
+    table=[]
+    for i in range(256):
+        if i < threshold:
+            table.append(0)
+        else:
+            table.append(1)
+    imgry = im.convert('L')
+    ret = imgry.point(table, '1')
+    return ret
