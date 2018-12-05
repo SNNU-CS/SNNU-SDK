@@ -22,3 +22,8 @@ class UnauthorizedError(SnnuException):
 class TemporaryBannedException(SnnuException):
     """Temporary Banned by Server"""
     
+class BuildingNotFoundException(SnnuException):
+    """Building Not Founf Error"""
+
+class RoomNotFoundException(SnnuException):
+    """Building Not Founf Error"""
