@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>snnusdk.room &mdash; SNNU-SDK latest 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SNNU-SDK
+          
+
+          
+            
+            <img src="../../_static/logo.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">接口文档</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../urp.html">1. 教务处接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../libiary.html">2. 图书馆接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../room.html">3. 教室接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../campus.html">4. 校园卡接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exceptions.html">5. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changes.html">6. Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">使用示例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../urp_example.html">1. 教务处接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../libiary_example.html">2. 图书馆接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../room_example.html">3. 教室接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../campus_example.html">4. 校园卡接口示例</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SNNU-SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">模块代码</a> &raquo;</li>
+        
+      <li>snnusdk.room</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>snnusdk.room 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Created on Dec 5, 2018</span>
+
+<span class="sd">@author: QiZhao</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">ReadTimeout</span><span class="p">,</span><span class="ne">ConnectionError</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="n">BuildingNotFoundException</span><span class="p">,</span><span class="n">RoomNotFoundException</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;崇鋈楼&#39;</span><span class="p">:</span><span class="s1">&#39;0101&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;积学堂&#39;</span><span class="p">:</span><span class="s1">&#39;0102&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;学院教室&#39;</span><span class="p">:</span><span class="s1">&#39;0103&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔教学八楼&#39;</span><span class="p">:</span><span class="s1">&#39;0104&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔教学九楼&#39;</span><span class="p">:</span><span class="s1">&#39;0105&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔教学六楼&#39;</span><span class="p">:</span><span class="s1">&#39;0106&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔教学四楼&#39;</span><span class="p">:</span><span class="s1">&#39;0107&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔教学五楼&#39;</span><span class="p">:</span><span class="s1">&#39;0108&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔教学一楼&#39;</span><span class="p">:</span><span class="s1">&#39;0109&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔体育场地&#39;</span><span class="p">:</span><span class="s1">&#39;0110&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔田家炳楼&#39;</span><span class="p">:</span><span class="s1">&#39;0111&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;雁塔语音&#39;</span><span class="p">:</span><span class="s1">&#39;0112&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;逸夫楼&#39;</span><span class="p">:</span><span class="s1">&#39;0113&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;教学七楼&#39;</span><span class="p">:</span><span class="s1">&#39;0114&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;长安体育场地&#39;</span><span class="p">:</span><span class="s1">&#39;0201&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;长安文津楼&#39;</span><span class="p">:</span><span class="s1">&#39;0202&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;长安文渊楼&#39;</span><span class="p">:</span><span class="s1">&#39;0203&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;长安语音&#39;</span><span class="p">:</span><span class="s1">&#39;0204&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;六艺楼&#39;</span><span class="p">:</span><span class="s1">&#39;0205&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;学院教室&#39;</span><span class="p">:</span><span class="s1">&#39;0206&#39;</span>
+        <span class="p">}</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;http://kb.snnu.edu.cn/room/index/&#39;</span>
+<span class="n">re_p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&lt;P&gt;([^&lt;]*?)&lt;/p&gt;&#39;</span><span class="p">)</span>
+<span class="n">week_key</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;星期一&#39;</span><span class="p">,</span><span class="s1">&#39;星期二&#39;</span><span class="p">,</span><span class="s1">&#39;星期三&#39;</span><span class="p">,</span><span class="s1">&#39;星期四&#39;</span><span class="p">,</span><span class="s1">&#39;星期五&#39;</span><span class="p">,</span><span class="s1">&#39;星期六&#39;</span><span class="p">,</span><span class="s1">&#39;星期日&#39;</span><span class="p">]</span>
+<span class="n">jieshu</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;9-10节&#39;</span><span class="p">,</span><span class="s1">&#39;1-2节&#39;</span><span class="p">,</span><span class="s1">&#39;3-4节&#39;</span><span class="p">,</span><span class="s1">&#39;5-6节&#39;</span><span class="p">,</span><span class="s1">&#39;7-8节&#39;</span><span class="p">,]</span>
+
+<div class="viewcode-block" id="Room"><a class="viewcode-back" href="../../room.html#snnusdk.Room">[文档]</a><span class="k">class</span> <span class="nc">Room</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;陕师大教室状态查询</span>
+
+<span class="sd">    :param int week: 周次</span>
+<span class="sd">    :param str building: 教学楼</span>
+<span class="sd">    :raise: :class:`snnusdk.exceptions.BuildingNotFoundException`</span>
+<span class="sd">    :raise: :class:`snnusdk.exceptions.RoomNotFoundException`</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; room = Room(week=14, building=&#39;雁塔教学八楼&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">week</span><span class="p">,</span> <span class="n">building</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">week</span> <span class="o">=</span> <span class="n">week</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">building</span> <span class="o">=</span> <span class="n">building</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">soup</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_getSoup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rooms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_getRooms</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">_getSoup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        依据构造参数,获取BeautifulSoup对象对象</span>
+<span class="sd">        :rtype: bs4.BeautifulSoup对象</span>
+<span class="sd">        :return: 依据构造参数获得的BeautifulSoup对象</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">?jxz=</span><span class="si">{}</span><span class="s1">&amp;lh=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">week</span><span class="p">,</span> <span class="n">dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">building</span><span class="p">])</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">soup</span><span class="o">=</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+<span class="c1">#             print(type(soup))</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BuildingNotFoundException</span><span class="p">(</span><span class="s1">&#39;不存在该教学楼！&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ReadTimeout</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s1">&#39;网络连接失败&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">soup</span>
+       
+    <span class="k">def</span> <span class="nf">_getRooms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: list of str</span>
+<span class="sd">        :retuen: 本教学楼内的所有教室名称</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; room._getRooms()</span>
+<span class="sd">        [&#39;8101&#39;, &#39;8102&#39;, ...]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">trs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tr&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
+            <span class="n">tds</span><span class="o">=</span><span class="n">tr</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">tds</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">td</span><span class="o">.</span><span class="n">has_attr</span><span class="p">(</span><span class="s1">&#39;align&#39;</span><span class="p">):</span>
+                    <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">td</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    
+    <span class="k">def</span> <span class="nf">_getOneRoom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;依据选中的tr标签,获得tr标签所对应的教室一周内的状态</span>
+<span class="sd">        </span>
+<span class="sd">        :parm bs4.element.Tag</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        :return: 参照例子</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; room._getOneRoom(tr)</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;id&#39;: &#39;8104&#39;, </span>
+<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>
+<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;, </span>
+<span class="sd">            &#39;星期一&#39;: </span>
+<span class="sd">            [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;状态&#39;: &#39;排课&#39;, </span>
+<span class="sd">                    &#39;info&#39;: </span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;科目&#39;: &#39;高等数学（一）-3&#39;, </span>
+<span class="sd">                        &#39;教师&#39;: &#39;吴洪博&#39;, </span>
+<span class="sd">                        &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;, </span>
+<span class="sd">                        &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;, </span>
+<span class="sd">                        &#39;地点&#39;: &#39;雁塔教学八楼 8104&#39;</span>
+<span class="sd">                    }</span>
+<span class="sd">                    &#39;节数&#39;:&#39;1-2节&#39;</span>
+<span class="sd">                },</span>
+<span class="sd">                ... </span>
+<span class="sd">            ]</span>
+<span class="sd">            ...</span>
+<span class="sd">        }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tds</span><span class="o">=</span><span class="n">tr</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+        <span class="n">dic</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">flag</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">oneday</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">tds</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">td</span><span class="o">.</span><span class="n">has_attr</span><span class="p">(</span><span class="s1">&#39;align&#39;</span><span class="p">):</span>
+                <span class="n">flag</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="n">one_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_getOneClass</span><span class="p">(</span><span class="n">td</span><span class="p">)</span>
+                <span class="n">one_class</span><span class="p">[</span><span class="s1">&#39;节数&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">jieshu</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]</span>
+                <span class="n">oneday</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">one_class</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span><span class="c1"># 教室整体信息</span>
+                <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">td</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+                <span class="n">ls</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;(\sbody=\[|&gt;\s)([^：]*?)：([^\s]*?)\s&#39;</span><span class="p">,</span><span class="n">td</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">ls</span><span class="p">:</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">=</span><span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">flag</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">dic</span><span class="p">[</span><span class="n">week_key</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">flag</span><span class="o">/</span><span class="mi">5</span><span class="p">)]]</span><span class="o">=</span><span class="n">oneday</span>
+                <span class="n">oneday</span><span class="o">=</span><span class="p">[]</span>
+                
+        <span class="k">return</span> <span class="n">dic</span>
+    
+    <span class="k">def</span> <span class="nf">_getOneClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">td</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;依据选中的td标签,获得td标签所对应的某教室某节课的状态</span>
+<span class="sd">        </span>
+<span class="sd">        :parm bs4.element.Tag</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        :return: 参照例子</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; room._getOneClass(td)</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;状态&#39;: &#39;排课&#39;, </span>
+<span class="sd">            &#39;info&#39;: </span>
+<span class="sd">            {</span>
+<span class="sd">                &#39;科目&#39;: &#39;高等数学（一）-3&#39;, </span>
+<span class="sd">                &#39;教师&#39;: &#39;吴洪博&#39;, </span>
+<span class="sd">                &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;, </span>
+<span class="sd">                &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;, </span>
+<span class="sd">                &#39;地点&#39;: &#39;雁塔教学八楼 8104&#39;</span>
+<span class="sd">            }</span>
+<span class="sd">            &#39;节数&#39;:&#39;1-2节&#39;</span>
+<span class="sd">        }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">one_class</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">div</span><span class="o">=</span><span class="n">td</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+        <span class="n">status</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">])[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">one_class</span><span class="p">[</span><span class="s1">&#39;状态&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">status</span>
+        <span class="n">info_list</span><span class="o">=</span><span class="n">re_p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">div</span><span class="p">[</span><span class="s1">&#39;onclick&#39;</span><span class="p">])</span> <span class="c1"># list</span>
+        <span class="n">temp_keys</span><span class="o">=</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">info_list</span><span class="p">]</span>
+        <span class="n">temp_values</span><span class="o">=</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">info_list</span><span class="p">]</span>
+        <span class="n">info_dic</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_keys</span><span class="p">,</span><span class="n">temp_values</span><span class="p">))</span>
+        <span class="n">one_class</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">info_dic</span>
+        <span class="k">return</span> <span class="n">one_class</span>
+
+<div class="viewcode-block" id="Room.QueryAll"><a class="viewcode-back" href="../../room.html#snnusdk.Room.QueryAll">[文档]</a>    <span class="k">def</span> <span class="nf">QueryAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;该教学楼该周所有教室的状态</span>
+
+<span class="sd">        :rtype: list of dict</span>
+<span class="sd">        :return: 参见例子</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; room.GetAllRooms()</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">            &#39;id&#39;: &#39;8101&#39;, </span>
+<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>
+<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;, </span>
+<span class="sd">            &#39;星期一&#39;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &#39;状态&#39;: &#39;排课&#39;, </span>
+<span class="sd">                            &#39;节数&#39;:&#39;1-2节&#39;</span>
+<span class="sd">                            &#39;info&#39;:</span>
+<span class="sd">                            {</span>
+<span class="sd">                                &#39;科目&#39;: &#39;数学分析(一)&#39;, </span>
+<span class="sd">                                &#39;教师&#39;: &#39;曹小红&#39;,</span>
+<span class="sd">                                ...</span>
+<span class="sd">                            }</span>
+<span class="sd">                        },</span>
+<span class="sd">                        ...</span>
+<span class="sd">                    ]</span>
+<span class="sd">            },</span>
+<span class="sd">            ..，</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">trs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tr&#39;</span><span class="p">)</span>
+        <span class="n">ret</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getOneRoom</span><span class="p">(</span><span class="n">tr</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+    
+<div class="viewcode-block" id="Room.GetAllRooms"><a class="viewcode-back" href="../../room.html#snnusdk.Room.GetAllRooms">[文档]</a>    <span class="k">def</span> <span class="nf">GetAllRooms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;教学楼内的所有教室名称</span>
+
+<span class="sd">        :rtype: list of str</span>
+<span class="sd">        :return: 本教学楼内的所有教室名称</span>
+
+<span class="sd">        &gt;&gt;&gt; room.GetAllRooms()</span>
+<span class="sd">        [&#39;8101&#39;, &#39;8102&#39;, ...]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rooms</span></div>
+    
+<div class="viewcode-block" id="Room.QueryOneRoom"><a class="viewcode-back" href="../../room.html#snnusdk.Room.QueryOneRoom">[文档]</a>    <span class="k">def</span> <span class="nf">QueryOneRoom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">room</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        查询该教学楼某一教室该周的所有状态</span>
+
+<span class="sd">        :param room: 教室号 8014</span>
+<span class="sd">        :rtype: dic</span>
+<span class="sd">        :return: 参照例子</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; room.QueryOneRoom(room=&#39;8014&#39;)</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;id&#39;: &#39;8104&#39;, </span>
+<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>
+<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;, </span>
+<span class="sd">            &#39;星期一&#39;: </span>
+<span class="sd">            [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;状态&#39;: &#39;排课&#39;, </span>
+<span class="sd">                    &#39;info&#39;: </span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;科目&#39;: &#39;高等数学（一）-3&#39;, </span>
+<span class="sd">                        &#39;教师&#39;: &#39;吴洪博&#39;, </span>
+<span class="sd">                        &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;, </span>
+<span class="sd">                        &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;, </span>
+<span class="sd">                        &#39;地点&#39;: &#39;雁塔教学八楼 8104&#39;</span>
+<span class="sd">                    }</span>
+<span class="sd">                    &#39;节数&#39;:&#39;1-2节&#39;</span>
+<span class="sd">                },</span>
+<span class="sd">                ... </span>
+<span class="sd">            ]</span>
+<span class="sd">            ...</span>
+<span class="sd">        }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tr&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">room</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rooms</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">RoomNotFoundException</span><span class="p">(</span><span class="s1">&#39;不存在该教室&#39;</span><span class="p">)</span>
+        <span class="n">tr</span><span class="o">=</span><span class="n">trs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">Rooms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">room</span><span class="p">)]</span>
+<span class="c1">#         print(type(tr))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getOneRoom</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span></div></div>
+    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">Room</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="s1">&#39;雁塔教学八楼&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">QueryOneRoom</span><span class="p">(</span><span class="s1">&#39;8104&#39;</span><span class="p">))</span>
+<span class="c1">#     print(a.QueryAll())</span>
+
+    
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, QiZhao
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
