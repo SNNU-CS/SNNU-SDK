@@ -103,8 +103,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# venu
-/venu
+# venv
+/venv
 
 # eclipse
 .project

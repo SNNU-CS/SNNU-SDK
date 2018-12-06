@@ -6,6 +6,7 @@ Created on Dec 5, 2018
 
 from bs4 import BeautifulSoup
 import requests
+from requests.exceptions import ReadTimeout,ConnectionError
 import re
 from snnusdk.exceptions import BuildingNotFoundException,RoomNotFoundException
 dic = {
@@ -33,9 +34,18 @@ dic = {
 host = 'http://kb.snnu.edu.cn/room/index/'
 re_p = re.compile('<P>([^<]*?)</p>')
 week_key=['','星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+jieshu=['9-10节','1-2节','3-4节','5-6节','7-8节',]
 
 class Room:
+    """陕师大教室状态查询
 
+    :param int week: 周次
+    :param str building: 教学楼
+    :raise: :class:`snnusdk.exceptions.BuildingNotFoundException`
+    :raise: :class:`snnusdk.exceptions.RoomNotFoundException`
+    
+    >>> room = Room(week=14, building='雁塔教学八楼')
+    """
     def __init__(self, week, building):
         self.week = week
         self.building = building
@@ -43,17 +53,30 @@ class Room:
         self.Rooms=self._getRooms()
         
     def _getSoup(self):
+        """
+        依据构造参数,获取BeautifulSoup对象对象
+        :rtype: bs4.BeautifulSoup对象
+        :return: 依据构造参数获得的BeautifulSoup对象
+        """
         try:
             url = '{}?jxz={}&lh={}'.format(host, self.week, dic[self.building])
-            r = requests.get(url)
+            r = requests.get(url,timeout=10)
             soup=BeautifulSoup(r.text,'lxml')
+#             print(type(soup))
         except KeyError :
             raise BuildingNotFoundException('不存在该教学楼！')
-        except Exception as e:
-            raise e
+        except ReadTimeout:
+            raise ConnectionError('网络连接失败')
         return soup
        
     def _getRooms(self):
+        """
+        :rtype: list of str
+        :retuen: 本教学楼内的所有教室名称
+        
+        >>> room._getRooms()
+        ['8101', '8102', ...]
+        """
         ret=[]
         trs=self.soup.find(name='tbody').find_all(name='tr')
         for tr in trs:
@@ -65,6 +88,36 @@ class Room:
         return ret
     
     def _getOneRoom(self,tr):
+        """依据选中的tr标签,获得tr标签所对应的教室一周内的状态
+        
+        :parm bs4.element.Tag
+        :rtype: dict
+        :return: 参照例子
+        
+        >>> room._getOneRoom(tr)
+        {
+            'id': '8104', 
+            '教室类型': '多媒体教室', 
+            '上课座位': '60', 
+            '星期一': 
+            [
+                {
+                    '状态': '排课', 
+                    'info': 
+                    {
+                        '科目': '高等数学（一）-3', 
+                        '教师': '吴洪博', 
+                        '班级':'数学与信息科学学院 恒元物理实验班1701', 
+                        '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节', 
+                        '地点': '雁塔教学八楼 8104'
+                    }
+                    '节数':'1-2节'
+                },
+                ... 
+            ]
+            ...
+        }
+        """
         tds=tr.find_all(name='td')
         dic={}
         flag=0
@@ -73,6 +126,7 @@ class Room:
             if td.has_attr('align'):
                 flag+=1
                 one_class=self._getOneClass(td)
+                one_class['节数']=jieshu[int(flag)%5]
                 oneday.append(one_class)
             else:# 教室整体信息
                 dic['id']=td.find(name='a')['title']
@@ -86,6 +140,26 @@ class Room:
         return dic
     
     def _getOneClass(self,td):
+        """依据选中的td标签,获得td标签所对应的某教室某节课的状态
+        
+        :parm bs4.element.Tag
+        :rtype: dict
+        :return: 参照例子
+        
+        >>> room._getOneClass(td)
+        {
+            '状态': '排课', 
+            'info': 
+            {
+                '科目': '高等数学（一）-3', 
+                '教师': '吴洪博', 
+                '班级':'数学与信息科学学院 恒元物理实验班1701', 
+                '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节', 
+                '地点': '雁塔教学八楼 8104'
+            }
+            '节数':'1-2节'
+        }
+        """
         one_class={}
         div=td.find(name='div')
         status=str(div['class'])[2:-2]
@@ -98,6 +172,35 @@ class Room:
         return one_class
 
     def QueryAll(self):
+        """该教学楼该周所有教室的状态
+
+        :rtype: list of dict
+        :return: 参见例子
+        
+        >>> room.GetAllRooms()
+        [
+            {
+            'id': '8101', 
+            '教室类型': '多媒体教室', 
+            '上课座位': '60', 
+            '星期一': [
+                        {
+                            '状态': '排课', 
+                            '节数':'1-2节'
+                            'info':
+                            {
+                                '科目': '数学分析(一)', 
+                                '教师': '曹小红',
+                                ...
+                            }
+                        },
+                        ...
+                    ]
+            },
+            ..，
+        ]
+        """
+        
         trs=self.soup.find(name='tbody').find_all(name='tr')
         ret=[]
         for tr in trs:
@@ -105,17 +208,58 @@ class Room:
         return ret
     
     def GetAllRooms(self):
+        """教学楼内的所有教室名称
+
+        :rtype: list of str
+        :return: 本教学楼内的所有教室名称
+
+        >>> room.GetAllRooms()
+        ['8101', '8102', ...]
+        """
         return self.Rooms
     
     def QueryOneRoom(self,room):
+        """
+        查询该教学楼某一教室该周的所有状态
+
+        :param room: 教室号 8014
+        :rtype: dic
+        :return: 参照例子
+        
+        >>> room.QueryOneRoom(room='8014')
+        {
+            'id': '8104', 
+            '教室类型': '多媒体教室', 
+            '上课座位': '60', 
+            '星期一': 
+            [
+                {
+                    '状态': '排课', 
+                    'info': 
+                    {
+                        '科目': '高等数学（一）-3', 
+                        '教师': '吴洪博', 
+                        '班级':'数学与信息科学学院 恒元物理实验班1701', 
+                        '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节', 
+                        '地点': '雁塔教学八楼 8104'
+                    }
+                    '节数':'1-2节'
+                },
+                ... 
+            ]
+            ...
+        }
+        """
         trs=self.soup.find(name='tbody').find_all(name='tr')
         if room not in self.Rooms:
             raise RoomNotFoundException('不存在该教室')
         tr=trs[self.Rooms.index(room)]
+#         print(type(tr))
         return self._getOneRoom(tr)
     
 if __name__ == '__main__':
     a=Room(12,'雁塔教学八楼')
     print(a.QueryOneRoom('8104'))
+#     print(a.QueryAll())
 
     

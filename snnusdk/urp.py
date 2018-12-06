@@ -17,7 +17,7 @@ class Urp(API):
     :param str password: 密码
     :raise: :class:`snnusdk.exceptions.AuthenticationException`
 
-    >>> u = Urp(account='B11111111', password='xxx')
+    >>> urp = Urp(account='B11111111', password='xxx')
     """
 
     class URLs:
@@ -37,12 +37,13 @@ class Urp(API):
             self.password = password
             self.login(account, password)
 
-    def get_courses(self):
+    def getCourses(self):
         """获取本学期的选课情况
-        :return:  格式参看例子
-        :rtype: list of dict
 
-        >>> urp.get_courses()
+        :rtype: list of dict
+        :return:  格式参看例子
+
+        >>> urp.getCourses()
         [
             {
                 'id': '1241416', 
@@ -104,15 +105,16 @@ class Urp(API):
             temp_dic = {}
         return courses
     
-    def get_old_courses(self, year, semester):
+    def getOldCourses(self, year, semester):
         """
         获取指定学期的课表
 
         :param year: 学年 格式为 "2017-2018"
         :param semester: 学期 数字1或2
+        :rtype: list of dict
         :return: 参照例子
 
-        >>> u.get_old_courses(year='2017-2018', semester=1)
+        >>> u.getOldCourses(year='2017-2018', semester=1)
         [
             {
                 'id': '1241416', 
@@ -138,23 +140,75 @@ class Urp(API):
         """
         return ""
 
-    def get_grade(self):
+    def getGrade(self):
         """
         获取本学期的成绩
+        
+        :rtype: list of dict
+        :return: 参照例子
+
+        >>> u.getGrade()
+        [
+            {
+                '课程号': '1243432', 
+                '课序号': '01', 
+                '课程名': '高级数据结构', 
+                '英文课程名': 'Advanced Data Structures', 
+                '学分': '2', 
+                '课程属性': '任选', 
+                '课堂最高分': '', 
+                '课堂最低分': '', 
+                '课堂平均分': '', 
+                '成绩': '', 
+                '名次': '', 
+                '未通过原因': ''
+            },
+            ...
+        ]
+
         """
         return ""
     
-    def get_all_grades(self,year,semester): 
-        """
-        获取指定学期的已及格成绩
+    def getAllGrades(self,year,semester): 
+        """获取指定学期的已及格成绩
 
         :param year: 学年 格式为 "2017-2018"
         :param semester: 学期 数字1或2
+        :rtype: list
         :return: 参照例子
+
+        >>> u.getAllGrades(year='2017-2018', semester=1)
+        [
+            {
+                '课程号':'01111',
+                '课序号': '62', 
+                '课程名': '大学外语（一）', 
+                '英文课程名': 'College English 1', 
+                '学分': '3', 
+                '课程属性': 
+                '必修', 
+                '成绩': '73.0'
+            },
+            ...
+        ]
         """
         return ""
     
+    def getGpa(self):
+        """计算绩点
+        
+        :rtype: double
+        :return: 只计算必修课的绩点
+
+        >>> u.getGpa()
+        73.00
+        """
     def login(self, account, password):
+        """
+        :param str account: 学号
+        :param str password: 密码
+        :raise: :class:`snnusdk.exceptions.AuthenticationException`
+        """
         # FIXME: 登录不可靠
         image = self.get_image(self.URLs.CAPTCHA)
 #         captcha_code = CaptchaGUI(image)
@@ -203,6 +257,6 @@ class Urp(API):
 
 if __name__ == '__main__':
     c = Urp("xx", "xx")
-    print(c.get_courses())
+    print(c.getCourses())
     
     
