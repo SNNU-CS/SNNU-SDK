@@ -1,9 +1,10 @@
+__author__ = 'QiZhao'
+
 '''
 Created on Nov 29, 2018
 
 @author: QiZhao
 '''
-
 
 class SnnuException(Exception):
     """Base class for exceptions in this module."""

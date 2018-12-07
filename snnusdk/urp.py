@@ -41,7 +41,7 @@ class Urp(API):
         """获取本学期的选课情况
 
         :rtype: list of dict
-        :return:  格式参看例子
+        :return:  参照例子
 
         >>> urp.getCourses()
         [
@@ -109,8 +109,8 @@ class Urp(API):
         """
         获取指定学期的课表
 
-        :param year: 学年 格式为 "2017-2018"
-        :param semester: 学期 数字1或2
+        :param str year: 学年 格式为 "2017-2018"
+        :param int semester: 学期 数字1或2
         :rtype: list of dict
         :return: 参照例子
 
@@ -172,8 +172,8 @@ class Urp(API):
     def getAllGrades(self,year,semester): 
         """获取指定学期的已及格成绩
 
-        :param year: 学年 格式为 "2017-2018"
-        :param semester: 学期 数字1或2
+        :param str year: 学年 格式为 "2017-2018"
+        :param int semester: 学期 数字1或2
         :rtype: list
         :return: 参照例子
 

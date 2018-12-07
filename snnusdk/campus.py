@@ -9,6 +9,7 @@ import requests
 
 class Campus:
     """校园卡消费明细
+    
     :param str id: 校园卡号
 
     >>> c = Campus(id='2016xxx')

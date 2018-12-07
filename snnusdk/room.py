@@ -90,7 +90,7 @@ class Room:
     def _getOneRoom(self,tr):
         """依据选中的tr标签,获得tr标签所对应的教室一周内的状态
         
-        :parm bs4.element.Tag
+        :param bs4.element.Tag tr:
         :rtype: dict
         :return: 参照例子
         
@@ -142,7 +142,7 @@ class Room:
     def _getOneClass(self,td):
         """依据选中的td标签,获得td标签所对应的某教室某节课的状态
         
-        :parm bs4.element.Tag
+        :param bs4.element.Tag td:
         :rtype: dict
         :return: 参照例子
         
@@ -222,7 +222,7 @@ class Room:
         """
         查询该教学楼某一教室该周的所有状态
 
-        :param room: 教室号 8014
+        :param str room: 教室号 8014
         :rtype: dic
         :return: 参照例子
         

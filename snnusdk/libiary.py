@@ -12,8 +12,8 @@ import requests
 class Library(API):
     """图书馆
 
-    :param username: 用户名
-    :param password: 密码
+    :param str username: 用户名
+    :param str password: 密码
     :raise: :class:`snnusdk.exceptions.AuthenticationException`
 
     >>> libiary = Library(username='B11111111', password='xxx')
@@ -84,8 +84,8 @@ class Library(API):
     def getBorrowingBooks(self):
         """在借书籍列表
         
-        :return: 在借书籍列表
         :rtype: list of dict
+        :return: 在借书籍列表
         
         >>> library.getBorrowingBooks()
         [
@@ -117,8 +117,8 @@ class Library(API):
     def getReservationBooks(self):
         """预约书籍列表
         
-        :return: 预约书籍列表
         :rtype: list of dict
+        :return: 预约书籍列表
         
         >>> library.getReservationBooks()
         [
@@ -140,7 +140,7 @@ class Library(API):
         """现金事务
         
         :rtype: dict
-        :return: 参见例子
+        :return: 参照例子
         
         >>> library.getCash()
         {
