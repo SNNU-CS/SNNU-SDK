@@ -6,6 +6,4 @@
    :members:
 
 
-.. automodule:: snnusdk.libiary.getBorrowInfo
-    :members:
-    :undoc-members:
+.. automethod:: snnusdk.libiary.getBorrowInfo

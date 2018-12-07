@@ -186,26 +186,6 @@
 </pre></div>
 </div>
 <dl class="method">
-<dt id="snnusdk.Room.GetAllRooms">
-<code class="descname">GetAllRooms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.GetAllRooms"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.GetAllRooms" title="永久链接至目标">¶</a></dt>
-<dd><p>教学楼内的所有教室名称</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">list of str</td>
-</tr>
-<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">本教学楼内的所有教室名称</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">GetAllRooms</span><span class="p">()</span>
-<span class="go">[&#39;8101&#39;, &#39;8102&#39;, ...]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
 <dt id="snnusdk.Room.QueryAll">
 <code class="descname">QueryAll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.QueryAll"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.QueryAll" title="永久链接至目标">¶</a></dt>
 <dd><p>该教学楼该周所有教室的状态</p>
@@ -246,6 +226,26 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="snnusdk.Room.GetAllRooms">
+<code class="descname">GetAllRooms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.GetAllRooms"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.GetAllRooms" title="永久链接至目标">¶</a></dt>
+<dd><p>教学楼内的所有教室名称</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">list of str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">本教学楼内的所有教室名称</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">GetAllRooms</span><span class="p">()</span>
+<span class="go">[&#39;8101&#39;, &#39;8102&#39;, ...]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="snnusdk.Room.QueryOneRoom">
 <code class="descname">QueryOneRoom</code><span class="sig-paren">(</span><em>room</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.QueryOneRoom"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.QueryOneRoom" title="永久链接至目标">¶</a></dt>
 <dd><p>查询该教学楼某一教室该周的所有状态</p>
@@ -253,7 +253,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>room</strong> – 教室号 8014</td>
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>room</strong> (<em>str</em>) – 教室号 8014</td>
 </tr>
 <tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body">dic</td>
 </tr>

@@ -249,7 +249,7 @@
     <span class="k">def</span> <span class="nf">_getOneRoom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;依据选中的tr标签,获得tr标签所对应的教室一周内的状态</span>
 <span class="sd">        </span>
-<span class="sd">        :parm bs4.element.Tag</span>
+<span class="sd">        :param bs4.element.Tag tr:</span>
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        :return: 参照例子</span>
 <span class="sd">        </span>
@@ -301,7 +301,7 @@
     <span class="k">def</span> <span class="nf">_getOneClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">td</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;依据选中的td标签,获得td标签所对应的某教室某节课的状态</span>
 <span class="sd">        </span>
-<span class="sd">        :parm bs4.element.Tag</span>
+<span class="sd">        :param bs4.element.Tag td:</span>
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        :return: 参照例子</span>
 <span class="sd">        </span>
@@ -381,7 +381,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        查询该教学楼某一教室该周的所有状态</span>
 
-<span class="sd">        :param room: 教室号 8014</span>
+<span class="sd">        :param str room: 教室号 8014</span>
 <span class="sd">        :rtype: dic</span>
 <span class="sd">        :return: 参照例子</span>
 <span class="sd">        </span>

@@ -183,46 +183,6 @@
 </pre></div>
 </div>
 <dl class="method">
-<dt id="snnusdk.Urp.getAllGrades">
-<code class="descname">getAllGrades</code><span class="sig-paren">(</span><em>year</em>, <em>semester</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getAllGrades"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getAllGrades" title="永久链接至目标">¶</a></dt>
-<dd><p>获取指定学期的已及格成绩</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>year</strong> – 学年 格式为 “2017-2018”</li>
-<li><strong>semester</strong> – 学期 数字1或2</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first">list</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body"><p class="first last">参照例子</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">getAllGrades</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="s1">&#39;2017-2018&#39;</span><span class="p">,</span> <span class="n">semester</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">[</span>
-<span class="go">    {</span>
-<span class="go">        &#39;课程号&#39;:&#39;01111&#39;,</span>
-<span class="go">        &#39;课序号&#39;: &#39;62&#39;, </span>
-<span class="go">        &#39;课程名&#39;: &#39;大学外语（一）&#39;, </span>
-<span class="go">        &#39;英文课程名&#39;: &#39;College English 1&#39;, </span>
-<span class="go">        &#39;学分&#39;: &#39;3&#39;, </span>
-<span class="go">        &#39;课程属性&#39;: </span>
-<span class="go">        &#39;必修&#39;, </span>
-<span class="go">        &#39;成绩&#39;: &#39;73.0&#39;</span>
-<span class="go">    },</span>
-<span class="go">    ...</span>
-<span class="go">]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
 <dt id="snnusdk.Urp.getCourses">
 <code class="descname">getCourses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getCourses"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getCourses" title="永久链接至目标">¶</a></dt>
 <dd><p>获取本学期的选课情况</p>
@@ -232,7 +192,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">list of dict</td>
 </tr>
-<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">格式参看例子</td>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">参照例子</td>
 </tr>
 </tbody>
 </table>
@@ -264,21 +224,50 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="snnusdk.Urp.getGpa">
-<code class="descname">getGpa</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getGpa"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getGpa" title="永久链接至目标">¶</a></dt>
-<dd><p>计算绩点</p>
+<dt id="snnusdk.Urp.getOldCourses">
+<code class="descname">getOldCourses</code><span class="sig-paren">(</span><em>year</em>, <em>semester</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getOldCourses"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getOldCourses" title="永久链接至目标">¶</a></dt>
+<dd><p>获取指定学期的课表</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">double</td>
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>year</strong> (<em>str</em>) – 学年 格式为 “2017-2018”</li>
+<li><strong>semester</strong> (<em>int</em>) – 学期 数字1或2</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">只计算必修课的绩点</td>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first">list of dict</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body"><p class="first last">参照例子</p>
+</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">getGpa</span><span class="p">()</span>
-<span class="go">73.00</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">getOldCourses</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="s1">&#39;2017-2018&#39;</span><span class="p">,</span> <span class="n">semester</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &#39;id&#39;: &#39;1241416&#39;, </span>
+<span class="go">        &#39;name&#39;: &#39;算法设计与分析&#39;, </span>
+<span class="go">        &#39;number&#39;: &#39;01&#39;, </span>
+<span class="go">        &#39;credits&#39;: 3.0, </span>
+<span class="go">        &#39;attributes&#39;: &#39;必修&#39;, </span>
+<span class="go">        &#39;teacher&#39;: &#39;王小明*&#39;, </span>
+<span class="go">        &#39;status&#39;: &#39;置入&#39;, </span>
+<span class="go">        &#39;info&#39;: [</span>
+<span class="go">                    {</span>
+<span class="go">                        &#39;week&#39;: &#39;1-18周上&#39;, </span>
+<span class="go">                        &#39;day&#39;: &#39;2&#39;, </span>
+<span class="go">                        &#39;timeOfClass&#39;: &#39;1&#39;, </span>
+<span class="go">                        &#39;numOfClass&#39;: &#39;2&#39;, </span>
+<span class="go">                        &#39;campus&#39;: &#39;长安校区&#39;, </span>
+<span class="go">                        &#39;buildings&#39;: &#39;长安文津楼&#39;, </span>
+<span class="go">                        &#39;room&#39;: &#39;1511&#39;</span>
+<span class="go">                    }</span>
+<span class="go">                ]</span>
+<span class="go">    }</span>
+<span class="go">]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -320,20 +309,20 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="snnusdk.Urp.getOldCourses">
-<code class="descname">getOldCourses</code><span class="sig-paren">(</span><em>year</em>, <em>semester</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getOldCourses"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getOldCourses" title="永久链接至目标">¶</a></dt>
-<dd><p>获取指定学期的课表</p>
+<dt id="snnusdk.Urp.getAllGrades">
+<code class="descname">getAllGrades</code><span class="sig-paren">(</span><em>year</em>, <em>semester</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getAllGrades"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getAllGrades" title="永久链接至目标">¶</a></dt>
+<dd><p>获取指定学期的已及格成绩</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>year</strong> – 学年 格式为 “2017-2018”</li>
-<li><strong>semester</strong> – 学期 数字1或2</li>
+<li><strong>year</strong> (<em>str</em>) – 学年 格式为 “2017-2018”</li>
+<li><strong>semester</strong> (<em>int</em>) – 学期 数字1或2</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first">list of dict</p>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first">list</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body"><p class="first last">参照例子</p>
@@ -341,29 +330,40 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">getOldCourses</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="s1">&#39;2017-2018&#39;</span><span class="p">,</span> <span class="n">semester</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">getAllGrades</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="s1">&#39;2017-2018&#39;</span><span class="p">,</span> <span class="n">semester</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[</span>
 <span class="go">    {</span>
-<span class="go">        &#39;id&#39;: &#39;1241416&#39;, </span>
-<span class="go">        &#39;name&#39;: &#39;算法设计与分析&#39;, </span>
-<span class="go">        &#39;number&#39;: &#39;01&#39;, </span>
-<span class="go">        &#39;credits&#39;: 3.0, </span>
-<span class="go">        &#39;attributes&#39;: &#39;必修&#39;, </span>
-<span class="go">        &#39;teacher&#39;: &#39;王小明*&#39;, </span>
-<span class="go">        &#39;status&#39;: &#39;置入&#39;, </span>
-<span class="go">        &#39;info&#39;: [</span>
-<span class="go">                    {</span>
-<span class="go">                        &#39;week&#39;: &#39;1-18周上&#39;, </span>
-<span class="go">                        &#39;day&#39;: &#39;2&#39;, </span>
-<span class="go">                        &#39;timeOfClass&#39;: &#39;1&#39;, </span>
-<span class="go">                        &#39;numOfClass&#39;: &#39;2&#39;, </span>
-<span class="go">                        &#39;campus&#39;: &#39;长安校区&#39;, </span>
-<span class="go">                        &#39;buildings&#39;: &#39;长安文津楼&#39;, </span>
-<span class="go">                        &#39;room&#39;: &#39;1511&#39;</span>
-<span class="go">                    }</span>
-<span class="go">                ]</span>
-<span class="go">    }</span>
+<span class="go">        &#39;课程号&#39;:&#39;01111&#39;,</span>
+<span class="go">        &#39;课序号&#39;: &#39;62&#39;, </span>
+<span class="go">        &#39;课程名&#39;: &#39;大学外语（一）&#39;, </span>
+<span class="go">        &#39;英文课程名&#39;: &#39;College English 1&#39;, </span>
+<span class="go">        &#39;学分&#39;: &#39;3&#39;, </span>
+<span class="go">        &#39;课程属性&#39;: </span>
+<span class="go">        &#39;必修&#39;, </span>
+<span class="go">        &#39;成绩&#39;: &#39;73.0&#39;</span>
+<span class="go">    },</span>
+<span class="go">    ...</span>
 <span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Urp.getGpa">
+<code class="descname">getGpa</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/urp.html#Urp.getGpa"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Urp.getGpa" title="永久链接至目标">¶</a></dt>
+<dd><p>计算绩点</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">double</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">只计算必修课的绩点</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">getGpa</span><span class="p">()</span>
+<span class="go">73.00</span>
 </pre></div>
 </div>
 </dd></dl>

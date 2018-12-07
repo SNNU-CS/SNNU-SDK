@@ -171,8 +171,8 @@
 <div class="viewcode-block" id="Library"><a class="viewcode-back" href="../../libiary.html#snnusdk.Library">[文档]</a><span class="k">class</span> <span class="nc">Library</span><span class="p">(</span><span class="n">API</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;图书馆</span>
 
-<span class="sd">    :param username: 用户名</span>
-<span class="sd">    :param password: 密码</span>
+<span class="sd">    :param str username: 用户名</span>
+<span class="sd">    :param str password: 密码</span>
 <span class="sd">    :raise: :class:`snnusdk.exceptions.AuthenticationException`</span>
 
 <span class="sd">    &gt;&gt;&gt; libiary = Library(username=&#39;B11111111&#39;, password=&#39;xxx&#39;)</span>
@@ -243,8 +243,8 @@
 <div class="viewcode-block" id="Library.getBorrowingBooks"><a class="viewcode-back" href="../../libiary.html#snnusdk.Library.getBorrowingBooks">[文档]</a>    <span class="k">def</span> <span class="nf">getBorrowingBooks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;在借书籍列表</span>
 <span class="sd">        </span>
-<span class="sd">        :return: 在借书籍列表</span>
 <span class="sd">        :rtype: list of dict</span>
+<span class="sd">        :return: 在借书籍列表</span>
 <span class="sd">        </span>
 <span class="sd">        &gt;&gt;&gt; library.getBorrowingBooks()</span>
 <span class="sd">        [</span>
@@ -276,8 +276,8 @@
 <div class="viewcode-block" id="Library.getReservationBooks"><a class="viewcode-back" href="../../libiary.html#snnusdk.Library.getReservationBooks">[文档]</a>    <span class="k">def</span> <span class="nf">getReservationBooks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;预约书籍列表</span>
 <span class="sd">        </span>
-<span class="sd">        :return: 预约书籍列表</span>
 <span class="sd">        :rtype: list of dict</span>
+<span class="sd">        :return: 预约书籍列表</span>
 <span class="sd">        </span>
 <span class="sd">        &gt;&gt;&gt; library.getReservationBooks()</span>
 <span class="sd">        [</span>
@@ -299,7 +299,7 @@
         <span class="sd">&quot;&quot;&quot;现金事务</span>
 <span class="sd">        </span>
 <span class="sd">        :rtype: dict</span>
-<span class="sd">        :return: 参见例子</span>
+<span class="sd">        :return: 参照例子</span>
 <span class="sd">        </span>
 <span class="sd">        &gt;&gt;&gt; library.getCash()</span>
 <span class="sd">        {</span>
