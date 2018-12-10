@@ -14,8 +14,8 @@ class CaptchaGUI:
 
     def __init__(self, im):
         self.im = im
-        self.captcha_value=""
-        
+        self.captcha_value = ""
+
         self.root = tkinter.Tk()
         self.tkimg = ImageTk.PhotoImage(self.im)
         self.imgLabel = tkinter.Label(self.root, image=self.tkimg)
@@ -24,10 +24,10 @@ class CaptchaGUI:
         self.message.pack()
         self.root.bind('<Return>', self.input)
         self.root.mainloop()
-        
+
     def input(self, event):
         self.captcha_value = self.message.get()
-        #print(self.captcha_value)
+        # print(self.captcha_value)
         self.root.quit()
 
     def __str__(self):

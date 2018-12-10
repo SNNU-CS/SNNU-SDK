@@ -7,15 +7,16 @@ Created on Nov 29, 2018
 from snnusdk.base import API
 # from snnusdk.tool.GUI import CaptchaGUI
 from snnusdk.tool.Table import table_to_list
-from snnusdk.exceptions import AuthenticationException
+from snnusdk.exceptions import AuthenticationError
 from snnusdk.utils.captcha import UrpCaptcha
+
 
 class Urp(API):
     """陕师大Urp教务
 
     :param str account: 学号
     :param str password: 密码
-    :raise: :class:`snnusdk.exceptions.AuthenticationException`
+    :raise: :class:`snnusdk.exceptions.AuthenticationError`
 
     >>> urp = Urp(account='B11111111', password='xxx')
     """
@@ -27,9 +28,9 @@ class Urp(API):
         OLD_COURSES = HOST + '/lnkbcxAction.do'  # 历年课表
         CAPTCHA = HOST + '/validateCodeAction.do'  # 教务系统验证码
         LOGIN = HOST + '/loginAction.do'  # 教务系统登录
-        GRADE = HOST + '/bxqcjcxAction.do' # 本学期成绩
-        ALL_GRADE = HOST + '/gradeLnAllAction.do?type=ln&oper=qbinfo' # 全部及格成绩
-        
+        GRADE = HOST + '/bxqcjcxAction.do'  # 本学期成绩
+        ALL_GRADE = HOST + '/gradeLnAllAction.do?type=ln&oper=qbinfo'  # 全部及格成绩
+
     def __init__(self, account=None, password=None):
         super(Urp, self).__init__()
         if account and password:
@@ -37,13 +38,14 @@ class Urp(API):
             self.password = password
             self.login(account, password)
 
-    def getCourses(self):
-        """获取本学期的选课情况
+    def get_courses(self):
+        """
+        获取本学期的选课情况
 
         :rtype: list of dict
         :return:  参照例子
 
-        >>> urp.getCourses()
+        >>> urp.get_courses()
         [
             {
                 'id': '1241416', 
@@ -68,9 +70,10 @@ class Urp(API):
         ]
         """
         soup = self.get_soup(method='get', url=self.URLs.SELECTED_COURSES)
-        tables = soup.findAll("table", attrs={'id' : "user"})
+        tables = soup.findAll("table", attrs={'id': "user"})
         table = tables[1]
-        table_list = table_to_list(table, remove_index_list=[8, 9])  # 0,6虽不用,不可写
+        table_list = table_to_list(
+            table, remove_index_list=[8, 9])  # 0,6虽不用,不可写
         courses = []
         temp_dic = {}
         keys = ['周次', '星期', '节次', '节数', '校区', '教学楼', '教室']
@@ -78,34 +81,34 @@ class Urp(API):
             dic_len = len(dic)
             if dic_len > 9:
                 courses.append({
-                                'id': dic['课程号'],
-                                'name':dic['课程名'],
-                                'number': dic['课序号'],
-                                'credits': float(dic['学分']),
-                                'attributes': dic['课程属性'],
-                                'teacher': dic['教师'],
-                                'status': dic['选课状态'],
-                                'info': []
-                    })
+                    'id': dic['课程号'],
+                    'name': dic['课程名'],
+                    'number': dic['课序号'],
+                    'credits': float(dic['学分']),
+                    'attributes': dic['课程属性'],
+                    'teacher': dic['教师'],
+                    'status': dic['选课状态'],
+                    'info': []
+                })
             else:
                 dic = dict(zip(keys, [dic[key] for key in dic.keys()]))
             for key in dic.keys():
                 if key in keys:
                     temp_dic = {
-                            'week':dic['周次'],
-                            'day':dic['星期'],
-                            'timeOfClass':dic['节次'],
-                            'numOfClass':dic['节数'],
-                            'campus':dic['校区'],
-                            'buildings':dic['教学楼'],
-                            'room':dic['教室']
-                        }
-                    
+                        'week': dic['周次'],
+                        'day': dic['星期'],
+                        'timeOfClass': dic['节次'],
+                        'numOfClass': dic['节数'],
+                        'campus': dic['校区'],
+                        'buildings': dic['教学楼'],
+                        'room': dic['教室']
+                    }
+
             courses[-1]['info'].append(temp_dic)
             temp_dic = {}
         return courses
-    
-    def getOldCourses(self, year, semester):
+
+    def get_old_courses(self, year, semester):
         """
         获取指定学期的课表
 
@@ -114,7 +117,7 @@ class Urp(API):
         :rtype: list of dict
         :return: 参照例子
 
-        >>> u.getOldCourses(year='2017-2018', semester=1)
+        >>> u.get_old_courses(year='2017-2018', semester=1)
         [
             {
                 'id': '1241416', 
@@ -140,14 +143,14 @@ class Urp(API):
         """
         return ""
 
-    def getGrade(self):
+    def get_grade(self):
         """
         获取本学期的成绩
-        
+
         :rtype: list of dict
         :return: 参照例子
 
-        >>> u.getGrade()
+        >>> u.get_grade()
         [
             {
                 '课程号': '1243432', 
@@ -168,8 +171,8 @@ class Urp(API):
 
         """
         return ""
-    
-    def getAllGrades(self,year,semester): 
+
+    def get_all_grades(self, year, semester):
         """获取指定学期的已及格成绩
 
         :param str year: 学年 格式为 "2017-2018"
@@ -177,7 +180,7 @@ class Urp(API):
         :rtype: list
         :return: 参照例子
 
-        >>> u.getAllGrades(year='2017-2018', semester=1)
+        >>> u.get_all_grades(year='2017-2018', semester=1)
         [
             {
                 '课程号':'01111',
@@ -193,34 +196,35 @@ class Urp(API):
         ]
         """
         return ""
-    
-    def getGpa(self):
+
+    def get_gpa(self):
         """计算绩点
-        
+
         :rtype: double
         :return: 只计算必修课的绩点
 
-        >>> u.getGpa()
+        >>> u.get_gpa()
         73.00
         """
+
     def login(self, account, password):
         """
         :param str account: 学号
         :param str password: 密码
-        :raise: :class:`snnusdk.exceptions.AuthenticationException`
+        :raise: :class:`snnusdk.exceptions.AuthenticationError`
         """
         # FIXME: 登录不可靠
         image = self.get_image(self.URLs.CAPTCHA)
 #         captcha_code = CaptchaGUI(image)
-        captcha_code=UrpCaptcha(image)
+        captcha_code = UrpCaptcha(image)
         data = {
-            "zjh1":"" ,
-            "tips":"",
+            "zjh1": "",
+            "tips": "",
             "lx": "",
             "evalue": "",
-            "eflag":"",
-            "fs":"",
-            "dzslh":"",
+            "eflag": "",
+            "fs": "",
+            "dzslh": "",
             "zjh": account,
             "mm": password,
             "v_yzm": captcha_code
@@ -234,7 +238,7 @@ class Urp(API):
         if result['success']:
             self.verify = True
         else:
-            raise AuthenticationException(result['msg'])
+            raise AuthenticationError(result['msg'])
         return result
 
     def _login_execute(self, url=None, data=None):
@@ -257,6 +261,4 @@ class Urp(API):
 
 if __name__ == '__main__':
     c = Urp("xx", "xx")
-    print(c.getCourses())
-    
-    
+    print(c.get_courses())

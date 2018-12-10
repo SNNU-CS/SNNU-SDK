@@ -73,8 +73,9 @@ def rotate_img(image):
     image = image.rotate(final_angle, expand=False)
     return image
 
-def ImageBinarization(im,threshold):
-    table=[]
+
+def ImageBinarization(im, threshold):
+    table = []
     for i in range(256):
         if i < threshold:
             table.append(0)

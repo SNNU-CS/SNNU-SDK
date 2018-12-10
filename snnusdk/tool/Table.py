@@ -4,6 +4,7 @@ Created on Nov 29, 2018
 @author: QiZhao
 '''
 
+
 def table_to_list(table, remove_index_list=None, index_cast_dict=None):
     """将html的table转换python中的list
 
@@ -19,7 +20,8 @@ def table_to_list(table, remove_index_list=None, index_cast_dict=None):
     index_cast_dict = index_cast_dict or {}
     remove_index_list = remove_index_list or []
     trs = list(table.select('tr'))
-    keys = [key.text.strip() for col_index, key in enumerate(trs[0].select('th')) if col_index not in remove_index_list]
+    keys = [key.text.strip() for col_index, key in enumerate(
+        trs[0].select('th')) if col_index not in remove_index_list]
     result = []
     for tr in trs[1:]:
         values = []
@@ -50,17 +52,18 @@ def table_to_dict(table, remove_index_list=None, index_cast_dict=None):
     index_cast_dict = index_cast_dict or {}
     remove_index_list = remove_index_list or []
     trs = list(table.select('tr'))
-    keys = [key.text.strip() for col_index, key in enumerate(trs[0].select('th')) if col_index not in remove_index_list]
+    keys = [key.text.strip() for col_index, key in enumerate(
+        trs[0].select('th')) if col_index not in remove_index_list]
     result = {}
     for key in keys:
-        result[key]=[]
+        result[key] = []
     for tr in trs[1:]:
         for col_index, td in enumerate(tr.select('td')):
-            key=keys[col_index]
+            key = keys[col_index]
             if col_index in remove_index_list:
                 continue
             value = td.text.strip()
             if col_index in index_cast_dict:
                 value = index_cast_dict[col_index](value)
             result[key].append(value)
-    return result   
+    return result

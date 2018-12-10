@@ -9,6 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class API(requests.Session):
+
     def __init__(self):
         super(API, self).__init__()
         self.verify = False
@@ -24,7 +25,8 @@ class API(requests.Session):
         :return: pillow的Image对象
         """
         try:  # 出现网络连接问题,直接在该处抛出错误
-            r = getattr(self, method)(url, json=json, data=data, params=params, **kwargs)
+            r = getattr(self, method)(url, json=json,
+                                      data=data, params=params, **kwargs)
             return Image.open(BytesIO(r.content))
         except ConnectionError:
             raise ConnectionError("请检查网络连接")
@@ -40,7 +42,8 @@ class API(requests.Session):
         :return: BeautifulSoup对象
         """
         try:  # 出现网络连接问题,直接在该处抛出错误
-            r = getattr(self, method)(url, json=json, data=data, params=params, **kwargs)
+            r = getattr(self, method)(url, json=json,
+                                      data=data, params=params, **kwargs)
         except ConnectionError:
             raise ConnectionError("请检查网络连接")
         else:
@@ -61,7 +64,8 @@ class API(requests.Session):
         :return: json转换出的字典
         """
         try:  # 出现网络连接问题,直接在该处抛出错误
-            r = getattr(self, method)(url, json=json, data=data, params=params, **kwargs)
+            r = getattr(self, method)(url, json=json,
+                                      data=data, params=params, **kwargs)
             return r.json()
         except ConnectionError:
             raise ConnectionError("请检查网络连接")

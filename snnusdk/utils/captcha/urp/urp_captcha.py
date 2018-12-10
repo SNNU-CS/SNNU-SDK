@@ -24,9 +24,8 @@ class UrpCaptcha:
         self.image_pre_process()
 
     def image_pre_process(self):
-        threshold=140 
-        self.image = ImageBinarization(self.image,threshold) 
-        
+        threshold = 140
+        self.image = ImageBinarization(self.image, threshold)
 
     def crack(self):
         return ImageToString(self.image)
@@ -39,5 +38,5 @@ if __name__ == "__main__":
     r = requests.get("http://219.244.71.113/validateCodeAction.do")
     im = Image.open(BytesIO(r.content))
     im.show()
-    cap=UrpCaptcha(im)
+    cap = UrpCaptcha(im)
     print(cap)

@@ -5,14 +5,15 @@ Created on Dec 4, 2018
 '''
 import pytesseract
 
+
 def ImageToString(im):
     '''
     使用ocr将图片识别为字符串
     '''
-    value=''
+    value = ''
     try:
-        value=str(pytesseract.image_to_string(im,lang='eng'))
+        value = str(pytesseract.image_to_string(im, lang='eng'))
     except Exception as e:
         raise e
-    value=value.replace(' ','')
+    value = value.replace(' ', '')
     return value

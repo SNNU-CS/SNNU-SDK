@@ -6,6 +6,7 @@ Created on Nov 29, 2018
 @author: QiZhao
 '''
 
+
 class SnnuException(Exception):
     """Base class for exceptions in this module."""
 
@@ -13,18 +14,21 @@ class SnnuException(Exception):
         super(SnnuException, self).__init__(*args, **kwargs)
 
 
-class AuthenticationException(SnnuException):
+class AuthenticationError(SnnuException):
     """An Authentication Exception occurred."""
 
 
 class UnauthorizedError(SnnuException):
     """Not authorized Error"""
 
-class TemporaryBannedException(SnnuException):
-    """Temporary Banned by Server"""
-    
-class BuildingNotFoundException(SnnuException):
-    """Building Not Founf Error"""
 
-class RoomNotFoundException(SnnuException):
-    """Building Not Founf Error"""
+class TemporaryBannedError(SnnuException):
+    """Temporary Banned by Server"""
+
+
+class BuildingNotFoundError(SnnuException):
+    """Building Not Found Error"""
+
+
+class RoomNotFoundError(SnnuException):
+    """Rooom Not Found Error"""
