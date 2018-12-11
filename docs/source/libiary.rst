@@ -6,4 +6,4 @@
    :members:
 
 
-.. automethod:: snnusdk.libiary.getBorrowInfo
+.. automethod:: snnusdk.libiary.get_borrow_info
