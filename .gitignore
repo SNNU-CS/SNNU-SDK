@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# venv
+/venv
+
+# eclipse
+.project
+.pydevproject
+.settings/
