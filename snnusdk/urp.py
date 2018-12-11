@@ -7,7 +7,7 @@ Created on Nov 29, 2018
 from snnusdk.base import API
 # from snnusdk.tool.GUI import CaptchaGUI
 from snnusdk.tool.Table import table_to_list
-from snnusdk.exceptions import AuthenticationError, YearNotExistError
+from snnusdk.exceptions import AuthenticationError, YearNotExistError, UnauthorizedError
 from snnusdk.utils.captcha import UrpCaptcha
 import re
 
@@ -18,6 +18,8 @@ class Urp(API):
     :param str account: 学号
     :param str password: 密码
     :raise: :class:`snnusdk.exceptions.AuthenticationError`
+    :raise: :class:`snnusdk.exceptions.UnauthorizedError`
+    :raise: :class:`snnusdk.exceptions.YearNotExistError`
 
     >>> urp = Urp(account='B11111111', password='xxx')
     """
@@ -37,13 +39,14 @@ class Urp(API):
         if account and password:
             self.account = account
             self.password = password
-            self.login(account, password)
 
     def get_courses(self):
         """获取本学期的选课情况
 
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return:  参照例子
+
         >>> urp.get_courses()
         [
             {
@@ -68,6 +71,8 @@ class Urp(API):
             }
         ]
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(method='get', url=self.URLs.SELECTED_COURSES)
         tables = soup.findAll("table", attrs={'id': "user"})
         table = tables[1]
@@ -112,6 +117,8 @@ class Urp(API):
 
         :param str year: 学年 格式为 "2017-2018"
         :param int semester: 学期 数字1或2
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
+        :raise: :class:`snnusdk.exceptions.YearNotExistError`
         :rtype: list of dict
         :return: 参照例子
 
@@ -139,6 +146,8 @@ class Urp(API):
             }
         ]
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.OLD_COURSES)
         year_list = [i.get('value') for i in soup.find_all(name='option')]
         key = "{}-{}-1".format(year, semester)
@@ -185,9 +194,9 @@ class Urp(API):
         return courses
 
     def get_grade(self):
-        """
-        获取本学期的成绩
+        """获取本学期的成绩
 
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 参照例子
 
@@ -211,6 +220,8 @@ class Urp(API):
         ]
 
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.GRADE)
         table = soup.find(name='table', attrs={'class': 'titleTop2'})
         table_list = table_to_list(table)
@@ -219,6 +230,7 @@ class Urp(API):
     def get_grade_year_list(self):
         """获取可供查询成绩的学期名称
 
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list
         :return: 参照例子
 
@@ -229,6 +241,8 @@ class Urp(API):
             '2017-2018学年春(两学期)'
         ]
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.ALL_GRADE)
         a_tags = soup.find_all(name='a')
         year_list = [a.get('name') for a in a_tags]
@@ -239,6 +253,8 @@ class Urp(API):
 
         :param str year: 学年 格式为 "2017-2018"
         :param int semester: 学期 数字1或2
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
+        :raise: :class:`snnusdk.exceptions.YearNotExistError`
         :rtype: list
         :return: 参照例子
 
@@ -256,6 +272,8 @@ class Urp(API):
             ...
         ]
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         year_list = self.get_grade_year_list()
         year_set = set()
         for year_item in year_list:
@@ -274,12 +292,15 @@ class Urp(API):
     def get_gpa(self):
         """计算绩点
 
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: double
         :return: 只计算必修课后的绩点
 
         >>> u.get_gpa()
         73.00
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         ret = 0.0
         num = 0.0
         tables = self.get_soup(self.URLs.ALL_GRADE).find_all(
@@ -292,11 +313,17 @@ class Urp(API):
                     ret += float(dic['学分']) * float(dic['成绩'])
         return round(ret / num, 2)
 
-    def login(self, account, password):
-        """
-        :param str account: 学号
-        :param str password: 密码
+    def login(self):
+        """登录
+
         :raise: :class:`snnusdk.exceptions.AuthenticationError`
+        :rtype: dict
+        
+        >>> u.login()
+        {
+            'msg': '登录成功', 
+            'success': True
+        }
         """
         # FIXME: 登录不可靠
         image = self.get_image(self.URLs.CAPTCHA)
@@ -310,16 +337,16 @@ class Urp(API):
             "eflag": "",
             "fs": "",
             "dzslh": "",
-            "zjh": account,
-            "mm": password,
+            "zjh": self.account,
+            "mm": self.password,
             "v_yzm": captcha_code
         }
         result = self._login_execute(url=self.URLs.LOGIN, data=data)
         if result['code'] == 2:
             # 如果验证码错误，尝试递归重复登录
-            return self.login(account, password)
+            return self.login()
         result['success'] = not result['code']
-#         print(result)
+        del result['code']
         if result['success']:
             self.verify = True
         else:
@@ -331,7 +358,6 @@ class Urp(API):
         # print(r.text)
         if r.ok:
             if "学分制综合教务" in r.text:
-                self.account = data['zjh']
                 self.verify = True  # 登陆成功, 修改状态  (后期还可能继续修改)
                 return {'code': 0, 'msg': '登录成功'}
             elif "你输入的验证码错误" in r.text:
@@ -346,6 +372,8 @@ class Urp(API):
 
 if __name__ == '__main__':
     c = Urp("xx", "xx")
+#     c.login()
+    print(c.login())
     print(c.get_old_courses('2018-2019', 1))
     print(c.get_grade_year_list())
 #     print(c.())

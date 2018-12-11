@@ -9,6 +9,7 @@ import requests
 from requests.exceptions import ReadTimeout, ConnectionError
 import re
 from snnusdk.exceptions import BuildingNotFoundError, RoomNotFoundError
+
 dic = {
     '崇鋈楼': '0101',
     '积学堂': '0102',
@@ -55,8 +56,10 @@ class Room:
         self.Rooms = self._get_Rooms()
 
     def _get_Soup(self):
-        """
-        依据构造参数,获取BeautifulSoup对象对象
+        """依据构造参数,获取BeautifulSoup对象对象
+        
+        :raise: :class:`snnusdk.exceptions.BuildingNotFoundError`
+        :raise: :class:`requests.exceptions.ConnectionError`
         :rtype: bs4.BeautifulSoup对象
         :return: 依据构造参数获得的BeautifulSoup对象
         """
@@ -226,6 +229,7 @@ class Room:
         查询该教学楼某一教室该周的所有状态
 
         :param str room: 教室号 8014
+        :raise: :class:`snnusdk.exceptions.RoomNotFoundError`
         :rtype: dic
         :return: 参照例子
 

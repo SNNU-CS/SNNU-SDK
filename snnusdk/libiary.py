@@ -38,6 +38,12 @@ class Library(API):
         self.login(self.username, self.password)
 
     def login(self, username, password):
+        """登录
+        
+        :param str username: 学号
+        :param str password: 密码
+        :raise: :class:`snnusdk.exceptions.AuthenticationError`
+        """
         data = {
             'userid': username,
             'password': password,
@@ -55,7 +61,8 @@ class Library(API):
 
     def get_info(self):
         """基本信息
-
+        
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 用户基本信息的字典
 
@@ -68,6 +75,8 @@ class Library(API):
             '状态': '正常'
         }
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.INFO)
         table = soup.find(name='table', attrs={'class': 'dzjbzl'})
         info = {}
@@ -84,7 +93,8 @@ class Library(API):
 
     def get_borrowing_books(self):
         """在借书籍列表
-
+        
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 在借书籍列表
 
@@ -102,6 +112,8 @@ class Library(API):
             ...  
         ]
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!') 
         soup = self.get_soup(self.URLs.BORROW)
         book_list = []
         tables = soup.find_all(name='table', attrs={'class': 'borrows'})
@@ -117,7 +129,8 @@ class Library(API):
 
     def get_reservation_books(self):
         """预约书籍列表
-
+        
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 预约书籍列表
 
@@ -134,6 +147,8 @@ class Library(API):
             ...  
         ]
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         book_list = []
         soup = self.get_soup(self.URLs.RESERVATION)
         borrow_divs = soup.find_all(name='div', attrs={'class': 'borrows'})
@@ -156,7 +171,8 @@ class Library(API):
 
     def get_cash(self):
         """现金事务
-
+        
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 参照例子
 
@@ -177,6 +193,8 @@ class Library(API):
             ]
         }
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         dic = {}
         soup = self.get_soup(self.URLs.CASH)
         div = soup.find(name='div', attrs={'id': 'b2_block'})
@@ -206,7 +224,8 @@ class Library(API):
 
     def lock_lib_card(self):
         """挂失图书证
-
+        
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 挂失借书证的结果
 
@@ -216,6 +235,8 @@ class Library(API):
             'msg':'挂失借书证成功'
         }
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         r = self.get(url=self.URLs.LOCK)
         if '挂失借书证成功' in r.text:
             return {'success': True, 'msg': '挂失借书证成功'}
@@ -224,7 +245,8 @@ class Library(API):
 
     def unlock_lib_card(self):
         """解挂图书证
-
+        
+        :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 解挂借书证的结果
 
@@ -234,6 +256,8 @@ class Library(API):
             'msg':'解挂借书证成功'
         }
         """
+        if self.verify == False:
+            raise UnauthorizedError('您还没有登录!')
         r = self.get(url=self.URLs.UNLOCK)
         if '解挂借书证成功' in r.text:
             return {'success': True, 'msg': '解挂借书证成功'}
@@ -250,6 +274,7 @@ def get_borrow_info():
     >>> get_borrow_info()
     {
         'success': True, 
+        'msg': '查询成功',
         'result': [
             {
                 '预约者': '张三', 
@@ -273,10 +298,11 @@ def get_borrow_info():
         ls = table_to_list(table)
         ret['success'] = True
         ret['result'] = ls
+        ret['msg']='查询成功'
     except Exception as e:
         ret['success'] = False
         ret['result'] = []
-        raise e
+        ret['msg']=e.message
     finally:
         return ret
 

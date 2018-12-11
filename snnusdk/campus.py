@@ -6,7 +6,7 @@ Created on Dec 5, 2018
 from snnusdk.tool.Table import table_to_list
 from bs4 import BeautifulSoup
 import requests
-
+from requests.exceptions import ConnectionError
 
 class Campus:
     """校园卡消费明细
@@ -26,8 +26,7 @@ class Campus:
         }
 
     def get_list(self):
-        """
-        查询消费明细
+        """查询消费明细
 
         :rtype: dict
         :return: 参见例子
@@ -35,6 +34,7 @@ class Campus:
         >>> c = get_list()
         {
             'success': True, 
+            'msg': '查询成功',
             'result': 
             [
                 {
@@ -59,11 +59,20 @@ class Campus:
             ls = table_to_list(
                 soup.find(name='table', attrs={'class': 'hovertable'}))
             ret['success'] = True
+            ret['msg']='查询成功'
             ret['result'] = ls
-        except Exception as e:
+        except AttributeError:
             ret['success'] = False
+            ret['msg']='请核对校园卡号'
             ret['result'] = []
-            raise e
+        except ConnectionError:
+            ret['success'] = False
+            ret['msg']='网络连接失败'
+            ret['result'] = []
+        except Exception:
+            ret['success'] = False
+            ret['msg']='未知错误'
+            ret['result'] = []
         finally:
             return ret
 
