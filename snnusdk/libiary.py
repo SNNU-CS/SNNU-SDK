@@ -8,6 +8,7 @@ from snnusdk.exceptions import AuthenticationError
 from bs4 import BeautifulSoup
 from snnusdk.tool.Table import table_to_list
 import requests
+import re
 
 
 class Library(API):
@@ -25,7 +26,7 @@ class Library(API):
         LOGIN = HOST + 'centerlogin.do'        # 登录
         INFO = HOST + 'action.do?webid=w-l-mylib'   # 信息
         BORROW = HOST + 'action.do?webid=w-l-zjts'  # 在借书籍
-        RESERVATION = HOST + ''  # 预约书籍
+        RESERVATION = HOST + 'action.do?webid=w-l-yyts'  # 预约书籍
         CASH = HOST + 'action.do?webid=w-l-xjsw'  # 现金事务
         LOCK = HOST + 'action.do?webid=w-l-gsjsz'  # 挂失
         UNLOCK = HOST + 'action.do?webid=w-l-jgjsz'  # 解挂
@@ -134,6 +135,23 @@ class Library(API):
         ]
         """
         book_list = []
+        soup = self.get_soup(self.URLs.RESERVATION)
+        borrow_divs = soup.find_all(name='div', attrs={'class': 'borrows'})
+        for borrow_div in borrow_divs:
+            temp = {}
+            for div in borrow_div.find_all(name='div'):
+                class_value = div.get('class')[0]
+                if class_value == 'title':
+                    temp['书名'] = div.text.split('、', 2)[1]
+                elif class_value == 'author':
+                    temp['作者'], temp['出版社'] = div.text.split(' -- ')
+                elif class_value == 'qsdd':
+                    temp['取书地点'] = div.text.split('：')[1]
+                elif class_value == 'yyrq':
+                    temp['预约开始日期'] = div.text.split('：')[1]
+                elif class_value == 'yysxrq':
+                    temp['预约失效日期'] = div.text.split('：')[1]
+            book_list.append(temp)
         return book_list
 
     def get_cash(self):
@@ -160,9 +178,30 @@ class Library(API):
         }
         """
         dic = {}
-        soup=self.oup(self.URLs.CASH)
-        id=soup.find(name='div',attrs={'id':'b2_block'})
-        print(id.text)
+        soup = self.get_soup(self.URLs.CASH)
+        div = soup.find(name='div', attrs={'id': 'b2_block'})
+        dic['总额'] = re.search('总额：([^\n]+)', div.text, re.S).group(1)
+
+        dic['明细'] = []
+        borrow_divs = soup.find_all(name='div', attrs={'class': 'borrows'})
+        for borrow_div in borrow_divs:
+            temp = {}
+            flag = False
+            for div in borrow_div.find_all(name='div'):
+                class_value = div.get('class')[0]
+                if class_value == 'title':
+                    temp['书名'] = div.text.split('、', 2)[1]
+                elif class_value == 'author':
+                    temp['作者'], temp['出版社'] = div.text.split(' -- ')
+                elif class_value == 'qsdd':
+                    temp['数量'] = div.text.split('：')[1]
+                elif class_value == 'yyrq':
+                    if not flag:
+                        temp['原因'] = div.text.split('：')[1]
+                        flag = True
+                    else:
+                        temp['状态'] = div.text.split('：')[1]
+            dic['明细'].append(temp)
         return dic
 
     def lock_lib_card(self):
@@ -242,6 +281,7 @@ def get_borrow_info():
         return ret
 
 if __name__ == "__main__":
-    lib = Library('41612164', 'zq201651')
-    print(lib.get_info())
-    print(lib.get_borrowing_books())
+    lib = Library('xx', 'xx')
+    print(lib.get_reservation_books())
+#     print(lib.get_info())
+#     print(lib.get_borrowing_books())

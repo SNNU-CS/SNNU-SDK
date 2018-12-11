@@ -170,6 +170,10 @@ class Urp(API):
         ]
 
         """
+        ret=[]
+        soup=self.get_soup(self.URLs.GRADE)
+        table=soup.find(name='table',attrs={'class':'titleTop2'})
+        table_list=table_to_list(table)
         return ""
 
     def get_all_grades(self, year, semester):
