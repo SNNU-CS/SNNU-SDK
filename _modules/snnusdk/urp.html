@@ -166,15 +166,19 @@
 <span class="kn">from</span> <span class="nn">snnusdk.base</span> <span class="k">import</span> <span class="n">API</span>
 <span class="c1"># from snnusdk.tool.GUI import CaptchaGUI</span>
 <span class="kn">from</span> <span class="nn">snnusdk.tool.Table</span> <span class="k">import</span> <span class="n">table_to_list</span>
-<span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="n">AuthenticationException</span>
+<span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="n">AuthenticationError</span><span class="p">,</span> <span class="n">YearNotExistError</span><span class="p">,</span> <span class="n">UnauthorizedError</span>
 <span class="kn">from</span> <span class="nn">snnusdk.utils.captcha</span> <span class="k">import</span> <span class="n">UrpCaptcha</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
 
 <div class="viewcode-block" id="Urp"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp">[文档]</a><span class="k">class</span> <span class="nc">Urp</span><span class="p">(</span><span class="n">API</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;陕师大Urp教务</span>
 
 <span class="sd">    :param str account: 学号</span>
 <span class="sd">    :param str password: 密码</span>
-<span class="sd">    :raise: :class:`snnusdk.exceptions.AuthenticationException`</span>
+<span class="sd">    :raise: :class:`snnusdk.exceptions.AuthenticationError`</span>
+<span class="sd">    :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
+<span class="sd">    :raise: :class:`snnusdk.exceptions.YearNotExistError`</span>
 
 <span class="sd">    &gt;&gt;&gt; urp = Urp(account=&#39;B11111111&#39;, password=&#39;xxx&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -186,23 +190,23 @@
         <span class="n">OLD_COURSES</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/lnkbcxAction.do&#39;</span>  <span class="c1"># 历年课表</span>
         <span class="n">CAPTCHA</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/validateCodeAction.do&#39;</span>  <span class="c1"># 教务系统验证码</span>
         <span class="n">LOGIN</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/loginAction.do&#39;</span>  <span class="c1"># 教务系统登录</span>
-        <span class="n">GRADE</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/bxqcjcxAction.do&#39;</span> <span class="c1"># 本学期成绩</span>
-        <span class="n">ALL_GRADE</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/gradeLnAllAction.do?type=ln&amp;oper=qbinfo&#39;</span> <span class="c1"># 全部及格成绩</span>
-        
+        <span class="n">GRADE</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/bxqcjcxAction.do&#39;</span>  <span class="c1"># 本学期成绩</span>
+        <span class="n">ALL_GRADE</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s1">&#39;/gradeLnAllAction.do?type=ln&amp;oper=qbinfo&#39;</span>  <span class="c1"># 全部及格成绩</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Urp</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">account</span> <span class="ow">and</span> <span class="n">password</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="n">account</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Urp.getCourses"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.getCourses">[文档]</a>    <span class="k">def</span> <span class="nf">getCourses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Urp.get_courses"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.get_courses">[文档]</a>    <span class="k">def</span> <span class="nf">get_courses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;获取本学期的选课情况</span>
 
+<span class="sd">        :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        :return:  参照例子</span>
 
-<span class="sd">        &gt;&gt;&gt; urp.getCourses()</span>
+<span class="sd">        &gt;&gt;&gt; urp.get_courses()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
 <span class="sd">                &#39;id&#39;: &#39;1241416&#39;, </span>
@@ -226,10 +230,13 @@
 <span class="sd">            }</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">SELECTED_COURSES</span><span class="p">)</span>
-        <span class="n">tables</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">})</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">})</span>
         <span class="n">table</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">remove_index_list</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>  <span class="c1"># 0,6虽不用,不可写</span>
+        <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span>
+            <span class="n">table</span><span class="p">,</span> <span class="n">remove_index_list</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>  <span class="c1"># 0,6虽不用,不可写</span>
         <span class="n">courses</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">temp_dic</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;周次&#39;</span><span class="p">,</span> <span class="s1">&#39;星期&#39;</span><span class="p">,</span> <span class="s1">&#39;节次&#39;</span><span class="p">,</span> <span class="s1">&#39;节数&#39;</span><span class="p">,</span> <span class="s1">&#39;校区&#39;</span><span class="p">,</span> <span class="s1">&#39;教学楼&#39;</span><span class="p">,</span> <span class="s1">&#39;教室&#39;</span><span class="p">]</span>
@@ -237,43 +244,44 @@
             <span class="n">dic_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">dic_len</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
                 <span class="n">courses</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程号&#39;</span><span class="p">],</span>
-                                <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程名&#39;</span><span class="p">],</span>
-                                <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课序号&#39;</span><span class="p">],</span>
-                                <span class="s1">&#39;credits&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;学分&#39;</span><span class="p">]),</span>
-                                <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程属性&#39;</span><span class="p">],</span>
-                                <span class="s1">&#39;teacher&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教师&#39;</span><span class="p">],</span>
-                                <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;选课状态&#39;</span><span class="p">],</span>
-                                <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">[]</span>
-                    <span class="p">})</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程号&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程名&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课序号&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;credits&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;学分&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程属性&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;teacher&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教师&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;选课状态&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                <span class="p">})</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="p">[</span><span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
                     <span class="n">temp_dic</span> <span class="o">=</span> <span class="p">{</span>
-                            <span class="s1">&#39;week&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;周次&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;day&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;星期&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;timeOfClass&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;节次&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;numOfClass&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;节数&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;campus&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;校区&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;buildings&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教学楼&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;room&#39;</span><span class="p">:</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教室&#39;</span><span class="p">]</span>
-                        <span class="p">}</span>
-                    
+                        <span class="s1">&#39;week&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;周次&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;day&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;星期&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;timeOfClass&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;节次&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;numOfClass&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;节数&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;campus&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;校区&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;buildings&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教学楼&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;room&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教室&#39;</span><span class="p">]</span>
+                    <span class="p">}</span>
+
             <span class="n">courses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_dic</span><span class="p">)</span>
             <span class="n">temp_dic</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">return</span> <span class="n">courses</span></div>
-    
-<div class="viewcode-block" id="Urp.getOldCourses"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.getOldCourses">[文档]</a>    <span class="k">def</span> <span class="nf">getOldCourses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">semester</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        获取指定学期的课表</span>
+
+<div class="viewcode-block" id="Urp.get_old_courses"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.get_old_courses">[文档]</a>    <span class="k">def</span> <span class="nf">get_old_courses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">semester</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;获取指定学期的课表</span>
 
 <span class="sd">        :param str year: 学年 格式为 &quot;2017-2018&quot;</span>
 <span class="sd">        :param int semester: 学期 数字1或2</span>
+<span class="sd">        :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
+<span class="sd">        :raise: :class:`snnusdk.exceptions.YearNotExistError`</span>
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        :return: 参照例子</span>
 
-<span class="sd">        &gt;&gt;&gt; u.getOldCourses(year=&#39;2017-2018&#39;, semester=1)</span>
+<span class="sd">        &gt;&gt;&gt; u.get_old_courses(year=&#39;2017-2018&#39;, semester=1)</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
 <span class="sd">                &#39;id&#39;: &#39;1241416&#39;, </span>
@@ -297,16 +305,61 @@
 <span class="sd">            }</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">OLD_COURSES</span><span class="p">)</span>
+        <span class="n">year_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;option&#39;</span><span class="p">)]</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-1&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">semester</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">year_list</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">YearNotExistError</span><span class="p">(</span><span class="s1">&#39;不存在该学期！&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Urp.getGrade"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.getGrade">[文档]</a>    <span class="k">def</span> <span class="nf">getGrade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        获取本学期的成绩</span>
-<span class="sd">        </span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">OLD_COURSES</span><span class="p">,</span>
+                             <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;zxjxjhh&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">})</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">})[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">remove_index_list</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+
+        <span class="n">courses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">temp_dic</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;周次&#39;</span><span class="p">,</span> <span class="s1">&#39;星期&#39;</span><span class="p">,</span> <span class="s1">&#39;节次&#39;</span><span class="p">,</span> <span class="s1">&#39;节数&#39;</span><span class="p">,</span> <span class="s1">&#39;校区&#39;</span><span class="p">,</span> <span class="s1">&#39;教学楼&#39;</span><span class="p">,</span> <span class="s1">&#39;教室&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">dic</span> <span class="ow">in</span> <span class="n">table_list</span><span class="p">:</span>
+            <span class="n">dic_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dic_len</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+                <span class="n">courses</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程号&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程名&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课序&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;credits&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;学分&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程属性&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;teacher&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教师&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;选课状态&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                <span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="p">[</span><span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                    <span class="n">temp_dic</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;week&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;周次&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;day&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;星期&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;timeOfClass&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;节次&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;numOfClass&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;节数&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;campus&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;校区&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;buildings&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教学楼&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;room&#39;</span><span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;教室&#39;</span><span class="p">]</span>
+                    <span class="p">}</span>
+
+            <span class="n">courses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_dic</span><span class="p">)</span>
+            <span class="n">temp_dic</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="n">courses</span></div>
+
+<div class="viewcode-block" id="Urp.get_grade"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.get_grade">[文档]</a>    <span class="k">def</span> <span class="nf">get_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;获取本学期的成绩</span>
+
+<span class="sd">        :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        :return: 参照例子</span>
 
-<span class="sd">        &gt;&gt;&gt; u.getGrade()</span>
+<span class="sd">        &gt;&gt;&gt; u.get_grade()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
 <span class="sd">                &#39;课程号&#39;: &#39;1243432&#39;, </span>
@@ -326,17 +379,45 @@
 <span class="sd">        ]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
-    
-<div class="viewcode-block" id="Urp.getAllGrades"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.getAllGrades">[文档]</a>    <span class="k">def</span> <span class="nf">getAllGrades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">semester</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">GRADE</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;titleTop2&#39;</span><span class="p">})</span>
+        <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">table_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
+
+<div class="viewcode-block" id="Urp.get_grade_year_list"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.get_grade_year_list">[文档]</a>    <span class="k">def</span> <span class="nf">get_grade_year_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;获取可供查询成绩的学期名称</span>
+
+<span class="sd">        :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        :return: 参照例子</span>
+
+<span class="sd">        &gt;&gt;&gt; u.get_grade_year_list()</span>
+<span class="sd">        [    &#39;2016-2017学年秋(两学期)&#39;, </span>
+<span class="sd">            &#39;2016-2017学年春(两学期)&#39;, </span>
+<span class="sd">            &#39;2017-2018学年秋(两学期)&#39;, </span>
+<span class="sd">            &#39;2017-2018学年春(两学期)&#39;</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">ALL_GRADE</span><span class="p">)</span>
+        <span class="n">a_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="n">year_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">a_tags</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">year_list</span></div>
+
+<div class="viewcode-block" id="Urp.get_all_grades"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.get_all_grades">[文档]</a>    <span class="k">def</span> <span class="nf">get_all_grades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">semester</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;获取指定学期的已及格成绩</span>
 
 <span class="sd">        :param str year: 学年 格式为 &quot;2017-2018&quot;</span>
 <span class="sd">        :param int semester: 学期 数字1或2</span>
+<span class="sd">        :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
+<span class="sd">        :raise: :class:`snnusdk.exceptions.YearNotExistError`</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">        :return: 参照例子</span>
 
-<span class="sd">        &gt;&gt;&gt; u.getAllGrades(year=&#39;2017-2018&#39;, semester=1)</span>
+<span class="sd">        &gt;&gt;&gt; u.get_all_grades(year=&#39;2017-2018&#39;, semester=1)</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
 <span class="sd">                &#39;课程号&#39;:&#39;01111&#39;,</span>
@@ -344,56 +425,91 @@
 <span class="sd">                &#39;课程名&#39;: &#39;大学外语（一）&#39;, </span>
 <span class="sd">                &#39;英文课程名&#39;: &#39;College English 1&#39;, </span>
 <span class="sd">                &#39;学分&#39;: &#39;3&#39;, </span>
-<span class="sd">                &#39;课程属性&#39;: </span>
-<span class="sd">                &#39;必修&#39;, </span>
+<span class="sd">                &#39;课程属性&#39;: &#39;必修&#39;, </span>
 <span class="sd">                &#39;成绩&#39;: &#39;73.0&#39;</span>
 <span class="sd">            },</span>
 <span class="sd">            ...</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
-    
-<div class="viewcode-block" id="Urp.getGpa"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.getGpa">[文档]</a>    <span class="k">def</span> <span class="nf">getGpa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;计算绩点</span>
-<span class="sd">        </span>
-<span class="sd">        :rtype: double</span>
-<span class="sd">        :return: 只计算必修课的绩点</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
+        <span class="n">year_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_grade_year_list</span><span class="p">()</span>
+        <span class="n">year_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">year_item</span> <span class="ow">in</span> <span class="n">year_list</span><span class="p">:</span>
+            <span class="n">year_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d{4,4}-\d{4,4}&#39;</span><span class="p">,</span> <span class="n">year_item</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">year_set</span> <span class="ow">or</span> <span class="n">semester</span> <span class="ow">not</span> <span class="ow">in</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">YearNotExistError</span><span class="p">(</span><span class="s1">&#39;不存在该学期&#39;</span><span class="p">)</span>
 
-<span class="sd">        &gt;&gt;&gt; u.getGpa()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">学年</span><span class="si">{}</span><span class="s2">(两学期)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="s1">&#39;春&#39;</span> <span class="k">if</span> <span class="n">semester</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="s1">&#39;秋&#39;</span><span class="p">)</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">ALL_GRADE</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;displayTag&#39;</span><span class="p">})</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="n">year_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+        <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">table_list</span></div>
+
+<div class="viewcode-block" id="Urp.get_gpa"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.get_gpa">[文档]</a>    <span class="k">def</span> <span class="nf">get_gpa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算绩点</span>
+
+<span class="sd">        :raise: :class:`snnusdk.exceptions.UnauthorizedError`</span>
+<span class="sd">        :rtype: double</span>
+<span class="sd">        :return: 只计算必修课后的绩点</span>
+
+<span class="sd">        &gt;&gt;&gt; u.get_gpa()</span>
 <span class="sd">        73.00</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-<div class="viewcode-block" id="Urp.login"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.login">[文档]</a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param str account: 学号</span>
-<span class="sd">        :param str password: 密码</span>
-<span class="sd">        :raise: :class:`snnusdk.exceptions.AuthenticationException`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">ALL_GRADE</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;displayTag&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+            <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dic</span> <span class="ow">in</span> <span class="n">table_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;课程属性&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;必修&#39;</span><span class="p">:</span>
+                    <span class="n">num</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;学分&#39;</span><span class="p">])</span>
+                    <span class="n">ret</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;学分&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;成绩&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">ret</span> <span class="o">/</span> <span class="n">num</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Urp.login"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp.login">[文档]</a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;登录</span>
+
+<span class="sd">        :raise: :class:`snnusdk.exceptions.AuthenticationError`</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; u.login()</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;msg&#39;: &#39;登录成功&#39;, </span>
+<span class="sd">            &#39;success&#39;: True</span>
+<span class="sd">        }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># FIXME: 登录不可靠</span>
         <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">CAPTCHA</span><span class="p">)</span>
 <span class="c1">#         captcha_code = CaptchaGUI(image)</span>
-        <span class="n">captcha_code</span><span class="o">=</span><span class="n">UrpCaptcha</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">captcha_code</span> <span class="o">=</span> <span class="n">UrpCaptcha</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;zjh1&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span> <span class="p">,</span>
-            <span class="s2">&quot;tips&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;zjh1&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tips&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
             <span class="s2">&quot;lx&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
             <span class="s2">&quot;evalue&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;eflag&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;fs&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;dzslh&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;zjh&quot;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span>
-            <span class="s2">&quot;mm&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span>
+            <span class="s2">&quot;eflag&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fs&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dzslh&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;zjh&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span>
+            <span class="s2">&quot;mm&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
             <span class="s2">&quot;v_yzm&quot;</span><span class="p">:</span> <span class="n">captcha_code</span>
         <span class="p">}</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_login_execute</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">LOGIN</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="c1"># 如果验证码错误，尝试递归重复登录</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
         <span class="n">result</span><span class="p">[</span><span class="s1">&#39;success&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">]</span>
-<span class="c1">#         print(result)</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;success&#39;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AuthenticationException</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="n">AuthenticationError</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
     <span class="k">def</span> <span class="nf">_login_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -401,7 +517,6 @@
         <span class="c1"># print(r.text)</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;学分制综合教务&quot;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;zjh&#39;</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># 登陆成功, 修改状态  (后期还可能继续修改)</span>
                 <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;登录成功&#39;</span><span class="p">}</span>
             <span class="k">elif</span> <span class="s2">&quot;你输入的验证码错误&quot;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
@@ -416,9 +531,11 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">Urp</span><span class="p">(</span><span class="s2">&quot;xx&quot;</span><span class="p">,</span> <span class="s2">&quot;xx&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">getCourses</span><span class="p">())</span>
-    
-    
+<span class="c1">#     c.login()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">login</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_old_courses</span><span class="p">(</span><span class="s1">&#39;2018-2019&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_grade_year_list</span><span class="p">())</span>
+<span class="c1">#     print(c.())</span>
 </pre></div>
 
            </div>

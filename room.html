@@ -174,10 +174,10 @@
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first"><a class="reference internal" href="exceptions.html#snnusdk.exceptions.BuildingNotFoundException" title="snnusdk.exceptions.BuildingNotFoundException"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.BuildingNotFoundException</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first"><a class="reference internal" href="exceptions.html#snnusdk.exceptions.BuildingNotFoundError" title="snnusdk.exceptions.BuildingNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.BuildingNotFoundError</span></code></a></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last"><a class="reference internal" href="exceptions.html#snnusdk.exceptions.RoomNotFoundException" title="snnusdk.exceptions.RoomNotFoundException"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.RoomNotFoundException</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last"><a class="reference internal" href="exceptions.html#snnusdk.exceptions.RoomNotFoundError" title="snnusdk.exceptions.RoomNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.RoomNotFoundError</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -186,8 +186,8 @@
 </pre></div>
 </div>
 <dl class="method">
-<dt id="snnusdk.Room.QueryAll">
-<code class="descname">QueryAll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.QueryAll"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.QueryAll" title="永久链接至目标">¶</a></dt>
+<dt id="snnusdk.Room.query_all">
+<code class="descname">query_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.query_all"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.query_all" title="永久链接至目标">¶</a></dt>
 <dd><p>该教学楼该周所有教室的状态</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -199,7 +199,7 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">GetAllRooms</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">query_all</span><span class="p">()</span>
 <span class="go">[</span>
 <span class="go">    {</span>
 <span class="go">    &#39;id&#39;: &#39;8101&#39;, </span>
@@ -226,8 +226,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="snnusdk.Room.GetAllRooms">
-<code class="descname">GetAllRooms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.GetAllRooms"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.GetAllRooms" title="永久链接至目标">¶</a></dt>
+<dt id="snnusdk.Room.get_all_rooms">
+<code class="descname">get_all_rooms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.get_all_rooms"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.get_all_rooms" title="永久链接至目标">¶</a></dt>
 <dd><p>教学楼内的所有教室名称</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -239,15 +239,15 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">GetAllRooms</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">get_all_rooms</span><span class="p">()</span>
 <span class="go">[&#39;8101&#39;, &#39;8102&#39;, ...]</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="snnusdk.Room.QueryOneRoom">
-<code class="descname">QueryOneRoom</code><span class="sig-paren">(</span><em>room</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.QueryOneRoom"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.QueryOneRoom" title="永久链接至目标">¶</a></dt>
+<dt id="snnusdk.Room.query_one_room">
+<code class="descname">query_one_room</code><span class="sig-paren">(</span><em>room</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/room.html#Room.query_one_room"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Room.query_one_room" title="永久链接至目标">¶</a></dt>
 <dd><p>查询该教学楼某一教室该周的所有状态</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -255,13 +255,15 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>room</strong> (<em>str</em>) – 教室号 8014</td>
 </tr>
-<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body">dic</td>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><a class="reference internal" href="exceptions.html#snnusdk.exceptions.RoomNotFoundError" title="snnusdk.exceptions.RoomNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.RoomNotFoundError</span></code></a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">参照例子</td>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">dic</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">参照例子</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">QueryOneRoom</span><span class="p">(</span><span class="n">room</span><span class="o">=</span><span class="s1">&#39;8014&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">room</span><span class="o">.</span><span class="n">query_one_room</span><span class="p">(</span><span class="n">room</span><span class="o">=</span><span class="s1">&#39;8014&#39;</span><span class="p">)</span>
 <span class="go">{</span>
 <span class="go">    &#39;id&#39;: &#39;8104&#39;, </span>
 <span class="go">    &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>

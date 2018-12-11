@@ -171,12 +171,13 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
  
 </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="exceptions.html#snnusdk.exceptions.AuthenticationException">AuthenticationException</a>
+      <li><a href="exceptions.html#snnusdk.exceptions.AuthenticationError">AuthenticationError</a>
 </li>
   </ul></td>
 </tr></table>
@@ -184,7 +185,7 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="exceptions.html#snnusdk.exceptions.BuildingNotFoundException">BuildingNotFoundException</a>
+      <li><a href="exceptions.html#snnusdk.exceptions.BuildingNotFoundError">BuildingNotFoundError</a>
 </li>
   </ul></td>
 </tr></table>
@@ -200,31 +201,33 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="urp.html#snnusdk.Urp.getAllGrades">getAllGrades() (snnusdk.Urp 方法)</a>
+      <li><a href="urp.html#snnusdk.Urp.get_all_grades">get_all_grades() (snnusdk.Urp 方法)</a>
 </li>
-      <li><a href="room.html#snnusdk.Room.GetAllRooms">GetAllRooms() (snnusdk.Room 方法)</a>
+      <li><a href="room.html#snnusdk.Room.get_all_rooms">get_all_rooms() (snnusdk.Room 方法)</a>
 </li>
-      <li><a href="libiary.html#snnusdk.libiary.getBorrowInfo">getBorrowInfo() (snnusdk.libiary 方法)</a>
+      <li><a href="libiary.html#snnusdk.libiary.get_borrow_info">get_borrow_info() (snnusdk.libiary 方法)</a>
 </li>
-      <li><a href="libiary.html#snnusdk.Library.getBorrowingBooks">getBorrowingBooks() (snnusdk.Library 方法)</a>
+      <li><a href="libiary.html#snnusdk.Library.get_borrowing_books">get_borrowing_books() (snnusdk.Library 方法)</a>
 </li>
-      <li><a href="libiary.html#snnusdk.Library.getCash">getCash() (snnusdk.Library 方法)</a>
+      <li><a href="libiary.html#snnusdk.Library.get_cash">get_cash() (snnusdk.Library 方法)</a>
 </li>
-      <li><a href="urp.html#snnusdk.Urp.getCourses">getCourses() (snnusdk.Urp 方法)</a>
+      <li><a href="urp.html#snnusdk.Urp.get_courses">get_courses() (snnusdk.Urp 方法)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="urp.html#snnusdk.Urp.getGpa">getGpa() (snnusdk.Urp 方法)</a>
+      <li><a href="urp.html#snnusdk.Urp.get_gpa">get_gpa() (snnusdk.Urp 方法)</a>
 </li>
-      <li><a href="urp.html#snnusdk.Urp.getGrade">getGrade() (snnusdk.Urp 方法)</a>
+      <li><a href="urp.html#snnusdk.Urp.get_grade">get_grade() (snnusdk.Urp 方法)</a>
 </li>
-      <li><a href="libiary.html#snnusdk.Library.getInfo">getInfo() (snnusdk.Library 方法)</a>
+      <li><a href="urp.html#snnusdk.Urp.get_grade_year_list">get_grade_year_list() (snnusdk.Urp 方法)</a>
 </li>
-      <li><a href="campus.html#snnusdk.Campus.getList">getList() (snnusdk.Campus 方法)</a>
+      <li><a href="libiary.html#snnusdk.Library.get_info">get_info() (snnusdk.Library 方法)</a>
 </li>
-      <li><a href="urp.html#snnusdk.Urp.getOldCourses">getOldCourses() (snnusdk.Urp 方法)</a>
+      <li><a href="campus.html#snnusdk.Campus.get_list">get_list() (snnusdk.Campus 方法)</a>
 </li>
-      <li><a href="libiary.html#snnusdk.Library.getReservationBooks">getReservationBooks() (snnusdk.Library 方法)</a>
+      <li><a href="urp.html#snnusdk.Urp.get_old_courses">get_old_courses() (snnusdk.Urp 方法)</a>
+</li>
+      <li><a href="libiary.html#snnusdk.Library.get_reservation_books">get_reservation_books() (snnusdk.Library 方法)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -234,23 +237,27 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="libiary.html#snnusdk.Library">Library (snnusdk 中的类)</a>
 </li>
+      <li><a href="libiary.html#snnusdk.Library.lock_lib_card">lock_lib_card() (snnusdk.Library 方法)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="libiary.html#snnusdk.Library.lockLibCard">lockLibCard() (snnusdk.Library 方法)</a>
+      <li><a href="libiary.html#snnusdk.Library.login">login() (snnusdk.Library 方法)</a>
+
+      <ul>
+        <li><a href="urp.html#snnusdk.Urp.login">(snnusdk.Urp 方法)</a>
 </li>
-      <li><a href="urp.html#snnusdk.Urp.login">login() (snnusdk.Urp 方法)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="room.html#snnusdk.Room.QueryAll">QueryAll() (snnusdk.Room 方法)</a>
+      <li><a href="room.html#snnusdk.Room.query_all">query_all() (snnusdk.Room 方法)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="room.html#snnusdk.Room.QueryOneRoom">QueryOneRoom() (snnusdk.Room 方法)</a>
+      <li><a href="room.html#snnusdk.Room.query_one_room">query_one_room() (snnusdk.Room 方法)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -262,7 +269,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="exceptions.html#snnusdk.exceptions.RoomNotFoundException">RoomNotFoundException</a>
+      <li><a href="exceptions.html#snnusdk.exceptions.RoomNotFoundError">RoomNotFoundError</a>
 </li>
   </ul></td>
 </tr></table>
@@ -282,7 +289,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="exceptions.html#snnusdk.exceptions.TemporaryBannedException">TemporaryBannedException</a>
+      <li><a href="exceptions.html#snnusdk.exceptions.TemporaryBannedError">TemporaryBannedError</a>
 </li>
   </ul></td>
 </tr></table>
@@ -294,9 +301,17 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="libiary.html#snnusdk.Library.unLockLibCard">unLockLibCard() (snnusdk.Library 方法)</a>
+      <li><a href="libiary.html#snnusdk.Library.unlock_lib_card">unlock_lib_card() (snnusdk.Library 方法)</a>
 </li>
       <li><a href="urp.html#snnusdk.Urp">Urp (snnusdk 中的类)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exceptions.html#snnusdk.exceptions.YearNotExistError">YearNotExistError</a>
 </li>
   </ul></td>
 </tr></table>
