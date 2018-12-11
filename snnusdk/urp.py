@@ -7,8 +7,9 @@ Created on Nov 29, 2018
 from snnusdk.base import API
 # from snnusdk.tool.GUI import CaptchaGUI
 from snnusdk.tool.Table import table_to_list
-from snnusdk.exceptions import AuthenticationError
+from snnusdk.exceptions import AuthenticationError, YearNotExistError
 from snnusdk.utils.captcha import UrpCaptcha
+import re
 
 
 class Urp(API):
@@ -39,12 +40,10 @@ class Urp(API):
             self.login(account, password)
 
     def get_courses(self):
-        """
-        获取本学期的选课情况
+        """获取本学期的选课情况
 
         :rtype: list of dict
         :return:  参照例子
-
         >>> urp.get_courses()
         [
             {
@@ -109,8 +108,7 @@ class Urp(API):
         return courses
 
     def get_old_courses(self, year, semester):
-        """
-        获取指定学期的课表
+        """获取指定学期的课表
 
         :param str year: 学年 格式为 "2017-2018"
         :param int semester: 学期 数字1或2
@@ -141,7 +139,50 @@ class Urp(API):
             }
         ]
         """
-        return ""
+        soup = self.get_soup(self.URLs.OLD_COURSES)
+        year_list = [i.get('value') for i in soup.find_all(name='option')]
+        key = "{}-{}-1".format(year, semester)
+        if key not in year_list:
+            raise YearNotExistError('不存在该学期！')
+
+        soup = self.get_soup(self.URLs.OLD_COURSES,
+                             'post', data={'zxjxjhh': key})
+        table = soup.find_all(name='table', attrs={'id': 'user'})[1]
+        table_list = table_to_list(table, remove_index_list=[8])
+
+        courses = []
+        temp_dic = {}
+        keys = ['周次', '星期', '节次', '节数', '校区', '教学楼', '教室']
+        for dic in table_list:
+            dic_len = len(dic)
+            if dic_len > 7:
+                courses.append({
+                    'id': dic['课程号'],
+                    'name': dic['课程名'],
+                    'number': dic['课序'],
+                    'credits': float(dic['学分']),
+                    'attributes': dic['课程属性'],
+                    'teacher': dic['教师'],
+                    'status': dic['选课状态'],
+                    'info': []
+                })
+            else:
+                dic = dict(zip(keys, [dic[key] for key in dic.keys()]))
+            for key in dic.keys():
+                if key in keys:
+                    temp_dic = {
+                        'week': dic['周次'],
+                        'day': dic['星期'],
+                        'timeOfClass': dic['节次'],
+                        'numOfClass': dic['节数'],
+                        'campus': dic['校区'],
+                        'buildings': dic['教学楼'],
+                        'room': dic['教室']
+                    }
+
+            courses[-1]['info'].append(temp_dic)
+            temp_dic = {}
+        return courses
 
     def get_grade(self):
         """
@@ -170,11 +211,28 @@ class Urp(API):
         ]
 
         """
-        ret=[]
-        soup=self.get_soup(self.URLs.GRADE)
-        table=soup.find(name='table',attrs={'class':'titleTop2'})
-        table_list=table_to_list(table)
-        return ""
+        soup = self.get_soup(self.URLs.GRADE)
+        table = soup.find(name='table', attrs={'class': 'titleTop2'})
+        table_list = table_to_list(table)
+        return table_list[1:]
+
+    def get_grade_year_list(self):
+        """获取可供查询成绩的学期名称
+
+        :rtype: list
+        :return: 参照例子
+
+        >>> u.get_grade_year_list()
+        [    '2016-2017学年秋(两学期)', 
+            '2016-2017学年春(两学期)', 
+            '2017-2018学年秋(两学期)', 
+            '2017-2018学年春(两学期)'
+        ]
+        """
+        soup = self.get_soup(self.URLs.ALL_GRADE)
+        a_tags = soup.find_all(name='a')
+        year_list = [a.get('name') for a in a_tags]
+        return year_list
 
     def get_all_grades(self, year, semester):
         """获取指定学期的已及格成绩
@@ -192,24 +250,47 @@ class Urp(API):
                 '课程名': '大学外语（一）', 
                 '英文课程名': 'College English 1', 
                 '学分': '3', 
-                '课程属性': 
-                '必修', 
+                '课程属性': '必修', 
                 '成绩': '73.0'
             },
             ...
         ]
         """
-        return ""
+        year_list = self.get_grade_year_list()
+        year_set = set()
+        for year_item in year_list:
+            year_set.add(
+                re.search(r'\d{4,4}-\d{4,4}', year_item, re.S).group(0))
+        if year not in year_set or semester not in[1, 2]:
+            raise YearNotExistError('不存在该学期')
+
+        key = "{}学年{}(两学期)".format(year, '春' if semester == 2 else '秋')
+        tables = self.get_soup(self.URLs.ALL_GRADE).find_all(
+            name='table', attrs={'class': 'displayTag'})
+        table = tables[year_list.index(key)]
+        table_list = table_to_list(table)
+        return table_list
 
     def get_gpa(self):
         """计算绩点
 
         :rtype: double
-        :return: 只计算必修课的绩点
+        :return: 只计算必修课后的绩点
 
         >>> u.get_gpa()
         73.00
         """
+        ret = 0.0
+        num = 0.0
+        tables = self.get_soup(self.URLs.ALL_GRADE).find_all(
+            name='table', attrs={'class': 'displayTag'})
+        for table in tables:
+            table_list = table_to_list(table)
+            for dic in table_list:
+                if dic['课程属性'] == '必修':
+                    num += float(dic['学分'])
+                    ret += float(dic['学分']) * float(dic['成绩'])
+        return round(ret / num, 2)
 
     def login(self, account, password):
         """
@@ -265,4 +346,6 @@ class Urp(API):
 
 if __name__ == '__main__':
     c = Urp("xx", "xx")
-    print(c.get_courses())
+    print(c.get_old_courses('2018-2019', 1))
+    print(c.get_grade_year_list())
+#     print(c.())
