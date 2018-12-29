@@ -9,13 +9,16 @@ import requests
 from requests.exceptions import ConnectionError
 
 class Campus:
-    """校园卡消费明细
+    """校园卡相关信息
 
     :param str id: 校园卡号
 
     >>> c = Campus(id='2016xxx')
     """
-    url = 'http://edutech.snnu.edu.cn/ecard/ccc.asp'
+    
+    class URLs:
+        CONSUMPTION= 'http://edutech.snnu.edu.cn/ecard/ccc.asp'
+        PHOTO='http://219.244.185.5:8228/getuserphoto.jsp?userid='
 
     def __init__(self, id):
         self.id = id
@@ -53,7 +56,7 @@ class Campus:
         """
         ret = {}
         try:
-            r = requests.post(self.url, data=self.data)
+            r = requests.post(self.URLs.CONSUMPTION, data=self.data)
             r.encoding = 'utf-8'
             soup = BeautifulSoup(r.text, 'lxml')
             ls = table_to_list(
@@ -82,7 +85,37 @@ class Campus:
         :return: 校园卡号
         """
         return self.id
+    
+    def get_photo(self):
+        """获取个人照片
 
+        :rtype: dict
+        :return: 以二进制流的方式返回照片
+
+        >>> c = get_photo()
+        {
+            'msg': '获取成功', 
+            'success': True,
+            'data': b'byte'
+        }
+        """
+        ret = {}
+        try:
+            r=requests.get(self.URLs.PHOTO+self.id)
+            ret['msg']='获取成功'
+            ret['success'] = True
+            ret['data']=r.content
+        except ConnectionError:
+            ret['success'] = False
+            ret['msg']='网络连接失败'
+            ret['result'] = []
+        except Exception:
+            ret['success'] = False
+            ret['msg']='未知错误'
+            ret['result'] = None
+        finally:
+            return ret
+        
 if __name__ == "__main__":
     a = Campus('201608735')
-    print(a.get_list())
+    print(a.get_photo())

@@ -18,7 +18,7 @@ URL = 'https://github.com/ZhaoQi99/SNNU-SDK'
 EMAIL = 'zhaoqi99@outlook.com'
 AUTHOR = 'Qi Zhao'
 REQUIRES_PYTHON = '>=3.0.0'
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [

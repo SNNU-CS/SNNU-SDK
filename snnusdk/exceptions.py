@@ -30,3 +30,6 @@ class RoomNotFoundError(SnnuException):
     
 class YearNotExistError(SnnuException):
     """Year Not Exist Error"""
+    
+class DepartmentNotSupportedError(SnnuException):
+    """Deparment Not Supported Error"""
