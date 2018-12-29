@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="5. 异常" href="exceptions.html" />
+    <link rel="next" title="5. 通知新闻接口" href="message.html" />
     <link rel="prev" title="3. 教室接口" href="room.html" /> 
 
   
@@ -87,8 +87,9 @@
 <li class="toctree-l1"><a class="reference internal" href="libiary.html">2. 图书馆接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="room.html">3. 教室接口</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. 校园卡接口</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">5. 异常</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">6. Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message.html">5. 通知新闻接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">6. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">7. Changelog</a></li>
 </ul>
 <p class="caption"><span class="caption-text">使用示例</span></p>
 <ul>
@@ -96,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="libiary_example.html">2. 图书馆接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="room_example.html">3. 教室接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="campus_example.html">4. 校园卡接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message_example.html">5. 通知新闻接口示例</a></li>
 </ul>
 
             
@@ -163,7 +165,7 @@
 <dl class="class">
 <dt id="snnusdk.Campus">
 <em class="property">class </em><code class="descclassname">snnusdk.</code><code class="descname">Campus</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/campus.html#Campus"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Campus" title="永久链接至目标">¶</a></dt>
-<dd><p>校园卡消费明细</p>
+<dd><p>校园卡相关信息</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -212,6 +214,30 @@
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="snnusdk.Campus.get_photo">
+<code class="descname">get_photo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/campus.html#Campus.get_photo"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Campus.get_photo" title="永久链接至目标">¶</a></dt>
+<dd><p>获取个人照片</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">dict</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">以二进制流的方式返回照片</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">get_photo</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;msg&#39;: &#39;获取成功&#39;, </span>
+<span class="go">    &#39;success&#39;: True,</span>
+<span class="go">    &#39;data&#39;: b&#39;byte&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -224,7 +250,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="exceptions.html" class="btn btn-neutral float-right" title="5. 异常" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="message.html" class="btn btn-neutral float-right" title="5. 通知新闻接口" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="room.html" class="btn btn-neutral" title="3. 教室接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

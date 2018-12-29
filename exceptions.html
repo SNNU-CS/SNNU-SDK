@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5. 异常 &mdash; SNNU-SDK latest 文档</title>
+  <title>6. 异常 &mdash; SNNU-SDK latest 文档</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="6. Changelog" href="changes.html" />
-    <link rel="prev" title="4. 校园卡接口" href="campus.html" /> 
+    <link rel="next" title="7. Changelog" href="changes.html" />
+    <link rel="prev" title="5. 通知新闻接口" href="message.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -87,8 +87,9 @@
 <li class="toctree-l1"><a class="reference internal" href="libiary.html">2. 图书馆接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="room.html">3. 教室接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="campus.html">4. 校园卡接口</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 异常</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">6. Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message.html">5. 通知新闻接口</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">7. Changelog</a></li>
 </ul>
 <p class="caption"><span class="caption-text">使用示例</span></p>
 <ul>
@@ -96,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="libiary_example.html">2. 图书馆接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="room_example.html">3. 教室接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="campus_example.html">4. 校园卡接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message_example.html">5. 通知新闻接口示例</a></li>
 </ul>
 
             
@@ -141,7 +143,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>5. 异常</li>
+      <li>6. 异常</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -159,7 +161,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="module-snnusdk.exceptions">
-<span id="id1"></span><h1>5. 异常<a class="headerlink" href="#module-snnusdk.exceptions" title="永久链接至标题">¶</a></h1>
+<span id="id1"></span><h1>6. 异常<a class="headerlink" href="#module-snnusdk.exceptions" title="永久链接至标题">¶</a></h1>
 <dl class="exception">
 <dt id="snnusdk.exceptions.SnnuException">
 <em class="property">exception </em><code class="descclassname">snnusdk.exceptions.</code><code class="descname">SnnuException</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/exceptions.html#SnnuException"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.exceptions.SnnuException" title="永久链接至目标">¶</a></dt>
@@ -209,6 +211,13 @@
 <p>Year Not Exist Error</p>
 </dd></dl>
 
+<dl class="exception">
+<dt id="snnusdk.exceptions.DepartmentNotSupportedError">
+<em class="property">exception </em><code class="descclassname">snnusdk.exceptions.</code><code class="descname">DepartmentNotSupportedError</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/exceptions.html#DepartmentNotSupportedError"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.exceptions.DepartmentNotSupportedError" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#snnusdk.exceptions.SnnuException" title="snnusdk.exceptions.SnnuException"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.SnnuException</span></code></a></p>
+<p>Deparment Not Supported Error</p>
+</dd></dl>
+
 </div>
 
 
@@ -219,10 +228,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="changes.html" class="btn btn-neutral float-right" title="6. Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="changes.html" class="btn btn-neutral float-right" title="7. Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="campus.html" class="btn btn-neutral" title="4. 校园卡接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="message.html" class="btn btn-neutral" title="5. 通知新闻接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

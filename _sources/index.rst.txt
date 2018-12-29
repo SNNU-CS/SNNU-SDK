@@ -18,6 +18,7 @@ SNNU-SDK 是陕西师范大学(SNNU)的一个第三方Python-SDK，实现了校�
    libiary
    room
    campus
+   message
    exceptions
    changes
 
@@ -30,6 +31,7 @@ SNNU-SDK 是陕西师范大学(SNNU)的一个第三方Python-SDK，实现了校�
    libiary_example
    room_example
    campus_example
+   message_example
 
 索引
 ==================

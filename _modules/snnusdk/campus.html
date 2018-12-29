@@ -85,8 +85,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../libiary.html">2. 图书馆接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../room.html">3. 教室接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../campus.html">4. 校园卡接口</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../exceptions.html">5. 异常</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../changes.html">6. Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../message.html">5. 通知新闻接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exceptions.html">6. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changes.html">7. Changelog</a></li>
 </ul>
 <p class="caption"><span class="caption-text">使用示例</span></p>
 <ul>
@@ -94,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../libiary_example.html">2. 图书馆接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../room_example.html">3. 教室接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../campus_example.html">4. 校园卡接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../message_example.html">5. 通知新闻接口示例</a></li>
 </ul>
 
             
@@ -168,13 +170,16 @@
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="ne">ConnectionError</span>
 
 <div class="viewcode-block" id="Campus"><a class="viewcode-back" href="../../campus.html#snnusdk.Campus">[文档]</a><span class="k">class</span> <span class="nc">Campus</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;校园卡消费明细</span>
+    <span class="sd">&quot;&quot;&quot;校园卡相关信息</span>
 
 <span class="sd">    :param str id: 校园卡号</span>
 
 <span class="sd">    &gt;&gt;&gt; c = Campus(id=&#39;2016xxx&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://edutech.snnu.edu.cn/ecard/ccc.asp&#39;</span>
+    
+    <span class="k">class</span> <span class="nc">URLs</span><span class="p">:</span>
+        <span class="n">CONSUMPTION</span><span class="o">=</span> <span class="s1">&#39;http://edutech.snnu.edu.cn/ecard/ccc.asp&#39;</span>
+        <span class="n">PHOTO</span><span class="o">=</span><span class="s1">&#39;http://219.244.185.5:8228/getuserphoto.jsp?userid=&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
@@ -212,7 +217,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">CONSUMPTION</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
             <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span>
             <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
             <span class="n">ls</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span>
@@ -240,11 +245,41 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :return: 校园卡号</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+    
+<div class="viewcode-block" id="Campus.get_photo"><a class="viewcode-back" href="../../campus.html#snnusdk.Campus.get_photo">[文档]</a>    <span class="k">def</span> <span class="nf">get_photo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;获取个人照片</span>
 
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        :return: 以二进制流的方式返回照片</span>
+
+<span class="sd">        &gt;&gt;&gt; c = get_photo()</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;msg&#39;: &#39;获取成功&#39;, </span>
+<span class="sd">            &#39;success&#39;: True,</span>
+<span class="sd">            &#39;data&#39;: b&#39;byte&#39;</span>
+<span class="sd">        }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">r</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">PHOTO</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;获取成功&#39;</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;success&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">content</span>
+        <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;success&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;网络连接失败&#39;</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;success&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;未知错误&#39;</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span></div></div>
+        
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">Campus</span><span class="p">(</span><span class="s1">&#39;201608735&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_list</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_photo</span><span class="p">())</span>
 </pre></div>
 
            </div>

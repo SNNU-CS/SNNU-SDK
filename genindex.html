@@ -86,8 +86,9 @@
 <li class="toctree-l1"><a class="reference internal" href="libiary.html">2. 图书馆接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="room.html">3. 教室接口</a></li>
 <li class="toctree-l1"><a class="reference internal" href="campus.html">4. 校园卡接口</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">5. 异常</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">6. Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message.html">5. 通知新闻接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">6. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">7. Changelog</a></li>
 </ul>
 <p class="caption"><span class="caption-text">使用示例</span></p>
 <ul>
@@ -95,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="libiary_example.html">2. 图书馆接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="room_example.html">3. 教室接口示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="campus_example.html">4. 校园卡接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message_example.html">5. 通知新闻接口示例</a></li>
 </ul>
 
             
@@ -164,8 +166,10 @@
  <a href="#A"><strong>A</strong></a>
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#L"><strong>L</strong></a>
+ | <a href="#N"><strong>N</strong></a>
  | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -198,6 +202,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exceptions.html#snnusdk.exceptions.DepartmentNotSupportedError">DepartmentNotSupportedError</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -211,12 +223,18 @@
 </li>
       <li><a href="libiary.html#snnusdk.Library.get_cash">get_cash() (snnusdk.Library 方法)</a>
 </li>
+      <li><a href="message.html#snnusdk.News.get_count">get_count() (snnusdk.News 方法)</a>
+
+      <ul>
+        <li><a href="message.html#snnusdk.Notice.get_count">(snnusdk.Notice 方法)</a>
+</li>
+      </ul></li>
       <li><a href="urp.html#snnusdk.Urp.get_courses">get_courses() (snnusdk.Urp 方法)</a>
+</li>
+      <li><a href="urp.html#snnusdk.Urp.get_gpa">get_gpa() (snnusdk.Urp 方法)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="urp.html#snnusdk.Urp.get_gpa">get_gpa() (snnusdk.Urp 方法)</a>
-</li>
       <li><a href="urp.html#snnusdk.Urp.get_grade">get_grade() (snnusdk.Urp 方法)</a>
 </li>
       <li><a href="urp.html#snnusdk.Urp.get_grade_year_list">get_grade_year_list() (snnusdk.Urp 方法)</a>
@@ -225,9 +243,17 @@
 </li>
       <li><a href="campus.html#snnusdk.Campus.get_list">get_list() (snnusdk.Campus 方法)</a>
 </li>
+      <li><a href="message.html#snnusdk.News.get_news">get_news() (snnusdk.News 方法)</a>
+</li>
+      <li><a href="message.html#snnusdk.Notice.get_notice">get_notice() (snnusdk.Notice 方法)</a>
+</li>
       <li><a href="urp.html#snnusdk.Urp.get_old_courses">get_old_courses() (snnusdk.Urp 方法)</a>
 </li>
+      <li><a href="campus.html#snnusdk.Campus.get_photo">get_photo() (snnusdk.Campus 方法)</a>
+</li>
       <li><a href="libiary.html#snnusdk.Library.get_reservation_books">get_reservation_books() (snnusdk.Library 方法)</a>
+</li>
+      <li><a href="message.html#snnusdk.message.get_support_dep">get_support_dep() (snnusdk.message 方法)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -247,6 +273,18 @@
         <li><a href="urp.html#snnusdk.Urp.login">(snnusdk.Urp 方法)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="message.html#snnusdk.News">News (snnusdk 中的类)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="message.html#snnusdk.Notice">Notice (snnusdk 中的类)</a>
+</li>
   </ul></td>
 </tr></table>
 
