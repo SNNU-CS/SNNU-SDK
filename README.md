@@ -92,7 +92,7 @@ libiary = Library(username='B11111111', password='xxx')
 ```
 
 ## 文档
-你可以在[https://ZhaoQi99.github.io/SNNU-SDK](https://ZhaoQi99.github.io/SNNU-SDK)看到本项目的完整使用文档。
+你可以在[https://snnucs.github.io/SNNU-SDK](https://snnucs.github.io/SNNU-SDK)看到本项目的完整使用文档。
 
 ## 贡献你的代码
 欢迎您贡献出自己的一份力量，你可以随时提交`issue`或`fork`本仓库,静候你的`pull request`。
