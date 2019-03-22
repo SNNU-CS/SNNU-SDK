@@ -4,6 +4,7 @@
 [![image](https://img.shields.io/pypi/pyversions/snnusdk.svg)](https://pypi.org/project/snnusdk/)
 [![Documentation Status](https://readthedocs.org/projects/snnu-sdk/badge/?version=master)](https://snnu-sdk.readthedocs.io/zh_CN/dev/?badge=master)
 [![GitHub license](https://img.shields.io/github/license/ZhaoQi99/SNNU-SDK.svg)](https://github.com/ZhaoQi99/SNNU-SDK/blob/dev/LICENSE)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/snnucs/SNNU-SDK.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/snnucs/SNNU-SDK/context:python)
 
 
 # 陕西师范大学(SNNU) 第三方Python SDK
