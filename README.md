@@ -1,5 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a631e0b7b3484ecf8cf3226b8f0d90b9)](https://app.codacy.com/app/ZhaoQi99/SNNU-SDK?utm_source=github.com&utm_medium=referral&utm_content=snnucs/SNNU-SDK&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.com/ZhaoQi99/SNNU-SDK.svg?branch=dev)](https://travis-ci.com/ZhaoQi99/SNNU-SDK)
+[![Build Status](https://travis-ci.com/snnucs/SNNU-SDK.svg?branch=dev)](https://travis-ci.com/snnucs/SNNU-SDK)
 [![image](https://img.shields.io/pypi/v/snnusdk.svg)](https://pypi.org/project/snnusdk/)
 [![Release](https://img.shields.io/github/release/ZhaoQi99/SNNU-SDK.svg)](https://github.com/ZhaoQi99/SNNU-SDK/releases)
 [![image](https://img.shields.io/pypi/pyversions/snnusdk.svg)](https://pypi.org/project/snnusdk/)
