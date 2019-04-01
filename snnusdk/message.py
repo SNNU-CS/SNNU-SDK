@@ -11,7 +11,13 @@ from snnusdk.configs import SPIDER_CONFIG
 from snnusdk.exceptions import DepartmentNotSupportedError
 
 
-class Notice(object):
+class BaseMessage(object):
+    def __init__(self, dep):
+        self.dep = dep
+        self.data = None
+
+
+class Notice(BaseMessage):
     """
     校园通知
 
@@ -22,9 +28,7 @@ class Notice(object):
     """
 
     def __init__(self, dep):
-        super().__init__()
-        self.dep = dep
-        self.data = None
+        super().__init__(dep)
 
     def get_count(self):
         """通知条数
@@ -82,7 +86,7 @@ class Notice(object):
         return self.data
 
 
-class News(object):
+class News(BaseMessage):
     """
     校园新闻
 
@@ -94,8 +98,6 @@ class News(object):
 
     def __init__(self, dep):
         super().__init__()
-        self.dep = dep
-        self.data = None
 
     def get_count(self):
         """新闻条数
