@@ -3,12 +3,14 @@ Created on Dec 5, 2018
 
 @author: QiZhao
 '''
+import re
+
+import requests
+from bs4 import BeautifulSoup
+
 from snnusdk.base import API
 from snnusdk.exceptions import AuthenticationError
-from bs4 import BeautifulSoup
 from snnusdk.tool.Table import table_to_list
-import requests
-import re
 
 
 class Library(API):
@@ -39,7 +41,7 @@ class Library(API):
 
     def login(self, username, password):
         """登录
-        
+
         :param str username: 学号
         :param str password: 密码
         :raise: :class:`snnusdk.exceptions.AuthenticationError`
@@ -61,7 +63,7 @@ class Library(API):
 
     def get_info(self):
         """基本信息
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 用户基本信息的字典
@@ -93,7 +95,7 @@ class Library(API):
 
     def get_borrowing_books(self):
         """在借书籍列表
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 在借书籍列表
@@ -113,7 +115,7 @@ class Library(API):
         ]
         """
         if self.verify == False:
-            raise UnauthorizedError('您还没有登录!') 
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.BORROW)
         book_list = []
         tables = soup.find_all(name='table', attrs={'class': 'borrows'})
@@ -129,7 +131,7 @@ class Library(API):
 
     def get_reservation_books(self):
         """预约书籍列表
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 预约书籍列表
@@ -171,7 +173,7 @@ class Library(API):
 
     def get_cash(self):
         """现金事务
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 参照例子
@@ -224,7 +226,7 @@ class Library(API):
 
     def lock_lib_card(self):
         """挂失图书证
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 挂失借书证的结果
@@ -245,7 +247,7 @@ class Library(API):
 
     def unlock_lib_card(self):
         """解挂图书证
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 解挂借书证的结果
@@ -298,13 +300,14 @@ def get_borrow_info():
         ls = table_to_list(table)
         ret['success'] = True
         ret['result'] = ls
-        ret['msg']='查询成功'
+        ret['msg'] = '查询成功'
     except Exception as e:
         ret['success'] = False
         ret['result'] = []
-        ret['msg']=e.message
+        ret['msg'] = e.message
     finally:
         return ret
+
 
 if __name__ == "__main__":
     lib = Library('xx', 'xx')

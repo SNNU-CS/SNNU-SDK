@@ -3,17 +3,19 @@ Created on Dec 3, 2018
 
 @author: QiZhao
 '''
-import os
-import requests
 import hashlib
-from PIL import Image, ImageTk
+import os
 import random
-from io import BytesIO
 import threading
 import tkinter
+from io import BytesIO
+
+import requests
 from bs4 import BeautifulSoup
-from snnusdk.tool.Table import table_to_list
+from PIL import Image, ImageTk
+
 from snnusdk.tool.Image import ImageBinarization
+from snnusdk.tool.Table import table_to_list
 from snnusdk.utils.captcha.base import ImageToString
 
 host = 'http://219.244.71.113/'

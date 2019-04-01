@@ -4,12 +4,14 @@ Created on Nov 29, 2018
 @author: QiZhao
 '''
 
+import re
+
 from snnusdk.base import API
+from snnusdk.exceptions import (AuthenticationError, UnauthorizedError,
+                                YearNotExistError)
 # from snnusdk.tool.GUI import CaptchaGUI
 from snnusdk.tool.Table import table_to_list
-from snnusdk.exceptions import AuthenticationError, YearNotExistError, UnauthorizedError
 from snnusdk.utils.captcha import UrpCaptcha
-import re
 
 
 class Urp(API):
@@ -318,7 +320,7 @@ class Urp(API):
 
         :raise: :class:`snnusdk.exceptions.AuthenticationError`
         :rtype: dict
-        
+
         >>> u.login()
         {
             'msg': '登录成功', 

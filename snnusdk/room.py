@@ -4,10 +4,12 @@ Created on Dec 5, 2018
 @author: QiZhao
 '''
 
-from bs4 import BeautifulSoup
-import requests
-from requests.exceptions import ReadTimeout, ConnectionError
 import re
+
+import requests
+from bs4 import BeautifulSoup
+from requests.exceptions import ConnectionError, ReadTimeout
+
 from snnusdk.exceptions import BuildingNotFoundError, RoomNotFoundError
 
 dic = {
@@ -57,7 +59,7 @@ class Room:
 
     def _get_Soup(self):
         """依据构造参数,获取BeautifulSoup对象对象
-        
+
         :raise: :class:`snnusdk.exceptions.BuildingNotFoundError`
         :raise: :class:`requests.exceptions.ConnectionError`
         :rtype: bs4.BeautifulSoup对象
@@ -263,6 +265,7 @@ class Room:
         tr = trs[self.Rooms.index(room)]
 #         print(type(tr))
         return self._get_one_room(tr)
+
 
 if __name__ == '__main__':
     a = Room(12, '雁塔教学八楼')

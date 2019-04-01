@@ -20,7 +20,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.snnu.edu.cn/info/1084/',
         'rule': 'info/1084/(?P<link>\d+.htm)" target="_blank" title="(?P<title>[^"]+?)"><[^<]+?<[^<]+?<[^<]+?<p class="qh-wide-pushtime">(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_css',
@@ -83,7 +83,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.lib.snnu.edu.cn/action.do?webid=w-l-showmsg&gtype=a&pid=',
         'rule': 'pid=(?P<link>\d*)[\s\S]{20,57}>(?P<title>[^<]*)</[af][\S\s]{18,70}(?P<date>\d{4}-\d*-\d*)',
         'coding': 'utf-8',
-        'type':'通知'
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_lib',
@@ -92,7 +92,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.lib.snnu.edu.cn/action.do?webid=w-l-showmsg&gtype=a&pid=',
         'rule': 'pid=(?P<link>\d*)[\s\S]{20,57}>(?P<title>[^<]*)</[af][\S\s]{18,70}(?P<date>\d{4}-\d*-\d*)',
         'coding': 'utf-8',
-        'type':'新闻'
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_clxy',
@@ -119,7 +119,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://marxism.snnu.edu.cn/info/1062/',
         'rule': 'class="fr">(?P<date>\d*-\d*-\d*)</span>[\s]+?<a href="../info/1062/(?P<link>\d+.htm)" target="_blank" title="(?P<title>[^"]+?)">',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_marxism',
@@ -128,7 +128,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://marxism.snnu.edu.cn/info/1062/',
         'rule': 'href="../info/1061/(?P<link>\d+.htm)" target="_blank" title="(?P<title>[^"]+?)">[\S]+[\s]+?<h2>(?P<date>\d*-\d*-\d*)<',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_lit',
@@ -137,7 +137,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.lit.snnu.edu.cn/index.php?m=content&c=index&a=show&catid=',
         'rule': 'show&catid=(?P<link>\d*&id=\d*)[\s\S]+?title">(?P<title>[^<]*)<[\s\S]+?date2">(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_lit',
@@ -146,7 +146,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.lit.snnu.edu.cn/index.php?m=content&c=index&a=show&catid=',
         'rule': 'show&catid=(?P<link>\d*&id=\d*)[\s\S]+?title">(?P<title>[^<]*)<[\s\S]+?date2">(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_his',
@@ -155,7 +155,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://his.snnu.edu.cn/notice.asp?id=',
         'rule': 'notice.asp[?]id=(?P<link>\d*)">(?P<title>[^<]*)[^\[]*\[(?P<date>\d*/\d*/\d*)',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_his',
@@ -164,7 +164,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://his.snnu.edu.cn/news.asp?id=',
         'rule': 'news.asp[?]id=(?P<link>\d*)">(?P<title>[^<]*)[^\[]*\[(?P<date>\d*/\d*/\d*)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_se',
@@ -173,7 +173,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://se.snnu.edu.cn/news_detail.php?id=',
         'rule': 'php[?]id=(?P<link>\d*)">(?P<title>[^（]*)（(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_se',
@@ -182,7 +182,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://se.snnu.edu.cn/news_detail.php?id=',
         'rule': 'php[?]id=(?P<link>\d*)">(?P<title>[^（]*)（(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_psych',
@@ -191,7 +191,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://psych.snnu.edu.cn/home/show/',
         'rule': 'show/(?P<link>\d*)[^>]+?>(?P<title>[^ ]*)[\S\s]+?<td align=[\s\S]+?(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_psych',
@@ -200,7 +200,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://psych.snnu.edu.cn/home/show/',
         'rule': 'show/(?P<link>\d*)[^>]+?>(?P<title>[^ ]*)[\S\s]+?<td align=[\s\S]+?(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_wyxy',
@@ -209,7 +209,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.wyxy.snnu.edu.cn/info/1044/',
         'rule': 'info/1044/(?P<link>\d+.htm)" title="" class="left">(?P<title>\S{4,100})</a><span class="right">(?P<date>\d*-\d*-\d*)<',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_wyxy',
@@ -218,7 +218,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.wyxy.snnu.edu.cn/info/1043/',
         'rule': 'info/1043/(?P<link>\d+.htm)" title="" class="left">(?P<title>\S{4,100})</a><span class="right">(?P<date>\d*-\d*-\d*)<',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_maths',
@@ -227,7 +227,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://maths.snnu.edu.cn/info/1041/',
         'rule': '1041/(?P<link>\d*.htm)">[\s\S]{18}(?P<title>[^ ]+)[ ]{5,}[^[]+?[^\d]+?(?P<date>\d+-\d+-\d+)',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_maths',
@@ -236,7 +236,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://maths.snnu.edu.cn/info/1042/',
         'rule': '1042/(?P<link>\d*.htm)">[\s\S]{18}(?P<title>[^ ]+)[ ]{5,}[^[]+?[^\d]+?(?P<date>\d+-\d+-\d+)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_wuli',
@@ -245,7 +245,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://wuli.snnu.edu.cn/home/content/',
         'rule': 'content/(?P<link>\d+)" title="(?P<title>[^"]*)[^<]+?</a>[^>]+?>(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_wuli',
@@ -254,7 +254,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://wuli.snnu.edu.cn/home/content/',
         'rule': 'content/(?P<link>\d+)" title="(?P<title>[^"]*)[^<]+?</a>[^>]+?>(?P<date>\d*-\d*-\d*)',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_spg',
@@ -263,7 +263,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://spg.snnu.edu.cn/Notice.asp?id=32&bh=',
         'rule': 'bh=(?P<link>\d+)[^>]+?>(?P<title>[^<]+?)<[^;]+?;[^;]+?;">(?P<date>\d+-\d+-\d+)',
         'coding': 'gbk',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_spg',
@@ -272,7 +272,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://spg.snnu.edu.cn/College_News.asp?id=31&bh=',
         'rule': 'bh=(?P<link>\d+)[^>]+?>(?P<title>[^<]+?)<[^;]+?;[^;]+?;">(?P<date>\d+-\d+-\d+)',
         'coding': 'gbk',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_chem',
@@ -281,7 +281,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.chem.snnu.edu.cn/neiye_show.aspx?id=',
         'rule': 'aspx[?]id=(?P<link>\d*)">(?P<title>[^<]*)<[\S\s]{1,45}(?P<date>\d{4}-\d{2}-\d{2})',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_chem',
@@ -290,7 +290,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.chem.snnu.edu.cn/neiye_show.aspx?id=',
         'rule': 'aspx[?]id=(?P<link>\d*)">(?P<title>[^<]*)<[\S\s]{1,45}(?P<date>\d{4}-\d{2}-\d{2})',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_lifesci',
@@ -299,7 +299,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://lifesci.snnu.edu.cn/inforshow.aspx?id=',
         'rule': 'aspx[?]id=(?P<link>\d*)">(?P<title>[^<]*)</a></li>[^>]*>(?P<date>\d*-\d*-\d*)</li>',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_lifesci',
@@ -308,7 +308,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://lifesci.snnu.edu.cn/inforshow.aspx?id=',
         'rule': 'aspx[?]id=(?P<link>\d*)">(?P<title>[^<]*)</a></li>[^>]*>(?P<date>\d*-\d*-\d*)</li>',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_geog',
@@ -317,7 +317,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://geog.snnu.edu.cn/info/1020/',
         'rule': '<span class="fr">(?P<date>\d{4}-\d{2}-\d{2})<[^"]{1,100}"info/1020/(?P<link>\d*.htm)">(?P<title>[^<]*)<',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_geog',
@@ -326,7 +326,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://geog.snnu.edu.cn/info/1019/',
         'rule': '<span class="fr">(?P<date>\d{4}-\d{2}-\d{2})<[^"]{1,100}"info/1019/(?P<link>\d*.htm)">(?P<title>[^<]*)<',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_cxinw',
@@ -335,7 +335,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://cxinw.snnu.edu.cn/News_bulletin.asp?id=15&bh=',
         'rule': 'bh=(?P<link>\d*)" class="c5">(?P<title>[^<]*)</a>[\s\S]{1,100}<span class="gk3">(?P<date>\d*-\d*-\d*)<',
         'coding': 'gbk',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_cxinw',
@@ -344,7 +344,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://cxinw.snnu.edu.cn/News_bulletin.asp?id=14&bh=',
         'rule': 'bh=(?P<link>\d*)" class="c5">(?P<title>[^<]*)</a>[\s\S]{1,100}<span class="gk3">(?P<date>\d*-\d*-\d*)<',
         'coding': 'gbk',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_tyxy',
@@ -353,7 +353,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://tyxy.snnu.edu.cn/Notice.asp?id=34&bh=',
         'rule': 'font-weight:normal;">(?P<date>\d*-\d*-\d*)</span></td>[^&]+?&nbsp;/&nbsp;&nbsp;&nbsp;<a href="/News_information.asp[?]id=33&amp;bh=(?P<link>\d*)">\r\n(?P<title>[^\r]*?)\r\n',
         'coding': 'gbk',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_tyxy',
@@ -362,7 +362,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=',
         'rule': 'font-weight:normal;">(?P<date>\d*-\d*-\d*)</span></td>[^&]+?&nbsp;/&nbsp;&nbsp;&nbsp;<a href="/News_information.asp[?]id=33&amp;bh=(?P<link>\d*)">\r\n(?P<title>[^\r]*?)\r\n',
         'coding': 'gbk',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_music',
@@ -371,7 +371,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://music.snnu.edu.cn/info/1018/',
         'rule': '<span class="fr">(?P<date>\d{4}-\d{2}-\d{2})<[^\d]{1,50}1018/(?P<link>\d*.htm)">(?P<title>[^<]*)<',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_music',
@@ -380,7 +380,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://music.snnu.edu.cn/info/1017/',
         'rule': '<span class="fr">(?P<date>\d{4}-\d{2}-\d{2})<[^\d]{1,50}1017/(?P<link>\d*.htm)">(?P<title>[^<]*)<',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_meishuxy',
@@ -389,7 +389,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://meishuxy.snnu.edu.cn/News_Center.asp?id=15&bh=',
         'rule': 'bh=(?P<link>\d*)" class="c5">(?P<title>[^<]*)</a>[\s\S]{1,160}>(?P<date>\d*-\d*-\d*)<',
         'coding': 'gbk',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_meishuxy',
@@ -398,7 +398,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://meishuxy.snnu.edu.cn/News_Center.asp?id=14&bh=',
         'rule': 'bh=(?P<link>\d*)" class="c5">(?P<title>[^<]*)</a>[\s\S]{1,160}>(?P<date>\d*-\d*-\d*)<',
         'coding': 'gbk',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_ibs',
@@ -407,7 +407,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.ibs.snnu.edu.cn/Announcements.asp?id=18&bh=',
         'rule': 'bh=(?P<link>\d*)" class="c5">(?P<title>[^<]*)</a>[\s\S]{1,150}>\[(?P<date>\d*-\d*-\d*)\]',
         'coding': 'gbk',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_ibs',
@@ -416,7 +416,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://www.ibs.snnu.edu.cn/Announcements.asp?id=16&bh=',
         'rule': 'bh=(?P<link>\d*)" class="c5">(?P<title>[^<]*)</a>[\s\S]{1,150}>\[(?P<date>\d*-\d*-\d*)\]',
         'coding': 'gbk',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_iscs',
@@ -425,7 +425,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://iscs.snnu.edu.cn/info/1132/',
         'rule': '1132[/](?P<link>\d*.htm)"[^>]*>(?P<title>[^<]*)</a>[\s\S]{1,80}>(?P<date>\d*-\d*-\d*) <',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_iscs',
@@ -434,7 +434,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://iscs.snnu.edu.cn/info/1133/',
         'rule': '1133[/](?P<link>\d*.htm)"[^>]*>(?P<title>[^<]*)</a>[\s\S]{1,80}>(?P<date>\d*-\d*-\d*) <',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     },
     {
         'department_EN': 'snnu_spgcx',
@@ -443,7 +443,7 @@ SPIDER_CONFIG = [
         'url_main': 'http://spgcx.snnu.edu.cn/info/1193/',
         'rule': 'class="fr">(?P<date>\d*-\d*)</span><a href="../info/1193/(?P<link>\d*.htm)" target="_blank" title="(?P<title>[^"]*?)"',
         'coding': 'utf-8',
-        'type': '通知' 
+        'type': '通知'
     },
     {
         'department_EN': 'snnu_spgcx',
@@ -452,6 +452,6 @@ SPIDER_CONFIG = [
         'url_main': 'http://spgcx.snnu.edu.cn/info/1192/',
         'rule': 'class="fr">(?P<date>\d*-\d*)</span><a href="../info/1192/(?P<link>\d*.htm)" target="_blank" title="(?P<title>[^"]*?)"',
         'coding': 'utf-8',
-        'type': '新闻' 
+        'type': '新闻'
     }
 ]

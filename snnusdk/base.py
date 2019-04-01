@@ -2,8 +2,8 @@ from io import BytesIO
 
 import requests
 import urllib3
-from PIL import Image
 from bs4 import BeautifulSoup
+from PIL import Image
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
