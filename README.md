@@ -44,12 +44,17 @@ SNNU-SDK 是陕西师范大学(SNNU)的一个第三方Python-SDK，实现了校�
 - 所支持的部门
 
 ## 安装
-
+### 安装snnusdk
 ```bash
 pip install snnusdk
 ✨🍰✨
 
 ```
+### (可选)安装Tesseract-OCR 
+如需正常使用Urp教务系统相关功能，需安装OCR识别引擎
+- [Windows](https://github.com/tesseract-ocr/tesseract/wiki#windows)
+- [Linux](https://github.com/tesseract-ocr/tesseract/wiki#linux)
+- [Mac OS](https://github.com/tesseract-ocr/tesseract/wiki#macos)
 ## 使用示例
 这里是一些简单的使用案例
 ```Python
