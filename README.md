@@ -108,8 +108,8 @@ libiary = Library(username='B11111111', password='xxx')
 感谢所有对本项目做出过贡献的开发者([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 
-| [<img src="https://avatars3.githubusercontent.com/u/40024866?v=4" width="100px;"/><br /><sub><b>jhy</b></sub>](https://Small-funny.github.io/)<br />[💻](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Code") [📖](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Documentation")|
-| :---: |
+| [<img src="https://avatars3.githubusercontent.com/u/40024866?v=4" width="100px;"/><br /><sub><b>jhy</b></sub>](https://Small-funny.github.io/)<br />[💻](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Code") [📖](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/7782671?v=4" width="100px;"/><br /><sub><b>Keyi Xie</b></sub>](https://xiekeyi98.github.io/)<br /> [📖](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=xiekeyi98 "Documentation") |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ## 谁在使用
 
