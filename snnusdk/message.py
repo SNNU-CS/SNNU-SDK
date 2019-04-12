@@ -47,8 +47,8 @@ class Notice(object):
         >>> n.get_notice()
         [
             {
-                'date': '2018-12-26', 
-                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593', 
+                'date': '2018-12-26',
+                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593',
                 'title': '【学生工作】学院2017级开展宿舍冬季安全教育工作'
             },
             ...
@@ -118,8 +118,8 @@ class News(object):
         >>> n.get_news()
         [
             {
-                'date': '2018-12-26', 
-                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593', 
+                'date': '2018-12-26',
+                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593',
                 'title': '【学生工作】学院2017级开展宿舍冬季安全教育工作'
             },
             ...

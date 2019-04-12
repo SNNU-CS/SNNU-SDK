@@ -25,8 +25,8 @@ class Library(API):
 
     class URLs:
         HOST = "http://www.lib.snnu.edu.cn/"
-        LOGIN = HOST + 'centerlogin.do'        # 登录
-        INFO = HOST + 'action.do?webid=w-l-mylib'   # 信息
+        LOGIN = HOST + 'centerlogin.do'  # 登录
+        INFO = HOST + 'action.do?webid=w-l-mylib'  # 信息
         BORROW = HOST + 'action.do?webid=w-l-zjts'  # 在借书籍
         RESERVATION = HOST + 'action.do?webid=w-l-yyts'  # 预约书籍
         CASH = HOST + 'action.do?webid=w-l-xjsw'  # 现金事务
@@ -70,14 +70,14 @@ class Library(API):
 
         >>> library.get_info()
         {
-            '帐号ID': '2016xxxxx', 
-            '姓名': '张三', 
-            '昵称': 'xx', 
-            '登录次数': '123', 
+            '帐号ID': '2016xxxxx',
+            '姓名': '张三',
+            '昵称': 'xx',
+            '登录次数': '123',
             '状态': '正常'
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.INFO)
         table = soup.find(name='table', attrs={'class': 'dzjbzl'})
@@ -103,18 +103,18 @@ class Library(API):
         >>> library.get_borrowing_books()
         [
             {
-            '书名': '大学语文', 
-            '作者': '张三', 
-            '出版社': '中国xx出版社', 
-            '分馆': '雁塔外借图书库', 
-            '索书号': 'TP311', 
-            '条码号': '123456789', 
+            '书名': '大学语文',
+            '作者': '张三',
+            '出版社': '中国xx出版社',
+            '分馆': '雁塔外借图书库',
+            '索书号': 'TP311',
+            '条码号': '123456789',
             '应还日期': '2018-12-11 22:00'
-            }, 
-            ...  
+            },
+            ...
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.BORROW)
         book_list = []
@@ -139,17 +139,17 @@ class Library(API):
         >>> library.get_reservation_books()
         [
             {
-            '书名': '大学语文', 
-            '作者': '张三', 
-            '出版社': '中国xx出版社', 
-            '取书地点': '长安总服务台', 
-            '预约开始日期': '2018-12-01', 
+            '书名': '大学语文',
+            '作者': '张三',
+            '出版社': '中国xx出版社',
+            '取书地点': '长安总服务台',
+            '预约开始日期': '2018-12-01',
             '预约失效日期': '2018-12-11'
-            }, 
-            ...  
+            },
+            ...
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         book_list = []
         soup = self.get_soup(self.URLs.RESERVATION)
@@ -184,18 +184,18 @@ class Library(API):
             '明细':
             [
                 {
-                    '书名': '大学语文', 
-                    '作者': '张三', 
-                    '出版社': '中国xx出版社', 
-                    '数量': '-2.00', 
-                    '原因': '超期', 
+                    '书名': '大学语文',
+                    '作者': '张三',
+                    '出版社': '中国xx出版社',
+                    '数量': '-2.00',
+                    '原因': '超期',
                     '状态': 'O'
                 },
                 ...
             ]
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         dic = {}
         soup = self.get_soup(self.URLs.CASH)
@@ -237,7 +237,7 @@ class Library(API):
             'msg':'挂失借书证成功'
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         r = self.get(url=self.URLs.LOCK)
         if '挂失借书证成功' in r.text:
@@ -258,7 +258,7 @@ class Library(API):
             'msg':'解挂借书证成功'
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         r = self.get(url=self.URLs.UNLOCK)
         if '解挂借书证成功' in r.text:
@@ -275,15 +275,15 @@ def get_borrow_info():
 
     >>> get_borrow_info()
     {
-        'success': True, 
+        'success': True,
         'msg': '查询成功',
         'result': [
             {
-                '预约者': '张三', 
-                '书名': 'C语言程序设计', 
-                '著者': '李四', 
-                '保留结束日期': '2018-12-06', 
-                '单册分馆': '长安西密集库', 
+                '预约者': '张三',
+                '书名': 'C语言程序设计',
+                '著者': '李四',
+                '保留结束日期': '2018-12-06',
+                '单册分馆': '长安西密集库',
                 '取书地点': '雁塔总服务台'
             },
             ...

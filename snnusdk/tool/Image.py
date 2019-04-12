@@ -12,7 +12,7 @@ WHITE = 255
 
 
 def magnitude(concordance):
-    total = reduce(operator.add, map(lambda x: x ** 2, concordance))
+    total = reduce(operator.add, map(lambda x: x**2, concordance))
     return math.sqrt(total)
 
 

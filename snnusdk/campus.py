@@ -24,11 +24,7 @@ class Campus:
 
     def __init__(self, id):
         self.id = id
-        self.data = {
-            'usernum': id,
-            'search': '查询',
-            'wx': ''
-        }
+        self.data = {'usernum': id, 'search': '查询', 'wx': ''}
 
     def get_list(self):
         """查询消费明细
@@ -38,20 +34,20 @@ class Campus:
 
         >>> c = get_list()
         {
-            'success': True, 
+            'success': True,
             'msg': '查询成功',
-            'result': 
+            'result':
             [
                 {
-                    '卡号': '201608735', 
-                    '时间': '2018-12-5 22:48:10', 
-                    '次数': '2760', 
-                    '原金额': '98.09', 
-                    '交易额': '30.70', 
-                    '卡余额': '67.39', 
-                    '记录信息': '99CB399', 
+                    '卡号': '201608735',
+                    '时间': '2018-12-5 22:48:10',
+                    '次数': '2760',
+                    '原金额': '98.09',
+                    '交易额': '30.70',
+                    '卡余额': '67.39',
+                    '记录信息': '99CB399',
                     '备注': ''
-                }, 
+                },
                 ...
             ]
         }
@@ -96,14 +92,14 @@ class Campus:
 
         >>> c = get_photo()
         {
-            'msg': '获取成功', 
+            'msg': '获取成功',
             'success': True,
             'data': b'byte'
         }
         """
         ret = {}
         try:
-            r = requests.get(self.URLs.PHOTO+self.id)
+            r = requests.get(self.URLs.PHOTO + self.id)
             ret['msg'] = '获取成功'
             ret['success'] = True
             ret['data'] = r.content
