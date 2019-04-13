@@ -39,7 +39,7 @@ class TestCampus(unittest.TestCase):
         self.assertIsInstance(test_result, dict)
         self.assertTrue(test_result['success'])
         self.assertEqual(test_result['msg'], '网络连接失败')
-        self.assertIsInstance(test_result['result', list])
+        self.assertIsInstance(test_result['result'], list)
         self.assertListEqual(test_result['result'], [])
 
 
