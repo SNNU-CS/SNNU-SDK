@@ -14,7 +14,7 @@ from snnusdk.exceptions import DepartmentNotSupportedError
 class BaseMessage(object):
     def __init__(self, dep):
         self.dep = dep
-        self.data = None
+        self.data = []
 
 
 class Notice(BaseMessage):
@@ -79,10 +79,10 @@ class Notice(BaseMessage):
             self.data = data_use
         except ConnectionError:
             raise ConnectionError("网络连接超时!")
-            self.data = None
+            self.data = []
         except Exception:
             raise Exception("未知错误!")
-            self.data = None
+            self.data = []
         return self.data
 
 
@@ -148,10 +148,10 @@ class News(BaseMessage):
             self.data = data_use
         except ConnectionError:
             raise ConnectionError("网络连接超时!")
-            self.data = None
+            self.data = []
         except Exception:
             raise Exception("未知错误!")
-            self.data = None
+            self.data = []
         return self.data
 
 
