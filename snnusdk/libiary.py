@@ -38,18 +38,15 @@ class Library(API):
         super().__init__()
         self.username = username
         self.password = password
-        self.login(self.username, self.password)
 
-    def login(self, username, password):
+    def login(self):
         """登录
 
-        :param str username: 学号
-        :param str password: 密码
         :raise: :class:`snnusdk.exceptions.AuthenticationError`
         """
         data = {
-            'userid': username,
-            'password': password,
+            'userid': self.username,
+            'password': self.password,
             '提交': '登录',
         }
 
