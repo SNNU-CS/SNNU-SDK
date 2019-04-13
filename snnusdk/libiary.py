@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from snnusdk.base import API
-from snnusdk.exceptions import AuthenticationError
+from snnusdk.exceptions import AuthenticationError, UnauthorizedError
 from snnusdk.tool.Table import table_to_list
 
 
