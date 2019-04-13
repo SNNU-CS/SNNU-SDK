@@ -10,7 +10,8 @@ class TestLibrary(unittest.TestCase):
     borrow_info_status = 200
     library_status = 200
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         try:
             borrow_info_status = urllib.request.urlopen(
                 url=Library.URLs.BORROW_INFO, timeout=5).code
