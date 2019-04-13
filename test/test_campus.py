@@ -44,4 +44,6 @@ class TestCampus(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    suite = unittest.TestSuite()
+    suite.addTest(TestCampus)
+    unittest.TextTestRunner().run(suite)

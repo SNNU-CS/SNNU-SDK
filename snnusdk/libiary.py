@@ -32,6 +32,7 @@ class Library(API):
         CASH = HOST + 'action.do?webid=w-l-xjsw'  # 现金事务
         LOCK = HOST + 'action.do?webid=w-l-gsjsz'  # 挂失
         UNLOCK = HOST + 'action.do?webid=w-l-jgjsz'  # 解挂
+        BORROW_INFO = 'http://opac.snnu.edu.cn:8991/F?func=file&file_name=hold_shelf'  # 预约到馆
 
     def __init__(self, username, password):
         super().__init__()
@@ -266,47 +267,47 @@ class Library(API):
         else:
             return {'success': False, 'msg': '解挂借书证失败'}
 
+    @staticmethod
+    def get_borrow_info():
+        """预约到馆信息
 
-def get_borrow_info():
-    """预约到馆信息
+        :rtype: dict
+        :return: 预约到馆信息的字典
 
-    :rtype: dict
-    :return: 预约到馆信息的字典
-
-    >>> get_borrow_info()
-    {
-        'success': True,
-        'msg': '查询成功',
-        'result': [
-            {
-                '预约者': '张三',
-                '书名': 'C语言程序设计',
-                '著者': '李四',
-                '保留结束日期': '2018-12-06',
-                '单册分馆': '长安西密集库',
-                '取书地点': '雁塔总服务台'
-            },
-            ...
-            ]
-    }
-    """
-    url = 'http://opac.snnu.edu.cn:8991/F?func=file&file_name=hold_shelf'
-    ret = {}
-    try:
-        r = requests.get(url)
-        r.encoding = 'utf-8'
-        soup = BeautifulSoup(r.text, 'lxml')
-        table = soup.find(name='table', attrs={'summary': 'Script output'})
-        ls = table_to_list(table)
-        ret['success'] = True
-        ret['result'] = ls
-        ret['msg'] = '查询成功'
-    except Exception as e:
-        ret['success'] = False
-        ret['result'] = []
-        ret['msg'] = e.message
-    finally:
-        return ret
+        >>> get_borrow_info()
+        {
+            'success': True,
+            'msg': '查询成功',
+            'result': [
+                {
+                    '预约者': '张三',
+                    '书名': 'C语言程序设计',
+                    '著者': '李四',
+                    '保留结束日期': '2018-12-06',
+                    '单册分馆': '长安西密集库',
+                    '取书地点': '雁塔总服务台'
+                },
+                ...
+                ]
+        }
+        """
+        ret = {}
+        try:
+            r = requests.get(Library.URLs.BORROW_INFO)
+            r.encoding = 'utf-8'
+            soup = BeautifulSoup(r.text, 'lxml')
+            table = soup.find(name='table', attrs={'summary': 'Script output'})
+            ls = table_to_list(table)
+            ret['success'] = True
+            ret['result'] = ls
+            ret['msg'] = '查询成功'
+        except Exception as e:
+            print(e)
+            ret['success'] = False
+            ret['result'] = []
+            ret['msg'] = e.message
+        finally:
+            return ret
 
 
 if __name__ == "__main__":
