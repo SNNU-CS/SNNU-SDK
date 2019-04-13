@@ -8,7 +8,7 @@ if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
 set SOURCEDIR=source
-set BUILDDIR=../../SNNU-SDk-docs
+set BUILDDIR=SNNU-SDk-docs
 
 if "%1" == "" goto help
 
