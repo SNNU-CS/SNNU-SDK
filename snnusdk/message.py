@@ -97,7 +97,7 @@ class News(BaseMessage):
     """
 
     def __init__(self, dep):
-        super().__init__()
+        super().__init__(dep)
 
     def get_count(self):
         """新闻条数
