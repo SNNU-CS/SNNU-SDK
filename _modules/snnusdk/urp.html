@@ -17,32 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -165,12 +168,14 @@
 <span class="sd">@author: QiZhao</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
+<span class="kn">import</span> <span class="nn">re</span>
+
 <span class="kn">from</span> <span class="nn">snnusdk.base</span> <span class="k">import</span> <span class="n">API</span>
+<span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="p">(</span><span class="n">AuthenticationError</span><span class="p">,</span> <span class="n">UnauthorizedError</span><span class="p">,</span>
+                                <span class="n">YearNotExistError</span><span class="p">)</span>
 <span class="c1"># from snnusdk.tool.GUI import CaptchaGUI</span>
 <span class="kn">from</span> <span class="nn">snnusdk.tool.Table</span> <span class="k">import</span> <span class="n">table_to_list</span>
-<span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="n">AuthenticationError</span><span class="p">,</span> <span class="n">YearNotExistError</span><span class="p">,</span> <span class="n">UnauthorizedError</span>
 <span class="kn">from</span> <span class="nn">snnusdk.utils.captcha</span> <span class="k">import</span> <span class="n">UrpCaptcha</span>
-<span class="kn">import</span> <span class="nn">re</span>
 
 
 <div class="viewcode-block" id="Urp"><a class="viewcode-back" href="../../urp.html#snnusdk.Urp">[文档]</a><span class="k">class</span> <span class="nc">Urp</span><span class="p">(</span><span class="n">API</span><span class="p">):</span>
@@ -211,28 +216,28 @@
 <span class="sd">        &gt;&gt;&gt; urp.get_courses()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
-<span class="sd">                &#39;id&#39;: &#39;1241416&#39;, </span>
-<span class="sd">                &#39;name&#39;: &#39;算法设计与分析&#39;, </span>
-<span class="sd">                &#39;number&#39;: &#39;01&#39;, </span>
-<span class="sd">                &#39;credits&#39;: 3.0, </span>
-<span class="sd">                &#39;attributes&#39;: &#39;必修&#39;, </span>
-<span class="sd">                &#39;teacher&#39;: &#39;王小明*&#39;, </span>
-<span class="sd">                &#39;status&#39;: &#39;置入&#39;, </span>
+<span class="sd">                &#39;id&#39;: &#39;1241416&#39;,</span>
+<span class="sd">                &#39;name&#39;: &#39;算法设计与分析&#39;,</span>
+<span class="sd">                &#39;number&#39;: &#39;01&#39;,</span>
+<span class="sd">                &#39;credits&#39;: 3.0,</span>
+<span class="sd">                &#39;attributes&#39;: &#39;必修&#39;,</span>
+<span class="sd">                &#39;teacher&#39;: &#39;王小明*&#39;,</span>
+<span class="sd">                &#39;status&#39;: &#39;置入&#39;,</span>
 <span class="sd">                &#39;info&#39;: [</span>
 <span class="sd">                            {</span>
-<span class="sd">                                &#39;week&#39;: &#39;1-18周上&#39;, </span>
-<span class="sd">                                &#39;day&#39;: &#39;2&#39;, </span>
-<span class="sd">                                &#39;timeOfClass&#39;: &#39;1&#39;, </span>
-<span class="sd">                                &#39;numOfClass&#39;: &#39;2&#39;, </span>
-<span class="sd">                                &#39;campus&#39;: &#39;长安校区&#39;, </span>
-<span class="sd">                                &#39;buildings&#39;: &#39;长安文津楼&#39;, </span>
+<span class="sd">                                &#39;week&#39;: &#39;1-18周上&#39;,</span>
+<span class="sd">                                &#39;day&#39;: &#39;2&#39;,</span>
+<span class="sd">                                &#39;timeOfClass&#39;: &#39;1&#39;,</span>
+<span class="sd">                                &#39;numOfClass&#39;: &#39;2&#39;,</span>
+<span class="sd">                                &#39;campus&#39;: &#39;长安校区&#39;,</span>
+<span class="sd">                                &#39;buildings&#39;: &#39;长安文津楼&#39;,</span>
 <span class="sd">                                &#39;room&#39;: &#39;1511&#39;</span>
 <span class="sd">                            }</span>
 <span class="sd">                        ]</span>
 <span class="sd">            }</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">SELECTED_COURSES</span><span class="p">)</span>
         <span class="n">tables</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">})</span>
@@ -286,28 +291,28 @@
 <span class="sd">        &gt;&gt;&gt; u.get_old_courses(year=&#39;2017-2018&#39;, semester=1)</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
-<span class="sd">                &#39;id&#39;: &#39;1241416&#39;, </span>
-<span class="sd">                &#39;name&#39;: &#39;算法设计与分析&#39;, </span>
-<span class="sd">                &#39;number&#39;: &#39;01&#39;, </span>
-<span class="sd">                &#39;credits&#39;: 3.0, </span>
-<span class="sd">                &#39;attributes&#39;: &#39;必修&#39;, </span>
-<span class="sd">                &#39;teacher&#39;: &#39;王小明*&#39;, </span>
-<span class="sd">                &#39;status&#39;: &#39;置入&#39;, </span>
+<span class="sd">                &#39;id&#39;: &#39;1241416&#39;,</span>
+<span class="sd">                &#39;name&#39;: &#39;算法设计与分析&#39;,</span>
+<span class="sd">                &#39;number&#39;: &#39;01&#39;,</span>
+<span class="sd">                &#39;credits&#39;: 3.0,</span>
+<span class="sd">                &#39;attributes&#39;: &#39;必修&#39;,</span>
+<span class="sd">                &#39;teacher&#39;: &#39;王小明*&#39;,</span>
+<span class="sd">                &#39;status&#39;: &#39;置入&#39;,</span>
 <span class="sd">                &#39;info&#39;: [</span>
 <span class="sd">                            {</span>
-<span class="sd">                                &#39;week&#39;: &#39;1-18周上&#39;, </span>
-<span class="sd">                                &#39;day&#39;: &#39;2&#39;, </span>
-<span class="sd">                                &#39;timeOfClass&#39;: &#39;1&#39;, </span>
-<span class="sd">                                &#39;numOfClass&#39;: &#39;2&#39;, </span>
-<span class="sd">                                &#39;campus&#39;: &#39;长安校区&#39;, </span>
-<span class="sd">                                &#39;buildings&#39;: &#39;长安文津楼&#39;, </span>
+<span class="sd">                                &#39;week&#39;: &#39;1-18周上&#39;,</span>
+<span class="sd">                                &#39;day&#39;: &#39;2&#39;,</span>
+<span class="sd">                                &#39;timeOfClass&#39;: &#39;1&#39;,</span>
+<span class="sd">                                &#39;numOfClass&#39;: &#39;2&#39;,</span>
+<span class="sd">                                &#39;campus&#39;: &#39;长安校区&#39;,</span>
+<span class="sd">                                &#39;buildings&#39;: &#39;长安文津楼&#39;,</span>
 <span class="sd">                                &#39;room&#39;: &#39;1511&#39;</span>
 <span class="sd">                            }</span>
 <span class="sd">                        ]</span>
 <span class="sd">            }</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">OLD_COURSES</span><span class="p">)</span>
         <span class="n">year_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;option&#39;</span><span class="p">)]</span>
@@ -315,8 +320,8 @@
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">year_list</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">YearNotExistError</span><span class="p">(</span><span class="s1">&#39;不存在该学期！&#39;</span><span class="p">)</span>
 
-        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">OLD_COURSES</span><span class="p">,</span>
-                             <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;zxjxjhh&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">})</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">OLD_COURSES</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;zxjxjhh&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">})</span>
         <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">})[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">table_list</span> <span class="o">=</span> <span class="n">table_to_list</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">remove_index_list</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
 
@@ -364,24 +369,24 @@
 <span class="sd">        &gt;&gt;&gt; u.get_grade()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
-<span class="sd">                &#39;课程号&#39;: &#39;1243432&#39;, </span>
-<span class="sd">                &#39;课序号&#39;: &#39;01&#39;, </span>
-<span class="sd">                &#39;课程名&#39;: &#39;高级数据结构&#39;, </span>
-<span class="sd">                &#39;英文课程名&#39;: &#39;Advanced Data Structures&#39;, </span>
-<span class="sd">                &#39;学分&#39;: &#39;2&#39;, </span>
-<span class="sd">                &#39;课程属性&#39;: &#39;任选&#39;, </span>
-<span class="sd">                &#39;课堂最高分&#39;: &#39;&#39;, </span>
-<span class="sd">                &#39;课堂最低分&#39;: &#39;&#39;, </span>
-<span class="sd">                &#39;课堂平均分&#39;: &#39;&#39;, </span>
-<span class="sd">                &#39;成绩&#39;: &#39;&#39;, </span>
-<span class="sd">                &#39;名次&#39;: &#39;&#39;, </span>
+<span class="sd">                &#39;课程号&#39;: &#39;1243432&#39;,</span>
+<span class="sd">                &#39;课序号&#39;: &#39;01&#39;,</span>
+<span class="sd">                &#39;课程名&#39;: &#39;高级数据结构&#39;,</span>
+<span class="sd">                &#39;英文课程名&#39;: &#39;Advanced Data Structures&#39;,</span>
+<span class="sd">                &#39;学分&#39;: &#39;2&#39;,</span>
+<span class="sd">                &#39;课程属性&#39;: &#39;任选&#39;,</span>
+<span class="sd">                &#39;课堂最高分&#39;: &#39;&#39;,</span>
+<span class="sd">                &#39;课堂最低分&#39;: &#39;&#39;,</span>
+<span class="sd">                &#39;课堂平均分&#39;: &#39;&#39;,</span>
+<span class="sd">                &#39;成绩&#39;: &#39;&#39;,</span>
+<span class="sd">                &#39;名次&#39;: &#39;&#39;,</span>
 <span class="sd">                &#39;未通过原因&#39;: &#39;&#39;</span>
 <span class="sd">            },</span>
 <span class="sd">            ...</span>
 <span class="sd">        ]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">GRADE</span><span class="p">)</span>
         <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;titleTop2&#39;</span><span class="p">})</span>
@@ -396,13 +401,13 @@
 <span class="sd">        :return: 参照例子</span>
 
 <span class="sd">        &gt;&gt;&gt; u.get_grade_year_list()</span>
-<span class="sd">        [    &#39;2016-2017学年秋(两学期)&#39;, </span>
-<span class="sd">            &#39;2016-2017学年春(两学期)&#39;, </span>
-<span class="sd">            &#39;2017-2018学年秋(两学期)&#39;, </span>
+<span class="sd">        [    &#39;2016-2017学年秋(两学期)&#39;,</span>
+<span class="sd">            &#39;2016-2017学年春(两学期)&#39;,</span>
+<span class="sd">            &#39;2017-2018学年秋(两学期)&#39;,</span>
 <span class="sd">            &#39;2017-2018学年春(两学期)&#39;</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_soup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">ALL_GRADE</span><span class="p">)</span>
         <span class="n">a_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
@@ -423,24 +428,24 @@
 <span class="sd">        [</span>
 <span class="sd">            {</span>
 <span class="sd">                &#39;课程号&#39;:&#39;01111&#39;,</span>
-<span class="sd">                &#39;课序号&#39;: &#39;62&#39;, </span>
-<span class="sd">                &#39;课程名&#39;: &#39;大学外语（一）&#39;, </span>
-<span class="sd">                &#39;英文课程名&#39;: &#39;College English 1&#39;, </span>
-<span class="sd">                &#39;学分&#39;: &#39;3&#39;, </span>
-<span class="sd">                &#39;课程属性&#39;: &#39;必修&#39;, </span>
+<span class="sd">                &#39;课序号&#39;: &#39;62&#39;,</span>
+<span class="sd">                &#39;课程名&#39;: &#39;大学外语（一）&#39;,</span>
+<span class="sd">                &#39;英文课程名&#39;: &#39;College English 1&#39;,</span>
+<span class="sd">                &#39;学分&#39;: &#39;3&#39;,</span>
+<span class="sd">                &#39;课程属性&#39;: &#39;必修&#39;,</span>
 <span class="sd">                &#39;成绩&#39;: &#39;73.0&#39;</span>
 <span class="sd">            },</span>
 <span class="sd">            ...</span>
 <span class="sd">        ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">year_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_grade_year_list</span><span class="p">()</span>
         <span class="n">year_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">year_item</span> <span class="ow">in</span> <span class="n">year_list</span><span class="p">:</span>
             <span class="n">year_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
                 <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d{4,4}-\d{4,4}&#39;</span><span class="p">,</span> <span class="n">year_item</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">year_set</span> <span class="ow">or</span> <span class="n">semester</span> <span class="ow">not</span> <span class="ow">in</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">year_set</span> <span class="ow">or</span> <span class="n">semester</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="n">YearNotExistError</span><span class="p">(</span><span class="s1">&#39;不存在该学期&#39;</span><span class="p">)</span>
 
         <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">学年</span><span class="si">{}</span><span class="s2">(两学期)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="s1">&#39;春&#39;</span> <span class="k">if</span> <span class="n">semester</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="s1">&#39;秋&#39;</span><span class="p">)</span>
@@ -460,7 +465,7 @@
 <span class="sd">        &gt;&gt;&gt; u.get_gpa()</span>
 <span class="sd">        73.00</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnauthorizedError</span><span class="p">(</span><span class="s1">&#39;您还没有登录!&#39;</span><span class="p">)</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">num</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -479,16 +484,16 @@
 
 <span class="sd">        :raise: :class:`snnusdk.exceptions.AuthenticationError`</span>
 <span class="sd">        :rtype: dict</span>
-<span class="sd">        </span>
+
 <span class="sd">        &gt;&gt;&gt; u.login()</span>
 <span class="sd">        {</span>
-<span class="sd">            &#39;msg&#39;: &#39;登录成功&#39;, </span>
+<span class="sd">            &#39;msg&#39;: &#39;登录成功&#39;,</span>
 <span class="sd">            &#39;success&#39;: True</span>
 <span class="sd">        }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># FIXME: 登录不可靠</span>
         <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLs</span><span class="o">.</span><span class="n">CAPTCHA</span><span class="p">)</span>
-<span class="c1">#         captcha_code = CaptchaGUI(image)</span>
+        <span class="c1">#         captcha_code = CaptchaGUI(image)</span>
         <span class="n">captcha_code</span> <span class="o">=</span> <span class="n">UrpCaptcha</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;zjh1&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -533,7 +538,7 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">Urp</span><span class="p">(</span><span class="s2">&quot;xx&quot;</span><span class="p">,</span> <span class="s2">&quot;xx&quot;</span><span class="p">)</span>
-<span class="c1">#     c.login()</span>
+    <span class="c1">#     c.login()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">login</span><span class="p">())</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_old_courses</span><span class="p">(</span><span class="s1">&#39;2018-2019&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_grade_year_list</span><span class="p">())</span>
@@ -567,26 +572,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/translations.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

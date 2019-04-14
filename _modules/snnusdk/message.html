@@ -17,32 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -164,10 +167,13 @@
 
 <span class="sd">@author: QiZhao</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
 <span class="kn">from</span> <span class="nn">snnusdk.configs</span> <span class="k">import</span> <span class="n">SPIDER_CONFIG</span>
 <span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="n">DepartmentNotSupportedError</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">re</span>
+
 
 <div class="viewcode-block" id="Notice"><a class="viewcode-back" href="../../message.html#snnusdk.Notice">[文档]</a><span class="k">class</span> <span class="nc">Notice</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -181,12 +187,12 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dep</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="o">=</span><span class="n">dep</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span>
-    
+        <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">=</span> <span class="n">dep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+
 <div class="viewcode-block" id="Notice.get_count"><a class="viewcode-back" href="../../message.html#snnusdk.Notice.get_count">[文档]</a>    <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;通知条数</span>
-<span class="sd">        </span>
+
 <span class="sd">        :rtype: int</span>
 <span class="sd">        :return: 通知的条数</span>
 
@@ -194,10 +200,10 @@
 <span class="sd">        14</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
-    
+
 <div class="viewcode-block" id="Notice.get_notice"><a class="viewcode-back" href="../../message.html#snnusdk.Notice.get_notice">[文档]</a>    <span class="k">def</span> <span class="nf">get_notice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;通知的关键信息(标题,时间,链接)</span>
-<span class="sd">        </span>
+
 <span class="sd">        :raise: :class:`snnusdk.exceptions.DepartmentNotSupportedError`</span>
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        :return: 参照例子</span>
@@ -205,8 +211,8 @@
 <span class="sd">        &gt;&gt;&gt; n.get_notice()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
-<span class="sd">                &#39;date&#39;: &#39;2018-12-26&#39;, </span>
-<span class="sd">                &#39;link&#39;: &#39;http://tyxy.snnu.edu.cn/News_information.asp?id=33&amp;bh=1593&#39;, </span>
+<span class="sd">                &#39;date&#39;: &#39;2018-12-26&#39;,</span>
+<span class="sd">                &#39;link&#39;: &#39;http://tyxy.snnu.edu.cn/News_information.asp?id=33&amp;bh=1593&#39;,</span>
 <span class="sd">                &#39;title&#39;: &#39;【学生工作】学院2017级开展宿舍冬季安全教育工作&#39;</span>
 <span class="sd">            },</span>
 <span class="sd">            ...</span>
@@ -214,15 +220,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_support_dep</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">DepartmentNotSupportedError</span><span class="p">(</span><span class="s2">&quot;暂时不支持该部门!&quot;</span><span class="p">)</span>
-        <span class="n">dic</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">SPIDER_CONFIG</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="o">==</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_EN&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="o">==</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_CN&#39;</span><span class="p">])</span>\
-             <span class="ow">and</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;通知&#39;</span><span class="p">:</span>
-                <span class="n">dic</span><span class="o">=</span><span class="n">d</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">==</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_EN&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">==</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_CN&#39;</span><span class="p">])</span>\
+                    <span class="ow">and</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;通知&#39;</span><span class="p">:</span>
+                <span class="n">dic</span> <span class="o">=</span> <span class="n">d</span>
                 <span class="k">break</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span>
-            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span><span class="o">=</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;coding&#39;</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;coding&#39;</span><span class="p">]</span>
             <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;rule&#39;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
             <span class="n">data_use</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">it</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -230,14 +236,15 @@
                 <span class="n">data_use</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">groupdict</span><span class="p">())</span>
             <span class="k">for</span> <span class="n">item_dict</span> <span class="ow">in</span> <span class="n">data_use</span><span class="p">:</span>
                 <span class="n">item_dict</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;url_main&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">item_dict</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="n">data_use</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_use</span>
         <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s2">&quot;网络连接超时!&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;未知错误!&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span></div></div>
+
 
 <div class="viewcode-block" id="News"><a class="viewcode-back" href="../../message.html#snnusdk.News">[文档]</a><span class="k">class</span> <span class="nc">News</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -251,12 +258,12 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dep</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="o">=</span><span class="n">dep</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span>
-    
+        <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">=</span> <span class="n">dep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+
 <div class="viewcode-block" id="News.get_count"><a class="viewcode-back" href="../../message.html#snnusdk.News.get_count">[文档]</a>    <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;新闻条数</span>
-<span class="sd">        </span>
+
 <span class="sd">        :rtype: int</span>
 <span class="sd">        :return: 通知的条数</span>
 
@@ -264,10 +271,10 @@
 <span class="sd">        14</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
-    
+
 <div class="viewcode-block" id="News.get_news"><a class="viewcode-back" href="../../message.html#snnusdk.News.get_news">[文档]</a>    <span class="k">def</span> <span class="nf">get_news</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;新闻的关键信息(标题,时间,链接)</span>
-<span class="sd">        </span>
+
 <span class="sd">        :raise: :class:`snnusdk.exceptions.DepartmentNotSupportedError`</span>
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        :return: 参照例子</span>
@@ -275,8 +282,8 @@
 <span class="sd">        &gt;&gt;&gt; n.get_news()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
-<span class="sd">                &#39;date&#39;: &#39;2018-12-26&#39;, </span>
-<span class="sd">                &#39;link&#39;: &#39;http://tyxy.snnu.edu.cn/News_information.asp?id=33&amp;bh=1593&#39;, </span>
+<span class="sd">                &#39;date&#39;: &#39;2018-12-26&#39;,</span>
+<span class="sd">                &#39;link&#39;: &#39;http://tyxy.snnu.edu.cn/News_information.asp?id=33&amp;bh=1593&#39;,</span>
 <span class="sd">                &#39;title&#39;: &#39;【学生工作】学院2017级开展宿舍冬季安全教育工作&#39;</span>
 <span class="sd">            },</span>
 <span class="sd">            ...</span>
@@ -284,15 +291,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_support_dep</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">DepartmentNotSupportedError</span><span class="p">(</span><span class="s2">&quot;暂时不支持该部门!&quot;</span><span class="p">)</span>
-        <span class="n">dic</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">SPIDER_CONFIG</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="o">==</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_EN&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="o">==</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_CN&#39;</span><span class="p">])</span>\
-             <span class="ow">and</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;新闻&#39;</span><span class="p">:</span>
-                <span class="n">dic</span><span class="o">=</span><span class="n">d</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">==</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_EN&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">==</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;department_CN&#39;</span><span class="p">])</span>\
+                    <span class="ow">and</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;新闻&#39;</span><span class="p">:</span>
+                <span class="n">dic</span> <span class="o">=</span> <span class="n">d</span>
                 <span class="k">break</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span>
-            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span><span class="o">=</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;coding&#39;</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;coding&#39;</span><span class="p">]</span>
             <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;rule&#39;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
             <span class="n">data_use</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">it</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -300,15 +307,16 @@
                 <span class="n">data_use</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">groupdict</span><span class="p">())</span>
             <span class="k">for</span> <span class="n">item_dict</span> <span class="ow">in</span> <span class="n">data_use</span><span class="p">:</span>
                 <span class="n">item_dict</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;url_main&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">item_dict</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="n">data_use</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_use</span>
         <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s2">&quot;网络连接超时!&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;未知错误!&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span></div></div>
-    
+
+
 <span class="k">def</span> <span class="nf">get_support_dep</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;所支持的部门</span>
 
@@ -318,17 +326,18 @@
 <span class="sd">    &gt;&gt;&gt; get_support_dep()</span>
 <span class="sd">    [&#39;生命科学学院&#39;, &#39;新闻与传播学院&#39;, ...]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ret</span><span class="o">=</span><span class="nb">set</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">dic</span> <span class="ow">in</span> <span class="n">SPIDER_CONFIG</span><span class="p">:</span>
         <span class="n">ret</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;department_CN&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">get_support_dep</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">SPIDER_CONFIG</span><span class="p">:</span>
-        <span class="n">a</span><span class="o">=</span><span class="n">News</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;department_CN&quot;</span><span class="p">])</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">News</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;department_CN&quot;</span><span class="p">])</span>
         <span class="n">a</span><span class="o">.</span><span class="n">get_news</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
            </div>
@@ -358,26 +367,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/translations.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

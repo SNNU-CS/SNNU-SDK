@@ -17,32 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -160,7 +163,6 @@
             
   <h1>snnusdk.exceptions 源代码</h1><div class="highlight"><pre>
 <span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;QiZhao&#39;</span>
-
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Created on Nov 29, 2018</span>
 
@@ -174,24 +176,31 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="AuthenticationError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.AuthenticationError">[文档]</a><span class="k">class</span> <span class="nc">AuthenticationError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An Authentication Exception occurred.&quot;&quot;&quot;</span></div>
+
 
 <div class="viewcode-block" id="UnauthorizedError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.UnauthorizedError">[文档]</a><span class="k">class</span> <span class="nc">UnauthorizedError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Not authorized Error&quot;&quot;&quot;</span></div>
 
+
 <div class="viewcode-block" id="TemporaryBannedError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.TemporaryBannedError">[文档]</a><span class="k">class</span> <span class="nc">TemporaryBannedError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Temporary Banned by Server&quot;&quot;&quot;</span></div>
+
 
 <div class="viewcode-block" id="BuildingNotFoundError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.BuildingNotFoundError">[文档]</a><span class="k">class</span> <span class="nc">BuildingNotFoundError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Building Not Found Error&quot;&quot;&quot;</span></div>
 
+
 <div class="viewcode-block" id="RoomNotFoundError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.RoomNotFoundError">[文档]</a><span class="k">class</span> <span class="nc">RoomNotFoundError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Room Not Found Error&quot;&quot;&quot;</span></div>
-    
+
+
 <div class="viewcode-block" id="YearNotExistError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.YearNotExistError">[文档]</a><span class="k">class</span> <span class="nc">YearNotExistError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Year Not Exist Error&quot;&quot;&quot;</span></div>
-    
+
+
 <div class="viewcode-block" id="DepartmentNotSupportedError"><a class="viewcode-back" href="../../exceptions.html#snnusdk.exceptions.DepartmentNotSupportedError">[文档]</a><span class="k">class</span> <span class="nc">DepartmentNotSupportedError</span><span class="p">(</span><span class="n">SnnuException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Deparment Not Supported Error&quot;&quot;&quot;</span></div>
 </pre></div>
@@ -223,26 +232,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/translations.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -17,32 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -165,10 +168,12 @@
 <span class="sd">@author: QiZhao</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">ReadTimeout</span><span class="p">,</span> <span class="ne">ConnectionError</span>
 <span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="ne">ConnectionError</span><span class="p">,</span> <span class="n">ReadTimeout</span>
+
 <span class="kn">from</span> <span class="nn">snnusdk.exceptions</span> <span class="k">import</span> <span class="n">BuildingNotFoundError</span><span class="p">,</span> <span class="n">RoomNotFoundError</span>
 
 <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span>
@@ -196,7 +201,13 @@
 <span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;http://kb.snnu.edu.cn/room/index/&#39;</span>
 <span class="n">re_p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&lt;P&gt;([^&lt;]*?)&lt;/p&gt;&#39;</span><span class="p">)</span>
 <span class="n">week_key</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;星期一&#39;</span><span class="p">,</span> <span class="s1">&#39;星期二&#39;</span><span class="p">,</span> <span class="s1">&#39;星期三&#39;</span><span class="p">,</span> <span class="s1">&#39;星期四&#39;</span><span class="p">,</span> <span class="s1">&#39;星期五&#39;</span><span class="p">,</span> <span class="s1">&#39;星期六&#39;</span><span class="p">,</span> <span class="s1">&#39;星期日&#39;</span><span class="p">]</span>
-<span class="n">jieshu</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;9-10节&#39;</span><span class="p">,</span> <span class="s1">&#39;1-2节&#39;</span><span class="p">,</span> <span class="s1">&#39;3-4节&#39;</span><span class="p">,</span> <span class="s1">&#39;5-6节&#39;</span><span class="p">,</span> <span class="s1">&#39;7-8节&#39;</span><span class="p">,</span> <span class="p">]</span>
+<span class="n">jieshu</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;9-10节&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;1-2节&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;3-4节&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;5-6节&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;7-8节&#39;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <div class="viewcode-block" id="Room"><a class="viewcode-back" href="../../room.html#snnusdk.Room">[文档]</a><span class="k">class</span> <span class="nc">Room</span><span class="p">:</span>
@@ -218,7 +229,7 @@
 
     <span class="k">def</span> <span class="nf">_get_Soup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;依据构造参数,获取BeautifulSoup对象对象</span>
-<span class="sd">        </span>
+
 <span class="sd">        :raise: :class:`snnusdk.exceptions.BuildingNotFoundError`</span>
 <span class="sd">        :raise: :class:`requests.exceptions.ConnectionError`</span>
 <span class="sd">        :rtype: bs4.BeautifulSoup对象</span>
@@ -228,6 +239,8 @@
             <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">?jxz=</span><span class="si">{}</span><span class="s1">&amp;lh=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">week</span><span class="p">,</span> <span class="n">dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">building</span><span class="p">])</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
             <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+
+
 <span class="c1">#             print(type(soup))</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">BuildingNotFoundError</span><span class="p">(</span><span class="s1">&#39;不存在该教学楼！&#39;</span><span class="p">)</span>
@@ -262,24 +275,24 @@
 
 <span class="sd">        &gt;&gt;&gt; room._get_one_room(tr)</span>
 <span class="sd">        {</span>
-<span class="sd">            &#39;id&#39;: &#39;8104&#39;, </span>
-<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>
-<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;, </span>
-<span class="sd">            &#39;星期一&#39;: </span>
+<span class="sd">            &#39;id&#39;: &#39;8104&#39;,</span>
+<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;,</span>
+<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;,</span>
+<span class="sd">            &#39;星期一&#39;:</span>
 <span class="sd">            [</span>
 <span class="sd">                {</span>
-<span class="sd">                    &#39;状态&#39;: &#39;排课&#39;, </span>
-<span class="sd">                    &#39;info&#39;: </span>
+<span class="sd">                    &#39;状态&#39;: &#39;排课&#39;,</span>
+<span class="sd">                    &#39;info&#39;:</span>
 <span class="sd">                    {</span>
-<span class="sd">                        &#39;科目&#39;: &#39;高等数学（一）-3&#39;, </span>
-<span class="sd">                        &#39;教师&#39;: &#39;吴洪博&#39;, </span>
-<span class="sd">                        &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;, </span>
-<span class="sd">                        &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;, </span>
+<span class="sd">                        &#39;科目&#39;: &#39;高等数学（一）-3&#39;,</span>
+<span class="sd">                        &#39;教师&#39;: &#39;吴洪博&#39;,</span>
+<span class="sd">                        &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;,</span>
+<span class="sd">                        &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;,</span>
 <span class="sd">                        &#39;地点&#39;: &#39;雁塔教学八楼 8104&#39;</span>
 <span class="sd">                    }</span>
 <span class="sd">                    &#39;节数&#39;:&#39;1-2节&#39;</span>
 <span class="sd">                },</span>
-<span class="sd">                ... </span>
+<span class="sd">                ...</span>
 <span class="sd">            ]</span>
 <span class="sd">            ...</span>
 <span class="sd">        }</span>
@@ -296,8 +309,8 @@
                 <span class="n">oneday</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">one_class</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>  <span class="c1"># 教室整体信息</span>
                 <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
-                <span class="n">ls</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
-                    <span class="s1">&#39;(\sbody=\[|&gt;\s)([^：]*?)：([^\s]*?)\s&#39;</span><span class="p">,</span> <span class="n">td</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;(\sbody=\[|&gt;\s)([^：]*?)：([^\s]*?)\s&#39;</span><span class="p">,</span>
+                                <span class="n">td</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
                 <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">ls</span><span class="p">:</span>
                     <span class="n">dic</span><span class="p">[</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -315,13 +328,13 @@
 
 <span class="sd">        &gt;&gt;&gt; room._get_one_class(td)</span>
 <span class="sd">        {</span>
-<span class="sd">            &#39;状态&#39;: &#39;排课&#39;, </span>
-<span class="sd">            &#39;info&#39;: </span>
+<span class="sd">            &#39;状态&#39;: &#39;排课&#39;,</span>
+<span class="sd">            &#39;info&#39;:</span>
 <span class="sd">            {</span>
-<span class="sd">                &#39;科目&#39;: &#39;高等数学（一）-3&#39;, </span>
-<span class="sd">                &#39;教师&#39;: &#39;吴洪博&#39;, </span>
-<span class="sd">                &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;, </span>
-<span class="sd">                &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;, </span>
+<span class="sd">                &#39;科目&#39;: &#39;高等数学（一）-3&#39;,</span>
+<span class="sd">                &#39;教师&#39;: &#39;吴洪博&#39;,</span>
+<span class="sd">                &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;,</span>
+<span class="sd">                &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;,</span>
 <span class="sd">                &#39;地点&#39;: &#39;雁塔教学八楼 8104&#39;</span>
 <span class="sd">            }</span>
 <span class="sd">            &#39;节数&#39;:&#39;1-2节&#39;</span>
@@ -347,16 +360,16 @@
 <span class="sd">        &gt;&gt;&gt; room.query_all()</span>
 <span class="sd">        [</span>
 <span class="sd">            {</span>
-<span class="sd">            &#39;id&#39;: &#39;8101&#39;, </span>
-<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>
-<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;, </span>
+<span class="sd">            &#39;id&#39;: &#39;8101&#39;,</span>
+<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;,</span>
+<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;,</span>
 <span class="sd">            &#39;星期一&#39;: [</span>
 <span class="sd">                        {</span>
-<span class="sd">                            &#39;状态&#39;: &#39;排课&#39;, </span>
+<span class="sd">                            &#39;状态&#39;: &#39;排课&#39;,</span>
 <span class="sd">                            &#39;节数&#39;:&#39;1-2节&#39;</span>
 <span class="sd">                            &#39;info&#39;:</span>
 <span class="sd">                            {</span>
-<span class="sd">                                &#39;科目&#39;: &#39;数学分析(一)&#39;, </span>
+<span class="sd">                                &#39;科目&#39;: &#39;数学分析(一)&#39;,</span>
 <span class="sd">                                &#39;教师&#39;: &#39;曹小红&#39;,</span>
 <span class="sd">                                ...</span>
 <span class="sd">                            }</span>
@@ -396,24 +409,24 @@
 
 <span class="sd">        &gt;&gt;&gt; room.query_one_room(room=&#39;8014&#39;)</span>
 <span class="sd">        {</span>
-<span class="sd">            &#39;id&#39;: &#39;8104&#39;, </span>
-<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;, </span>
-<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;, </span>
-<span class="sd">            &#39;星期一&#39;: </span>
+<span class="sd">            &#39;id&#39;: &#39;8104&#39;,</span>
+<span class="sd">            &#39;教室类型&#39;: &#39;多媒体教室&#39;,</span>
+<span class="sd">            &#39;上课座位&#39;: &#39;60&#39;,</span>
+<span class="sd">            &#39;星期一&#39;:</span>
 <span class="sd">            [</span>
 <span class="sd">                {</span>
-<span class="sd">                    &#39;状态&#39;: &#39;排课&#39;, </span>
-<span class="sd">                    &#39;info&#39;: </span>
+<span class="sd">                    &#39;状态&#39;: &#39;排课&#39;,</span>
+<span class="sd">                    &#39;info&#39;:</span>
 <span class="sd">                    {</span>
-<span class="sd">                        &#39;科目&#39;: &#39;高等数学（一）-3&#39;, </span>
-<span class="sd">                        &#39;教师&#39;: &#39;吴洪博&#39;, </span>
-<span class="sd">                        &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;, </span>
-<span class="sd">                        &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;, </span>
+<span class="sd">                        &#39;科目&#39;: &#39;高等数学（一）-3&#39;,</span>
+<span class="sd">                        &#39;教师&#39;: &#39;吴洪博&#39;,</span>
+<span class="sd">                        &#39;班级&#39;:&#39;数学与信息科学学院 恒元物理实验班1701&#39;,</span>
+<span class="sd">                        &#39;时间&#39;: &#39;1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节&#39;,</span>
 <span class="sd">                        &#39;地点&#39;: &#39;雁塔教学八楼 8104&#39;</span>
 <span class="sd">                    }</span>
 <span class="sd">                    &#39;节数&#39;:&#39;1-2节&#39;</span>
 <span class="sd">                },</span>
-<span class="sd">                ... </span>
+<span class="sd">                ...</span>
 <span class="sd">            ]</span>
 <span class="sd">            ...</span>
 <span class="sd">        }</span>
@@ -422,7 +435,7 @@
         <span class="k">if</span> <span class="n">room</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rooms</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">RoomNotFoundError</span><span class="p">(</span><span class="s1">&#39;不存在该教室&#39;</span><span class="p">)</span>
         <span class="n">tr</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">Rooms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">room</span><span class="p">)]</span>
-<span class="c1">#         print(type(tr))</span>
+        <span class="c1">#         print(type(tr))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_one_room</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
@@ -458,26 +471,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/translations.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
