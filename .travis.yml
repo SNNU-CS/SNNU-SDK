@@ -1,12 +1,20 @@
 language: python
-python:
-  - "3.5"
-  - "3.6"
 install:
   - pip install -r dev-requirements.txt
   - pip install pytest-pep8
-script:
-  - make ci
-  - make build-docs
-  - bash publish-docs.sh
-  
+jobs:
+  include:
+    - stage: test
+      script:
+        - make ci
+        - make build-docs
+      python: '3.5'
+    - stage: test
+      script:
+        - make ci
+        - make build-docs
+      python: '3.6'
+    - stage: docs
+      script:
+        - make build-docs && bash publish-docs.sh
+      python: '3.6'
