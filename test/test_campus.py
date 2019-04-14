@@ -4,6 +4,7 @@ from urllib.error import URLError
 
 from snnusdk.campus import Campus
 
+
 class TestCampus(unittest.TestCase):
     consumption_status = 200
     photo_status = 200
@@ -41,7 +42,7 @@ class TestCampus(unittest.TestCase):
         self.assertIsInstance(test_result['result', list])
         self.assertListEqual(test_result['result'], [])
 
-    @unittest.skipIf(consumption_status == 200 , "状态码等于200，就跳过该测试")
+    @unittest.skipIf(consumption_status == 200, "状态码等于200，就跳过该测试")
     def test_get_photo_1(self):
         test = Campus('201608735')
         test_result = test.get_photo()
@@ -55,14 +56,14 @@ class TestCampus(unittest.TestCase):
         test = Campus('201608714')
         test_result = test.get_photo()
         self.assertIsInstance(test_result, dict)
-        self.assertEqual(test_result['msg'] , '获取成功')
-        self.assertTrue(test_result['success'], True)
+        self.assertEqual(test_result['msg'], '获取成功')
+        self.assertTrue(test_result['success'], False)
 
         test = Campus('xxxxxx')
         test_result = test.get_photo()
         self.assertIsInstance(test_result, dict)
         self.assertEqual(test_result['msg'], '获取成功')
-        self.assertTrue(test_result['success'],True)
+        self.assertTrue(test_result['success'], False)
 
 
 if __name__ == '__main__':

@@ -6,31 +6,40 @@ from snnusdk.message import Notice
 from snnusdk.configs import SPIDER_CONFIG as links
 from snnusdk.exceptions import DepartmentNotSupportedError
 
+
 class TestNotice(unittest.TestCase):
-    code_status = 200
+    code_status = dict(zip(list(set([i['department_CN'] for i in links])), [
+                       200 for _ in range(int(len(links)/2))]))
 
     def setUp(self):
-        try:
-            for link in links:
-                code_status = urllib.request.urlopen(url = link['url'] , timeout=5).code
-                if code_status != 200:
-                    return
-        except URLError:
-            code_status = -1
+        for link in links:
+            if link['type'] is '通知':
+                dep = link['department_CN']
+                try:
+                    code_status[dep] = urllib.request.urlopen(
+                        url=link['url'], timeout=5).code
+                except URLError:
+                    code_status[dep] = -1
 
-    @unittest.skipIf(code_status != 200, '状态码不等于200,就跳过该测试')
     def test_get_count(self):
-        pass
-
-    @unittest.skipIf(code_status != 200, '状态码不等于200,就跳过该测试')
-    def test_get_notice(self):
         test = Notice(dep='计算机科学学院')
+        test_result = test.get_count()
+        self.assertEqual(test_result, 0)
         test_result = test.get_notice()
-        self.assertIsInstance(test_result , list)
+        self.assertIsInstance(test_result, list)
+
+    def test_get_notice(self):
+        for link in links:
+            if link['type'] is '通知' and code_status[link['department_CN']] is 200:
+                test = Notice(link['department_CN'])
+                test_result = test.get_notice()
+                self.assertIsInstance(test_result, list)
+                self.assertGreater(len(test_ressult), 0)
 
         test = Notice(dep='xxx')
         with self.assertRaises(DepartmentNotSupportedError):
             test_result = test.get_notice()
+
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()

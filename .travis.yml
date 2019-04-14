@@ -4,6 +4,8 @@ install:
   - pip install pytest-pep8
   - yes| sudo add-apt-repository ppa:alex-p/tesseract-ocr
   - yes| sudo apt-get update
+  - yes | sudo apt install tesseract-ocr
+  - yes | sudo apt install libtesseract-dev
 jobs:
   include:
     - stage: test
