@@ -11,7 +11,8 @@ class TestNotice(unittest.TestCase):
     code_status = dict(zip(list(set([i['department_CN'] for i in links])), [
                        200 for _ in range(int(len(links)/2))]))
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         for link in links:
             if link['type'] is '通知':
                 dep = link['department_CN']
