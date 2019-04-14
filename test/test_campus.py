@@ -8,8 +8,8 @@ from snnusdk.campus import Campus
 class TestCampus(unittest.TestCase):
     consumption_status = 200
     photo_status = 200
-
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         try:
             consumption_status = urllib.request.urlopen(
                 url=Campus.URLs.CONSUMPTION, timeout=5).code

@@ -10,8 +10,8 @@ from snnusdk.room import Room
 
 class TestRoom(unittest.TestCase):
     Rooms_status = 200
-
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         try:
             Rooms_status = urllib.request.urlopen(
                 url=room.host, timeout=5).code

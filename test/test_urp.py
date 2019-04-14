@@ -9,8 +9,8 @@ from snnusdk.exceptions import AuthenticationError, UnauthorizedError, YearNotEx
 
 class TestUrp(unittest.TestCase):
     Urp_status = 200
-
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         try:
             Urp_status = urllib.request.urlopen(
                 url=Urp.URLs.HOST, timeout=5).code
