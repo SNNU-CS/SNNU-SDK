@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. 通知新闻接口 &mdash; SNNU-SDK latest 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="6. 异常" href="exceptions.html" />
+    <link rel="prev" title="4. 校园卡接口" href="campus.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SNNU-SDK
+          
+
+          
+            
+            <img src="_static/logo.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">接口文档</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="urp.html">1. 教务处接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libiary.html">2. 图书馆接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="room.html">3. 教室接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="campus.html">4. 校园卡接口</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 通知新闻接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">6. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">7. Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">使用示例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="urp_example.html">1. 教务处接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libiary_example.html">2. 图书馆接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="room_example.html">3. 教室接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="campus_example.html">4. 校园卡接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message_example.html">5. 通知新闻接口示例</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SNNU-SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>5. 通知新闻接口</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>5. 通知新闻接口<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<dl class="class">
+<dt id="snnusdk.Notice">
+<em class="property">class </em><code class="descclassname">snnusdk.</code><code class="descname">Notice</code><span class="sig-paren">(</span><em>dep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/message.html#Notice"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Notice" title="永久链接至目标">¶</a></dt>
+<dd><p>校园通知</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>dep</strong> (<em>str</em>) – 部门名称</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.DepartmentNotSupportedError" title="snnusdk.exceptions.DepartmentNotSupportedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.DepartmentNotSupportedError</span></code></a></p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">Notice</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;计算机科学学院&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="snnusdk.Notice.get_count">
+<code class="descname">get_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/message.html#Notice.get_count"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Notice.get_count" title="永久链接至目标">¶</a></dt>
+<dd><p>通知条数</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>通知的条数</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">get_count</span><span class="p">()</span>
+<span class="go">14</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Notice.get_notice">
+<code class="descname">get_notice</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/message.html#Notice.get_notice"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Notice.get_notice" title="永久链接至目标">¶</a></dt>
+<dd><p>通知的关键信息(标题,时间,链接)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.DepartmentNotSupportedError" title="snnusdk.exceptions.DepartmentNotSupportedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.DepartmentNotSupportedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>list of dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>参照例子</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">get_notice</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &#39;date&#39;: &#39;2018-12-26&#39;,</span>
+<span class="go">        &#39;link&#39;: &#39;http://tyxy.snnu.edu.cn/News_information.asp?id=33&amp;bh=1593&#39;,</span>
+<span class="go">        &#39;title&#39;: &#39;【学生工作】学院2017级开展宿舍冬季安全教育工作&#39;</span>
+<span class="go">    },</span>
+<span class="go">    ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="snnusdk.News">
+<em class="property">class </em><code class="descclassname">snnusdk.</code><code class="descname">News</code><span class="sig-paren">(</span><em>dep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/message.html#News"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.News" title="永久链接至目标">¶</a></dt>
+<dd><p>校园新闻</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>dep</strong> (<em>str</em>) – 部门名称</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.DepartmentNotSupportedError" title="snnusdk.exceptions.DepartmentNotSupportedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.DepartmentNotSupportedError</span></code></a></p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">News</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;计算机科学学院&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="snnusdk.News.get_count">
+<code class="descname">get_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/message.html#News.get_count"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.News.get_count" title="永久链接至目标">¶</a></dt>
+<dd><p>新闻条数</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>通知的条数</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">get_count</span><span class="p">()</span>
+<span class="go">14</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.News.get_news">
+<code class="descname">get_news</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/message.html#News.get_news"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.News.get_news" title="永久链接至目标">¶</a></dt>
+<dd><p>新闻的关键信息(标题,时间,链接)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.DepartmentNotSupportedError" title="snnusdk.exceptions.DepartmentNotSupportedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.DepartmentNotSupportedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>list of dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>参照例子</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">get_news</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &#39;date&#39;: &#39;2018-12-26&#39;,</span>
+<span class="go">        &#39;link&#39;: &#39;http://tyxy.snnu.edu.cn/News_information.asp?id=33&amp;bh=1593&#39;,</span>
+<span class="go">        &#39;title&#39;: &#39;【学生工作】学院2017级开展宿舍冬季安全教育工作&#39;</span>
+<span class="go">    },</span>
+<span class="go">    ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.message.get_support_dep">
+<code class="descclassname">message.</code><code class="descname">get_support_dep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snnusdk.message.get_support_dep" title="永久链接至目标">¶</a></dt>
+<dd><p>所支持的部门</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>所支持部门的名称的列表</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_support_dep</span><span class="p">()</span>
+<span class="go">[&#39;生命科学学院&#39;, &#39;新闻与传播学院&#39;, ...]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="exceptions.html" class="btn btn-neutral float-right" title="6. 异常" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="campus.html" class="btn btn-neutral float-left" title="4. 校园卡接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, QiZhao
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

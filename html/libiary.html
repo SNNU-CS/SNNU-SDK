@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. 图书馆接口 &mdash; SNNU-SDK latest 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="3. 教室接口" href="room.html" />
+    <link rel="prev" title="1. 教务处接口" href="urp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SNNU-SDK
+          
+
+          
+            
+            <img src="_static/logo.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">接口文档</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="urp.html">1. 教务处接口</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 图书馆接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="room.html">3. 教室接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="campus.html">4. 校园卡接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message.html">5. 通知新闻接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">6. 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">7. Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">使用示例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="urp_example.html">1. 教务处接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libiary_example.html">2. 图书馆接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="room_example.html">3. 教室接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="campus_example.html">4. 校园卡接口示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message_example.html">5. 通知新闻接口示例</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SNNU-SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>2. 图书馆接口</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>2. 图书馆接口<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<dl class="class">
+<dt id="snnusdk.Library">
+<em class="property">class </em><code class="descclassname">snnusdk.</code><code class="descname">Library</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library" title="永久链接至目标">¶</a></dt>
+<dd><p>图书馆</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – 用户名</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – 密码</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.AuthenticationError" title="snnusdk.exceptions.AuthenticationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.AuthenticationError</span></code></a></p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">libiary</span> <span class="o">=</span> <span class="n">Library</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;B11111111&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;xxx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="snnusdk.Library.login">
+<code class="descname">login</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.login"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.login" title="永久链接至目标">¶</a></dt>
+<dd><p>登录</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – 学号</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – 密码</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.AuthenticationError" title="snnusdk.exceptions.AuthenticationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.AuthenticationError</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Library.get_info">
+<code class="descname">get_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.get_info"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.get_info" title="永久链接至目标">¶</a></dt>
+<dd><p>基本信息</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.UnauthorizedError" title="snnusdk.exceptions.UnauthorizedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.UnauthorizedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>用户基本信息的字典</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">library</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;帐号ID&#39;: &#39;2016xxxxx&#39;,</span>
+<span class="go">    &#39;姓名&#39;: &#39;张三&#39;,</span>
+<span class="go">    &#39;昵称&#39;: &#39;xx&#39;,</span>
+<span class="go">    &#39;登录次数&#39;: &#39;123&#39;,</span>
+<span class="go">    &#39;状态&#39;: &#39;正常&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Library.get_borrowing_books">
+<code class="descname">get_borrowing_books</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.get_borrowing_books"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.get_borrowing_books" title="永久链接至目标">¶</a></dt>
+<dd><p>在借书籍列表</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.UnauthorizedError" title="snnusdk.exceptions.UnauthorizedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.UnauthorizedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>list of dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>在借书籍列表</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">library</span><span class="o">.</span><span class="n">get_borrowing_books</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">    &#39;书名&#39;: &#39;大学语文&#39;,</span>
+<span class="go">    &#39;作者&#39;: &#39;张三&#39;,</span>
+<span class="go">    &#39;出版社&#39;: &#39;中国xx出版社&#39;,</span>
+<span class="go">    &#39;分馆&#39;: &#39;雁塔外借图书库&#39;,</span>
+<span class="go">    &#39;索书号&#39;: &#39;TP311&#39;,</span>
+<span class="go">    &#39;条码号&#39;: &#39;123456789&#39;,</span>
+<span class="go">    &#39;应还日期&#39;: &#39;2018-12-11 22:00&#39;</span>
+<span class="go">    },</span>
+<span class="go">    ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Library.get_reservation_books">
+<code class="descname">get_reservation_books</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.get_reservation_books"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.get_reservation_books" title="永久链接至目标">¶</a></dt>
+<dd><p>预约书籍列表</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.UnauthorizedError" title="snnusdk.exceptions.UnauthorizedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.UnauthorizedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>list of dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>预约书籍列表</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">library</span><span class="o">.</span><span class="n">get_reservation_books</span><span class="p">()</span>
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">    &#39;书名&#39;: &#39;大学语文&#39;,</span>
+<span class="go">    &#39;作者&#39;: &#39;张三&#39;,</span>
+<span class="go">    &#39;出版社&#39;: &#39;中国xx出版社&#39;,</span>
+<span class="go">    &#39;取书地点&#39;: &#39;长安总服务台&#39;,</span>
+<span class="go">    &#39;预约开始日期&#39;: &#39;2018-12-01&#39;,</span>
+<span class="go">    &#39;预约失效日期&#39;: &#39;2018-12-11&#39;</span>
+<span class="go">    },</span>
+<span class="go">    ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Library.get_cash">
+<code class="descname">get_cash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.get_cash"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.get_cash" title="永久链接至目标">¶</a></dt>
+<dd><p>现金事务</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.UnauthorizedError" title="snnusdk.exceptions.UnauthorizedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.UnauthorizedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>参照例子</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">library</span><span class="o">.</span><span class="n">get_cash</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;总额&#39;:&#39;-2.00&#39;,</span>
+<span class="go">    &#39;明细&#39;:</span>
+<span class="go">    [</span>
+<span class="go">        {</span>
+<span class="go">            &#39;书名&#39;: &#39;大学语文&#39;,</span>
+<span class="go">            &#39;作者&#39;: &#39;张三&#39;,</span>
+<span class="go">            &#39;出版社&#39;: &#39;中国xx出版社&#39;,</span>
+<span class="go">            &#39;数量&#39;: &#39;-2.00&#39;,</span>
+<span class="go">            &#39;原因&#39;: &#39;超期&#39;,</span>
+<span class="go">            &#39;状态&#39;: &#39;O&#39;</span>
+<span class="go">        },</span>
+<span class="go">        ...</span>
+<span class="go">    ]</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Library.lock_lib_card">
+<code class="descname">lock_lib_card</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.lock_lib_card"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.lock_lib_card" title="永久链接至目标">¶</a></dt>
+<dd><p>挂失图书证</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.UnauthorizedError" title="snnusdk.exceptions.UnauthorizedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.UnauthorizedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>挂失借书证的结果</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">library</span><span class="o">.</span><span class="n">lock_lib_card</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;success&#39;:True,</span>
+<span class="go">    &#39;msg&#39;:&#39;挂失借书证成功&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.Library.unlock_lib_card">
+<code class="descname">unlock_lib_card</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/libiary.html#Library.unlock_lib_card"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Library.unlock_lib_card" title="永久链接至目标">¶</a></dt>
+<dd><p>解挂图书证</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#snnusdk.exceptions.UnauthorizedError" title="snnusdk.exceptions.UnauthorizedError"><code class="xref py py-class docutils literal notranslate"><span class="pre">snnusdk.exceptions.UnauthorizedError</span></code></a></p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>解挂借书证的结果</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">library</span><span class="o">.</span><span class="n">unlock_lib_card</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;success&#39;:True,</span>
+<span class="go">    &#39;msg&#39;:&#39;解挂借书证成功&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="snnusdk.libiary.get_borrow_info">
+<code class="descclassname">libiary.</code><code class="descname">get_borrow_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snnusdk.libiary.get_borrow_info" title="永久链接至目标">¶</a></dt>
+<dd><p>预约到馆信息</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>预约到馆信息的字典</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_borrow_info</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;success&#39;: True,</span>
+<span class="go">    &#39;msg&#39;: &#39;查询成功&#39;,</span>
+<span class="go">    &#39;result&#39;: [</span>
+<span class="go">        {</span>
+<span class="go">            &#39;预约者&#39;: &#39;张三&#39;,</span>
+<span class="go">            &#39;书名&#39;: &#39;C语言程序设计&#39;,</span>
+<span class="go">            &#39;著者&#39;: &#39;李四&#39;,</span>
+<span class="go">            &#39;保留结束日期&#39;: &#39;2018-12-06&#39;,</span>
+<span class="go">            &#39;单册分馆&#39;: &#39;长安西密集库&#39;,</span>
+<span class="go">            &#39;取书地点&#39;: &#39;雁塔总服务台&#39;</span>
+<span class="go">        },</span>
+<span class="go">        ...</span>
+<span class="go">        ]</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="room.html" class="btn btn-neutral float-right" title="3. 教室接口" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="urp.html" class="btn btn-neutral float-left" title="1. 教务处接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, QiZhao
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
