@@ -15,6 +15,11 @@ class TestCampus(unittest.TestCase):
                 url=Campus.URLs.CONSUMPTION, timeout=5).code
         except URLError:
             consumption_status = -1
+        try:
+            photo_status = urllib.request.urlopen(
+                url=Campus.URLs.PHOTO, timeout=5).code
+        except URLError:
+            photo_status = -1
 
     @unittest.skipIf(consumption_status != 200, "状态码不等于200，就跳过该测试")
     def test_get_list_1(self):
@@ -42,7 +47,7 @@ class TestCampus(unittest.TestCase):
         self.assertIsInstance(test_result['result', list])
         self.assertListEqual(test_result['result'], [])
 
-    @unittest.skipIf(consumption_status == 200, "状态码等于200，就跳过该测试")
+    @unittest.skipIf(photo_status == 200, "状态码等于200，就跳过该测试")
     def test_get_photo_1(self):
         test = Campus('201608735')
         test_result = test.get_photo()
@@ -51,7 +56,7 @@ class TestCampus(unittest.TestCase):
         self.assertTrue(test_result['success'])
         self.assertIsInstance(test_result['data'], bytes)
 
-    @unittest.skipIf(consumption_status != 200, "状态码不等于200，就跳过该测试")
+    @unittest.skipIf(photo_status != 200, "状态码不等于200，就跳过该测试")
     def test_get_photo_2(self):
         test = Campus('201608714')
         test_result = test.get_photo()
