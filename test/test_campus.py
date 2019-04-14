@@ -4,13 +4,11 @@ from urllib.error import URLError
 
 from snnusdk.campus import Campus
 
-
 class TestCampus(unittest.TestCase):
     consumption_status = 200
     photo_status = 200
 
-    @classmethod
-    def setUpClass(cls):
+    def setUp(self):
         try:
             consumption_status = urllib.request.urlopen(
                 url=Campus.URLs.CONSUMPTION, timeout=5).code
@@ -40,8 +38,31 @@ class TestCampus(unittest.TestCase):
         self.assertIsInstance(test_result, dict)
         self.assertTrue(test_result['success'])
         self.assertEqual(test_result['msg'], '网络连接失败')
-        self.assertIsInstance(test_result['result'], list)
+        self.assertIsInstance(test_result['result', list])
         self.assertListEqual(test_result['result'], [])
+
+    @unittest.skipIf(consumption_status == 200 , "状态码等于200，就跳过该测试")
+    def test_get_photo_1(self):
+        test = Campus('201608735')
+        test_result = test.get_photo()
+        self.assertIsInstance(test_result, dict)
+        self.assertEqual(test_result['msg'], '网络连接失败')
+        self.assertTrue(test_result['success'])
+        self.assertIsInstance(test_result['data'], bytes)
+
+    @unittest.skipIf(consumption_status != 200, "状态码不等于200，就跳过该测试")
+    def test_get_photo_2(self):
+        test = Campus('201608714')
+        test_result = test.get_photo()
+        self.assertIsInstance(test_result, dict)
+        self.assertEqual(test_result['msg'] , '获取成功')
+        self.assertTrue(test_result['success'], True)
+
+        test = Campus('xxxxxx')
+        test_result = test.get_photo()
+        self.assertIsInstance(test_result, dict)
+        self.assertEqual(test_result['msg'], '获取成功')
+        self.assertTrue(test_result['success'],True)
 
 
 if __name__ == '__main__':
