@@ -1,13 +1,17 @@
-#!/usr/bin/bash
+#!/bin/bash
 export GH_REF="github.com/snnucs/SNNU-SDK.git"
 cd docs && make html
+pwd
 git clone https://${GH_REF} html
 cd html
 git checkout  gh-pages
 git pull origin
-sudo mkdir SNNU-SDK-docs/.git
+cd ..
+pwd
+ls
+sudo cd SNNU-SDK-docs && sudo mkdir .git
 sudo mv html/.git/ SNNU-SDK-docs/.git/
-cd SNNU-SDK-docs
+sudo cd SNNU-SDK-docs
 pwd
 rm -rf doctrees
 git config  --global user.name "Qi Zhao"
