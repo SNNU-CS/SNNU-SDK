@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="5. 通知新闻接口" href="message.html" />
     <link rel="prev" title="3. 教室接口" href="room.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -166,14 +169,11 @@
 <dt id="snnusdk.Campus">
 <em class="property">class </em><code class="descclassname">snnusdk.</code><code class="descname">Campus</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/campus.html#Campus"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Campus" title="永久链接至目标">¶</a></dt>
 <dd><p>校园卡相关信息</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>id</strong> (<em>str</em>) – 校园卡号</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – 校园卡号</p>
+</dd>
+</dl>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Campus</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;2016xxx&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -181,32 +181,30 @@
 <dt id="snnusdk.Campus.get_list">
 <code class="descname">get_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/campus.html#Campus.get_list"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Campus.get_list" title="永久链接至目标">¶</a></dt>
 <dd><p>查询消费明细</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">dict</td>
-</tr>
-<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">参见例子</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>参见例子</p>
+</dd>
+</dl>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">get_list</span><span class="p">()</span>
 <span class="go">{</span>
-<span class="go">    &#39;success&#39;: True, </span>
+<span class="go">    &#39;success&#39;: True,</span>
 <span class="go">    &#39;msg&#39;: &#39;查询成功&#39;,</span>
-<span class="go">    &#39;result&#39;: </span>
+<span class="go">    &#39;result&#39;:</span>
 <span class="go">    [</span>
 <span class="go">        {</span>
-<span class="go">            &#39;卡号&#39;: &#39;201608735&#39;, </span>
-<span class="go">            &#39;时间&#39;: &#39;2018-12-5 22:48:10&#39;, </span>
-<span class="go">            &#39;次数&#39;: &#39;2760&#39;, </span>
-<span class="go">            &#39;原金额&#39;: &#39;98.09&#39;, </span>
-<span class="go">            &#39;交易额&#39;: &#39;30.70&#39;, </span>
-<span class="go">            &#39;卡余额&#39;: &#39;67.39&#39;, </span>
-<span class="go">            &#39;记录信息&#39;: &#39;99CB399&#39;, </span>
+<span class="go">            &#39;卡号&#39;: &#39;201608735&#39;,</span>
+<span class="go">            &#39;时间&#39;: &#39;2018-12-5 22:48:10&#39;,</span>
+<span class="go">            &#39;次数&#39;: &#39;2760&#39;,</span>
+<span class="go">            &#39;原金额&#39;: &#39;98.09&#39;,</span>
+<span class="go">            &#39;交易额&#39;: &#39;30.70&#39;,</span>
+<span class="go">            &#39;卡余额&#39;: &#39;67.39&#39;,</span>
+<span class="go">            &#39;记录信息&#39;: &#39;99CB399&#39;,</span>
 <span class="go">            &#39;备注&#39;: &#39;&#39;</span>
-<span class="go">        }, </span>
+<span class="go">        },</span>
 <span class="go">        ...</span>
 <span class="go">    ]</span>
 <span class="go">}</span>
@@ -218,19 +216,17 @@
 <dt id="snnusdk.Campus.get_photo">
 <code class="descname">get_photo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snnusdk/campus.html#Campus.get_photo"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#snnusdk.Campus.get_photo" title="永久链接至目标">¶</a></dt>
 <dd><p>获取个人照片</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">dict</td>
-</tr>
-<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">以二进制流的方式返回照片</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>以二进制流的方式返回照片</p>
+</dd>
+</dl>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">get_photo</span><span class="p">()</span>
 <span class="go">{</span>
-<span class="go">    &#39;msg&#39;: &#39;获取成功&#39;, </span>
+<span class="go">    &#39;msg&#39;: &#39;获取成功&#39;,</span>
 <span class="go">    &#39;success&#39;: True,</span>
 <span class="go">    &#39;data&#39;: b&#39;byte&#39;</span>
 <span class="go">}</span>
@@ -253,7 +249,7 @@
         <a href="message.html" class="btn btn-neutral float-right" title="5. 通知新闻接口" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="room.html" class="btn btn-neutral" title="3. 教室接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="room.html" class="btn btn-neutral float-left" title="3. 教室接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -279,26 +275,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
