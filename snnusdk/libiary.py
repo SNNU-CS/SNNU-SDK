@@ -3,12 +3,14 @@ Created on Dec 5, 2018
 
 @author: QiZhao
 '''
-from snnusdk.base import API
-from snnusdk.exceptions import AuthenticationError
-from bs4 import BeautifulSoup
-from snnusdk.tool.Table import table_to_list
-import requests
 import re
+
+import requests
+from bs4 import BeautifulSoup
+
+from snnusdk.base import API
+from snnusdk.exceptions import AuthenticationError, UnauthorizedError
+from snnusdk.tool.Table import table_to_list
 
 
 class Library(API):
@@ -23,30 +25,28 @@ class Library(API):
 
     class URLs:
         HOST = "http://www.lib.snnu.edu.cn/"
-        LOGIN = HOST + 'centerlogin.do'        # 登录
-        INFO = HOST + 'action.do?webid=w-l-mylib'   # 信息
+        LOGIN = HOST + 'centerlogin.do'  # 登录
+        INFO = HOST + 'action.do?webid=w-l-mylib'  # 信息
         BORROW = HOST + 'action.do?webid=w-l-zjts'  # 在借书籍
         RESERVATION = HOST + 'action.do?webid=w-l-yyts'  # 预约书籍
         CASH = HOST + 'action.do?webid=w-l-xjsw'  # 现金事务
         LOCK = HOST + 'action.do?webid=w-l-gsjsz'  # 挂失
         UNLOCK = HOST + 'action.do?webid=w-l-jgjsz'  # 解挂
+        BORROW_INFO = 'http://opac.snnu.edu.cn:8991/F?func=file&file_name=hold_shelf'  # 预约到馆
 
     def __init__(self, username, password):
         super().__init__()
         self.username = username
         self.password = password
-        self.login(self.username, self.password)
 
-    def login(self, username, password):
+    def login(self):
         """登录
-        
-        :param str username: 学号
-        :param str password: 密码
+
         :raise: :class:`snnusdk.exceptions.AuthenticationError`
         """
         data = {
-            'userid': username,
-            'password': password,
+            'userid': self.username,
+            'password': self.password,
             '提交': '登录',
         }
 
@@ -61,21 +61,21 @@ class Library(API):
 
     def get_info(self):
         """基本信息
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 用户基本信息的字典
 
         >>> library.get_info()
         {
-            '帐号ID': '2016xxxxx', 
-            '姓名': '张三', 
-            '昵称': 'xx', 
-            '登录次数': '123', 
+            '帐号ID': '2016xxxxx',
+            '姓名': '张三',
+            '昵称': 'xx',
+            '登录次数': '123',
             '状态': '正常'
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.INFO)
         table = soup.find(name='table', attrs={'class': 'dzjbzl'})
@@ -93,7 +93,7 @@ class Library(API):
 
     def get_borrowing_books(self):
         """在借书籍列表
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 在借书籍列表
@@ -101,19 +101,19 @@ class Library(API):
         >>> library.get_borrowing_books()
         [
             {
-            '书名': '大学语文', 
-            '作者': '张三', 
-            '出版社': '中国xx出版社', 
-            '分馆': '雁塔外借图书库', 
-            '索书号': 'TP311', 
-            '条码号': '123456789', 
+            '书名': '大学语文',
+            '作者': '张三',
+            '出版社': '中国xx出版社',
+            '分馆': '雁塔外借图书库',
+            '索书号': 'TP311',
+            '条码号': '123456789',
             '应还日期': '2018-12-11 22:00'
-            }, 
-            ...  
+            },
+            ...
         ]
         """
-        if self.verify == False:
-            raise UnauthorizedError('您还没有登录!') 
+        if self.verify is False:
+            raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.BORROW)
         book_list = []
         tables = soup.find_all(name='table', attrs={'class': 'borrows'})
@@ -129,7 +129,7 @@ class Library(API):
 
     def get_reservation_books(self):
         """预约书籍列表
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: list of dict
         :return: 预约书籍列表
@@ -137,17 +137,17 @@ class Library(API):
         >>> library.get_reservation_books()
         [
             {
-            '书名': '大学语文', 
-            '作者': '张三', 
-            '出版社': '中国xx出版社', 
-            '取书地点': '长安总服务台', 
-            '预约开始日期': '2018-12-01', 
+            '书名': '大学语文',
+            '作者': '张三',
+            '出版社': '中国xx出版社',
+            '取书地点': '长安总服务台',
+            '预约开始日期': '2018-12-01',
             '预约失效日期': '2018-12-11'
-            }, 
-            ...  
+            },
+            ...
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         book_list = []
         soup = self.get_soup(self.URLs.RESERVATION)
@@ -171,7 +171,7 @@ class Library(API):
 
     def get_cash(self):
         """现金事务
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 参照例子
@@ -182,18 +182,18 @@ class Library(API):
             '明细':
             [
                 {
-                    '书名': '大学语文', 
-                    '作者': '张三', 
-                    '出版社': '中国xx出版社', 
-                    '数量': '-2.00', 
-                    '原因': '超期', 
+                    '书名': '大学语文',
+                    '作者': '张三',
+                    '出版社': '中国xx出版社',
+                    '数量': '-2.00',
+                    '原因': '超期',
                     '状态': 'O'
                 },
                 ...
             ]
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         dic = {}
         soup = self.get_soup(self.URLs.CASH)
@@ -224,7 +224,7 @@ class Library(API):
 
     def lock_lib_card(self):
         """挂失图书证
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 挂失借书证的结果
@@ -235,7 +235,7 @@ class Library(API):
             'msg':'挂失借书证成功'
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         r = self.get(url=self.URLs.LOCK)
         if '挂失借书证成功' in r.text:
@@ -245,7 +245,7 @@ class Library(API):
 
     def unlock_lib_card(self):
         """解挂图书证
-        
+
         :raise: :class:`snnusdk.exceptions.UnauthorizedError`
         :rtype: dict
         :return: 解挂借书证的结果
@@ -256,7 +256,7 @@ class Library(API):
             'msg':'解挂借书证成功'
         }
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         r = self.get(url=self.URLs.UNLOCK)
         if '解挂借书证成功' in r.text:
@@ -264,47 +264,48 @@ class Library(API):
         else:
             return {'success': False, 'msg': '解挂借书证失败'}
 
+    @staticmethod
+    def get_borrow_info():
+        """预约到馆信息
 
-def get_borrow_info():
-    """预约到馆信息
+        :rtype: dict
+        :return: 预约到馆信息的字典
 
-    :rtype: dict
-    :return: 预约到馆信息的字典
+        >>> get_borrow_info()
+        {
+            'success': True,
+            'msg': '查询成功',
+            'result': [
+                {
+                    '预约者': '张三',
+                    '书名': 'C语言程序设计',
+                    '著者': '李四',
+                    '保留结束日期': '2018-12-06',
+                    '单册分馆': '长安西密集库',
+                    '取书地点': '雁塔总服务台'
+                },
+                ...
+                ]
+        }
+        """
+        ret = {}
+        try:
+            r = requests.get(Library.URLs.BORROW_INFO)
+            r.encoding = 'utf-8'
+            soup = BeautifulSoup(r.text, 'lxml')
+            table = soup.find(name='table', attrs={'summary': 'Script output'})
+            ls = table_to_list(table)
+            ret['success'] = True
+            ret['result'] = ls
+            ret['msg'] = '查询成功'
+        except Exception as e:
+            print(e)
+            ret['success'] = False
+            ret['result'] = []
+            ret['msg'] = e.message
+        finally:
+            return ret
 
-    >>> get_borrow_info()
-    {
-        'success': True, 
-        'msg': '查询成功',
-        'result': [
-            {
-                '预约者': '张三', 
-                '书名': 'C语言程序设计', 
-                '著者': '李四', 
-                '保留结束日期': '2018-12-06', 
-                '单册分馆': '长安西密集库', 
-                '取书地点': '雁塔总服务台'
-            },
-            ...
-            ]
-    }
-    """
-    url = 'http://opac.snnu.edu.cn:8991/F?func=file&file_name=hold_shelf'
-    ret = {}
-    try:
-        r = requests.get(url)
-        r.encoding = 'utf-8'
-        soup = BeautifulSoup(r.text, 'lxml')
-        table = soup.find(name='table', attrs={'summary': 'Script output'})
-        ls = table_to_list(table)
-        ret['success'] = True
-        ret['result'] = ls
-        ret['msg']='查询成功'
-    except Exception as e:
-        ret['success'] = False
-        ret['result'] = []
-        ret['msg']=e.message
-    finally:
-        return ret
 
 if __name__ == "__main__":
     lib = Library('xx', 'xx')

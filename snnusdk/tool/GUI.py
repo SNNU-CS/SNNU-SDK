@@ -11,7 +11,6 @@ from PIL import Image, ImageTk
 
 
 class CaptchaGUI:
-
     def __init__(self, im):
         self.im = im
         self.captcha_value = ""
@@ -38,6 +37,6 @@ if __name__ == "__main__":
     captcha_url = "http://219.244.71.113/validateCodeAction.do"
     r = requests.get(captcha_url)
     im = Image.open(BytesIO(r.content))
-#     im.show()
+    #     im.show()
     captcha_gui = CaptchaGUI(im)
     print(captcha_gui)

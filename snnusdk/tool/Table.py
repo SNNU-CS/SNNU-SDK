@@ -20,8 +20,10 @@ def table_to_list(table, remove_index_list=None, index_cast_dict=None):
     index_cast_dict = index_cast_dict or {}
     remove_index_list = remove_index_list or []
     trs = list(table.select('tr'))
-    keys = [key.text.strip() for col_index, key in enumerate(
-        trs[0].select('th')) if col_index not in remove_index_list]
+    keys = [
+        key.text.strip() for col_index, key in enumerate(trs[0].select('th'))
+        if col_index not in remove_index_list
+    ]
     result = []
     for tr in trs[1:]:
         values = []
@@ -52,8 +54,10 @@ def table_to_dict(table, remove_index_list=None, index_cast_dict=None):
     index_cast_dict = index_cast_dict or {}
     remove_index_list = remove_index_list or []
     trs = list(table.select('tr'))
-    keys = [key.text.strip() for col_index, key in enumerate(
-        trs[0].select('th')) if col_index not in remove_index_list]
+    keys = [
+        key.text.strip() for col_index, key in enumerate(trs[0].select('th'))
+        if col_index not in remove_index_list
+    ]
     result = {}
     for key in keys:
         result[key] = []

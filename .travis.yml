@@ -1,8 +1,27 @@
 language: python
-sudo: true
-python:
-  - "3.5"
-  - "3.6"
 install:
-  - pip install -r requirements.txt
-script: True
+  - pip install -r dev-requirements.txt
+  - pip install pytest-pep8
+  - yes| sudo add-apt-repository ppa:alex-p/tesseract-ocr
+  - yes| sudo apt-get update
+  - yes | sudo apt install tesseract-ocr
+  - yes | sudo apt install libtesseract-dev
+jobs:
+  include:
+    - stage: test
+      script:
+        - make ci
+        - make build-docs
+      python: '3.5'
+    - stage: test
+      script:
+        - make ci
+        - make build-docs
+      python: '3.6'
+    - stage: docs
+      script:
+        - make build-docs && bash publish-docs.sh
+      python: '3.6'
+      branches:
+        only:
+          - master

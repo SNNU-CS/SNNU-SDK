@@ -3,24 +3,27 @@ Created on Dec 3, 2018
 
 @author: QiZhao
 '''
-import os
-import requests
 import hashlib
-from PIL import Image, ImageTk
+import os
 import random
-from io import BytesIO
 import threading
 import tkinter
+from io import BytesIO
+
+import requests
 from bs4 import BeautifulSoup
-from snnusdk.tool.Table import table_to_list
+from PIL import Image, ImageTk
+
 from snnusdk.tool.Image import ImageBinarization
+from snnusdk.tool.Table import table_to_list
 from snnusdk.utils.captcha.base import ImageToString
 
 host = 'http://219.244.71.113/'
 url_captcha = host + 'validateCodeAction.do'
 url_login = host + 'loginAction.do'
 headers = {
-    "User_Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
+    "User_Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
     'Connection': 'close',
     'Referer': 'http://219.244.71.113/login.jsp'
 }
@@ -30,7 +33,6 @@ data = 'data.txr'  # 图片的hash值与
 
 
 class CaptchaGUI:
-
     def __init__(self, im, all_md5_name_file):
         self.im = im
         self.captcha_value = ""
@@ -102,18 +104,16 @@ def GetAllImage():
         pro += 1
         ip = ip_list[random.randint(0, len(ip_list) - 1)]
         proxies = {}
-        proxies.update({
-            'http': ip,
-            "https": ip
-        })
-#         print(proxies)
+        proxies.update({'http': ip, "https": ip})
+        #         print(proxies)
         try:
-            r = requests.get(url_captcha, proxies=proxies,
-                             headers=headers, timeout=3).content
+            r = requests.get(
+                url_captcha, proxies=proxies, headers=headers,
+                timeout=3).content
         except:
             err += 1
-            print("ERROR:{}/{} {}% ip:{}".format(err, pro,
-                                                 round(err * 1.0 / pro * 100, 2), ip))
+            print("ERROR:{}/{} {}% ip:{}".format(
+                err, pro, round(err * 1.0 / pro * 100, 2), ip))
             continue
         md5 = Hash(r)
         if md5 not in save_image:
@@ -125,8 +125,9 @@ def GetAllImage():
                 f.write(md5 + '\n')
         else:
             rep += 1
-            print("Existed:{}/{}\t{}% {}%".format(rep, pro, round(rep *
-                                                                  1.0 / pro * 100, 2), round(rep * 1.0 / (pro - err) * 100, 2)))
+            print("Existed:{}/{}\t{}% {}%".format(
+                rep, pro, round(rep * 1.0 / pro * 100, 2),
+                round(rep * 1.0 / (pro - err) * 100, 2)))
 
 
 def GenerateFromFile():
@@ -165,8 +166,9 @@ def GetIpList():
     ip_list = []
     r = requests.get('http://ip.jiangxianli.com/')
     soup = BeautifulSoup(r.text, 'lxml')
-    table = soup.find(name='table', attrs={
-                      "class": "table table-hover table-bordered table-striped"})
+    table = soup.find(
+        name='table',
+        attrs={"class": "table table-hover table-bordered table-striped"})
     ls = table_to_list(table)
     for dic in ls:
         ip_list.append(dic['IP'] + ':' + dic['端口'])
@@ -217,7 +219,8 @@ def OcrMark():
             print("成功！")
             with open("captchas/{}.gif".format(value), 'wb+') as f:
                 f.write(v.content)
-        print('正确率为:{}% {}/{}'.format(round(success / num * 100, 2), success, num))
+        print('正确率为:{}% {}/{}'.format(
+            round(success / num * 100, 2), success, num))
 
 
 if __name__ == '__main__':

@@ -6,8 +6,10 @@ Created on Dec 3, 2018
 import json
 import os
 from io import BytesIO
+
 import requests
 from PIL import Image
+
 from snnusdk.tool.Image import ImageBinarization
 from snnusdk.utils.captcha.base import ImageToString
 

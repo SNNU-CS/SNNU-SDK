@@ -4,10 +4,12 @@ Created on Dec 5, 2018
 @author: QiZhao
 '''
 
-from bs4 import BeautifulSoup
-import requests
-from requests.exceptions import ReadTimeout, ConnectionError
 import re
+
+import requests
+from bs4 import BeautifulSoup
+from requests.exceptions import ConnectionError, ReadTimeout
+
 from snnusdk.exceptions import BuildingNotFoundError, RoomNotFoundError
 
 dic = {
@@ -35,7 +37,13 @@ dic = {
 host = 'http://kb.snnu.edu.cn/room/index/'
 re_p = re.compile('<P>([^<]*?)</p>')
 week_key = ['', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
-jieshu = ['9-10节', '1-2节', '3-4节', '5-6节', '7-8节', ]
+jieshu = [
+    '9-10节',
+    '1-2节',
+    '3-4节',
+    '5-6节',
+    '7-8节',
+]
 
 
 class Room:
@@ -57,7 +65,7 @@ class Room:
 
     def _get_Soup(self):
         """依据构造参数,获取BeautifulSoup对象对象
-        
+
         :raise: :class:`snnusdk.exceptions.BuildingNotFoundError`
         :raise: :class:`requests.exceptions.ConnectionError`
         :rtype: bs4.BeautifulSoup对象
@@ -67,6 +75,8 @@ class Room:
             url = '{}?jxz={}&lh={}'.format(host, self.week, dic[self.building])
             r = requests.get(url, timeout=10)
             soup = BeautifulSoup(r.text, 'lxml')
+
+
 #             print(type(soup))
         except KeyError:
             raise BuildingNotFoundError('不存在该教学楼！')
@@ -101,24 +111,24 @@ class Room:
 
         >>> room._get_one_room(tr)
         {
-            'id': '8104', 
-            '教室类型': '多媒体教室', 
-            '上课座位': '60', 
-            '星期一': 
+            'id': '8104',
+            '教室类型': '多媒体教室',
+            '上课座位': '60',
+            '星期一':
             [
                 {
-                    '状态': '排课', 
-                    'info': 
+                    '状态': '排课',
+                    'info':
                     {
-                        '科目': '高等数学（一）-3', 
-                        '教师': '吴洪博', 
-                        '班级':'数学与信息科学学院 恒元物理实验班1701', 
-                        '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节', 
+                        '科目': '高等数学（一）-3',
+                        '教师': '吴洪博',
+                        '班级':'数学与信息科学学院 恒元物理实验班1701',
+                        '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节',
                         '地点': '雁塔教学八楼 8104'
                     }
                     '节数':'1-2节'
                 },
-                ... 
+                ...
             ]
             ...
         }
@@ -135,8 +145,8 @@ class Room:
                 oneday.append(one_class)
             else:  # 教室整体信息
                 dic['id'] = td.find(name='a')['title']
-                ls = re.findall(
-                    '(\sbody=\[|>\s)([^：]*?)：([^\s]*?)\s', td['title'])
+                ls = re.findall('(\sbody=\[|>\s)([^：]*?)：([^\s]*?)\s',
+                                td['title'])
                 for tup in ls:
                     dic[tup[1]] = tup[2]
             if int(flag) % 5 == 0 and flag != 0:
@@ -154,13 +164,13 @@ class Room:
 
         >>> room._get_one_class(td)
         {
-            '状态': '排课', 
-            'info': 
+            '状态': '排课',
+            'info':
             {
-                '科目': '高等数学（一）-3', 
-                '教师': '吴洪博', 
-                '班级':'数学与信息科学学院 恒元物理实验班1701', 
-                '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节', 
+                '科目': '高等数学（一）-3',
+                '教师': '吴洪博',
+                '班级':'数学与信息科学学院 恒元物理实验班1701',
+                '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节',
                 '地点': '雁塔教学八楼 8104'
             }
             '节数':'1-2节'
@@ -186,16 +196,16 @@ class Room:
         >>> room.query_all()
         [
             {
-            'id': '8101', 
-            '教室类型': '多媒体教室', 
-            '上课座位': '60', 
+            'id': '8101',
+            '教室类型': '多媒体教室',
+            '上课座位': '60',
             '星期一': [
                         {
-                            '状态': '排课', 
+                            '状态': '排课',
                             '节数':'1-2节'
                             'info':
                             {
-                                '科目': '数学分析(一)', 
+                                '科目': '数学分析(一)',
                                 '教师': '曹小红',
                                 ...
                             }
@@ -235,24 +245,24 @@ class Room:
 
         >>> room.query_one_room(room='8014')
         {
-            'id': '8104', 
-            '教室类型': '多媒体教室', 
-            '上课座位': '60', 
-            '星期一': 
+            'id': '8104',
+            '教室类型': '多媒体教室',
+            '上课座位': '60',
+            '星期一':
             [
                 {
-                    '状态': '排课', 
-                    'info': 
+                    '状态': '排课',
+                    'info':
                     {
-                        '科目': '高等数学（一）-3', 
-                        '教师': '吴洪博', 
-                        '班级':'数学与信息科学学院 恒元物理实验班1701', 
-                        '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节', 
+                        '科目': '高等数学（一）-3',
+                        '教师': '吴洪博',
+                        '班级':'数学与信息科学学院 恒元物理实验班1701',
+                        '时间': '1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18 周1 1-2节',
                         '地点': '雁塔教学八楼 8104'
                     }
                     '节数':'1-2节'
                 },
-                ... 
+                ...
             ]
             ...
         }
@@ -261,7 +271,7 @@ class Room:
         if room not in self.Rooms:
             raise RoomNotFoundError('不存在该教室')
         tr = trs[self.Rooms.index(room)]
-#         print(type(tr))
+        #         print(type(tr))
         return self._get_one_room(tr)
 
 if __name__ == '__main__':

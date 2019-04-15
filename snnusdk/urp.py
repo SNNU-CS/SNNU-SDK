@@ -4,12 +4,14 @@ Created on Nov 29, 2018
 @author: QiZhao
 '''
 
+import re
+
 from snnusdk.base import API
+from snnusdk.exceptions import (AuthenticationError, UnauthorizedError,
+                                YearNotExistError)
 # from snnusdk.tool.GUI import CaptchaGUI
 from snnusdk.tool.Table import table_to_list
-from snnusdk.exceptions import AuthenticationError, YearNotExistError, UnauthorizedError
 from snnusdk.utils.captcha import UrpCaptcha
-import re
 
 
 class Urp(API):
@@ -50,28 +52,28 @@ class Urp(API):
         >>> urp.get_courses()
         [
             {
-                'id': '1241416', 
-                'name': '算法设计与分析', 
-                'number': '01', 
-                'credits': 3.0, 
-                'attributes': '必修', 
-                'teacher': '王小明*', 
-                'status': '置入', 
+                'id': '1241416',
+                'name': '算法设计与分析',
+                'number': '01',
+                'credits': 3.0,
+                'attributes': '必修',
+                'teacher': '王小明*',
+                'status': '置入',
                 'info': [
                             {
-                                'week': '1-18周上', 
-                                'day': '2', 
-                                'timeOfClass': '1', 
-                                'numOfClass': '2', 
-                                'campus': '长安校区', 
-                                'buildings': '长安文津楼', 
+                                'week': '1-18周上',
+                                'day': '2',
+                                'timeOfClass': '1',
+                                'numOfClass': '2',
+                                'campus': '长安校区',
+                                'buildings': '长安文津楼',
                                 'room': '1511'
                             }
                         ]
             }
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(method='get', url=self.URLs.SELECTED_COURSES)
         tables = soup.findAll("table", attrs={'id': "user"})
@@ -125,28 +127,28 @@ class Urp(API):
         >>> u.get_old_courses(year='2017-2018', semester=1)
         [
             {
-                'id': '1241416', 
-                'name': '算法设计与分析', 
-                'number': '01', 
-                'credits': 3.0, 
-                'attributes': '必修', 
-                'teacher': '王小明*', 
-                'status': '置入', 
+                'id': '1241416',
+                'name': '算法设计与分析',
+                'number': '01',
+                'credits': 3.0,
+                'attributes': '必修',
+                'teacher': '王小明*',
+                'status': '置入',
                 'info': [
                             {
-                                'week': '1-18周上', 
-                                'day': '2', 
-                                'timeOfClass': '1', 
-                                'numOfClass': '2', 
-                                'campus': '长安校区', 
-                                'buildings': '长安文津楼', 
+                                'week': '1-18周上',
+                                'day': '2',
+                                'timeOfClass': '1',
+                                'numOfClass': '2',
+                                'campus': '长安校区',
+                                'buildings': '长安文津楼',
                                 'room': '1511'
                             }
                         ]
             }
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.OLD_COURSES)
         year_list = [i.get('value') for i in soup.find_all(name='option')]
@@ -154,8 +156,8 @@ class Urp(API):
         if key not in year_list:
             raise YearNotExistError('不存在该学期！')
 
-        soup = self.get_soup(self.URLs.OLD_COURSES,
-                             'post', data={'zxjxjhh': key})
+        soup = self.get_soup(
+            self.URLs.OLD_COURSES, 'post', data={'zxjxjhh': key})
         table = soup.find_all(name='table', attrs={'id': 'user'})[1]
         table_list = table_to_list(table, remove_index_list=[8])
 
@@ -203,24 +205,24 @@ class Urp(API):
         >>> u.get_grade()
         [
             {
-                '课程号': '1243432', 
-                '课序号': '01', 
-                '课程名': '高级数据结构', 
-                '英文课程名': 'Advanced Data Structures', 
-                '学分': '2', 
-                '课程属性': '任选', 
-                '课堂最高分': '', 
-                '课堂最低分': '', 
-                '课堂平均分': '', 
-                '成绩': '', 
-                '名次': '', 
+                '课程号': '1243432',
+                '课序号': '01',
+                '课程名': '高级数据结构',
+                '英文课程名': 'Advanced Data Structures',
+                '学分': '2',
+                '课程属性': '任选',
+                '课堂最高分': '',
+                '课堂最低分': '',
+                '课堂平均分': '',
+                '成绩': '',
+                '名次': '',
                 '未通过原因': ''
             },
             ...
         ]
 
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.GRADE)
         table = soup.find(name='table', attrs={'class': 'titleTop2'})
@@ -235,13 +237,13 @@ class Urp(API):
         :return: 参照例子
 
         >>> u.get_grade_year_list()
-        [    '2016-2017学年秋(两学期)', 
-            '2016-2017学年春(两学期)', 
-            '2017-2018学年秋(两学期)', 
+        [    '2016-2017学年秋(两学期)',
+            '2016-2017学年春(两学期)',
+            '2017-2018学年秋(两学期)',
             '2017-2018学年春(两学期)'
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         soup = self.get_soup(self.URLs.ALL_GRADE)
         a_tags = soup.find_all(name='a')
@@ -262,24 +264,24 @@ class Urp(API):
         [
             {
                 '课程号':'01111',
-                '课序号': '62', 
-                '课程名': '大学外语（一）', 
-                '英文课程名': 'College English 1', 
-                '学分': '3', 
-                '课程属性': '必修', 
+                '课序号': '62',
+                '课程名': '大学外语（一）',
+                '英文课程名': 'College English 1',
+                '学分': '3',
+                '课程属性': '必修',
                 '成绩': '73.0'
             },
             ...
         ]
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         year_list = self.get_grade_year_list()
         year_set = set()
         for year_item in year_list:
             year_set.add(
                 re.search(r'\d{4,4}-\d{4,4}', year_item, re.S).group(0))
-        if year not in year_set or semester not in[1, 2]:
+        if year not in year_set or semester not in [1, 2]:
             raise YearNotExistError('不存在该学期')
 
         key = "{}学年{}(两学期)".format(year, '春' if semester == 2 else '秋')
@@ -299,7 +301,7 @@ class Urp(API):
         >>> u.get_gpa()
         73.00
         """
-        if self.verify == False:
+        if self.verify is False:
             raise UnauthorizedError('您还没有登录!')
         ret = 0.0
         num = 0.0
@@ -318,16 +320,16 @@ class Urp(API):
 
         :raise: :class:`snnusdk.exceptions.AuthenticationError`
         :rtype: dict
-        
+
         >>> u.login()
         {
-            'msg': '登录成功', 
+            'msg': '登录成功',
             'success': True
         }
         """
         # FIXME: 登录不可靠
         image = self.get_image(self.URLs.CAPTCHA)
-#         captcha_code = CaptchaGUI(image)
+        #         captcha_code = CaptchaGUI(image)
         captcha_code = UrpCaptcha(image)
         data = {
             "zjh1": "",
@@ -372,7 +374,7 @@ class Urp(API):
 
 if __name__ == '__main__':
     c = Urp("xx", "xx")
-#     c.login()
+    #     c.login()
     print(c.login())
     print(c.get_old_courses('2018-2019', 1))
     print(c.get_grade_year_list())

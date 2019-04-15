@@ -1,9 +1,11 @@
-[![Build Status](https://travis-ci.com/ZhaoQi99/SNNU-SDK.svg?branch=master)](https://travis-ci.com/ZhaoQi99/SNNU-SDK/master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a631e0b7b3484ecf8cf3226b8f0d90b9)](https://app.codacy.com/app/ZhaoQi99/SNNU-SDK?utm_source=github.com&utm_medium=referral&utm_content=snnucs/SNNU-SDK&utm_campaign=Badge_Grade_Settings)
+[![Build Status](https://travis-ci.com/snnucs/SNNU-SDK.svg?branch=dev)](https://travis-ci.com/snnucs/SNNU-SDK)
 [![image](https://img.shields.io/pypi/v/snnusdk.svg)](https://pypi.org/project/snnusdk/)
 [![Release](https://img.shields.io/github/release/ZhaoQi99/SNNU-SDK.svg)](https://github.com/ZhaoQi99/SNNU-SDK/releases)
 [![image](https://img.shields.io/pypi/pyversions/snnusdk.svg)](https://pypi.org/project/snnusdk/)
 [![Documentation Status](https://readthedocs.org/projects/snnu-sdk/badge/?version=master)](https://snnu-sdk.readthedocs.io/zh_CN/dev/?badge=master)
 [![GitHub license](https://img.shields.io/github/license/ZhaoQi99/SNNU-SDK.svg)](https://github.com/ZhaoQi99/SNNU-SDK/blob/dev/LICENSE)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/snnucs/SNNU-SDK.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/snnucs/SNNU-SDK/context:python)
 
 
 # 陕西师范大学(SNNU) 第三方Python SDK
@@ -42,12 +44,17 @@ SNNU-SDK 是陕西师范大学(SNNU)的一个第三方Python-SDK，实现了校�
 - 所支持的部门
 
 ## 安装
-
+### 安装snnusdk
 ```bash
 pip install snnusdk
 ✨🍰✨
 
 ```
+### (可选)安装Tesseract-OCR 
+如需正常使用Urp教务系统相关功能，需安装OCR识别引擎
+- [Windows](https://github.com/tesseract-ocr/tesseract/wiki#windows)
+- [Linux](https://github.com/tesseract-ocr/tesseract/wiki#linux)
+- [Mac OS](https://github.com/tesseract-ocr/tesseract/wiki#macos)
 ## 使用示例
 这里是一些简单的使用案例
 ```Python
@@ -92,7 +99,7 @@ libiary = Library(username='B11111111', password='xxx')
 ```
 
 ## 文档
-你可以在[https://ZhaoQi99.github.io/SNNU-SDK](https://ZhaoQi99.github.io/SNNU-SDK)看到本项目的完整使用文档。
+你可以在[https://snnucs.github.io/SNNU-SDK](https://snnucs.github.io/SNNU-SDK)看到本项目的完整使用文档。
 
 ## 贡献你的代码
 欢迎您贡献出自己的一份力量，你可以随时提交`issue`或`fork`本仓库,静候你的`pull request`。
@@ -101,8 +108,8 @@ libiary = Library(username='B11111111', password='xxx')
 感谢所有对本项目做出过贡献的开发者([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 
-| [<img src="https://avatars3.githubusercontent.com/u/40024866?v=4" width="100px;"/><br /><sub><b>jhy</b></sub>](https://Small-funny.github.io/)<br />[💻](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Code") [📖](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Documentation")|
-| :---: |
+| [<img src="https://avatars3.githubusercontent.com/u/40024866?v=4" width="100px;"/><br /><sub><b>jhy</b></sub>](https://Small-funny.github.io/)<br />[💻](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Code") [📖](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=Small-funny "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/7782671?v=4" width="100px;"/><br /><sub><b>Keyi Xie</b></sub>](https://xiekeyi98.github.io/)<br /> [📖](https://github.com/ZhaoQi99/SNNU-SDK/commits?author=xiekeyi98 "Documentation") |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ## 谁在使用
 

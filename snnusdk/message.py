@@ -3,12 +3,21 @@ Created on Dec 29, 2018
 
 @author: QiZhao
 '''
-from snnusdk.configs import SPIDER_CONFIG
-from snnusdk.exceptions import DepartmentNotSupportedError
-import requests
 import re
 
-class Notice(object):
+import requests
+
+from snnusdk.configs import SPIDER_CONFIG
+from snnusdk.exceptions import DepartmentNotSupportedError
+
+
+class BaseMessage(object):
+    def __init__(self, dep):
+        self.dep = dep
+        self.data = []
+
+
+class Notice(BaseMessage):
     """
     校园通知
 
@@ -19,13 +28,11 @@ class Notice(object):
     """
 
     def __init__(self, dep):
-        super().__init__()
-        self.dep=dep
-        self.data=None
-    
+        super().__init__(dep)
+
     def get_count(self):
         """通知条数
-        
+
         :rtype: int
         :return: 通知的条数
 
@@ -33,10 +40,10 @@ class Notice(object):
         14
         """
         return len(self.data)
-    
+
     def get_notice(self):
         """通知的关键信息(标题,时间,链接)
-        
+
         :raise: :class:`snnusdk.exceptions.DepartmentNotSupportedError`
         :rtype: list of dict
         :return: 参照例子
@@ -44,8 +51,8 @@ class Notice(object):
         >>> n.get_notice()
         [
             {
-                'date': '2018-12-26', 
-                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593', 
+                'date': '2018-12-26',
+                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593',
                 'title': '【学生工作】学院2017级开展宿舍冬季安全教育工作'
             },
             ...
@@ -53,15 +60,15 @@ class Notice(object):
         """
         if self.dep not in get_support_dep():
             raise DepartmentNotSupportedError("暂时不支持该部门!")
-        dic={}
+        dic = {}
         for d in SPIDER_CONFIG:
-            if (self.dep==d['department_EN'] or self.dep==d['department_CN'])\
-             and d['type']=='通知':
-                dic=d
+            if (self.dep == d['department_EN'] or self.dep == d['department_CN'])\
+                    and d['type'] == '通知':
+                dic = d
                 break
         try:
-            r=requests.get(dic['url'])
-            r.encoding=dic['coding']
+            r = requests.get(dic['url'])
+            r.encoding = dic['coding']
             pattern = re.compile(dic['rule'], re.S)
             data_use = []
             it = pattern.finditer(r.text)
@@ -69,16 +76,17 @@ class Notice(object):
                 data_use.append(i.groupdict())
             for item_dict in data_use:
                 item_dict['link'] = dic['url_main'] + item_dict['link']
-            self.data=data_use
+            self.data = data_use
         except ConnectionError:
             raise ConnectionError("网络连接超时!")
-            self.data=None
+            self.data = []
         except Exception:
             raise Exception("未知错误!")
-            self.data=None
+            self.data = []
         return self.data
 
-class News(object):
+
+class News(BaseMessage):
     """
     校园新闻
 
@@ -89,13 +97,11 @@ class News(object):
     """
 
     def __init__(self, dep):
-        super().__init__()
-        self.dep=dep
-        self.data=None
-    
+        super().__init__(dep)
+
     def get_count(self):
         """新闻条数
-        
+
         :rtype: int
         :return: 通知的条数
 
@@ -103,10 +109,10 @@ class News(object):
         14
         """
         return len(self.data)
-    
+
     def get_news(self):
         """新闻的关键信息(标题,时间,链接)
-        
+
         :raise: :class:`snnusdk.exceptions.DepartmentNotSupportedError`
         :rtype: list of dict
         :return: 参照例子
@@ -114,8 +120,8 @@ class News(object):
         >>> n.get_news()
         [
             {
-                'date': '2018-12-26', 
-                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593', 
+                'date': '2018-12-26',
+                'link': 'http://tyxy.snnu.edu.cn/News_information.asp?id=33&bh=1593',
                 'title': '【学生工作】学院2017级开展宿舍冬季安全教育工作'
             },
             ...
@@ -123,15 +129,15 @@ class News(object):
         """
         if self.dep not in get_support_dep():
             raise DepartmentNotSupportedError("暂时不支持该部门!")
-        dic={}
+        dic = {}
         for d in SPIDER_CONFIG:
-            if (self.dep==d['department_EN'] or self.dep==d['department_CN'])\
-             and d['type']=='新闻':
-                dic=d
+            if (self.dep == d['department_EN'] or self.dep == d['department_CN'])\
+                    and d['type'] == '新闻':
+                dic = d
                 break
         try:
-            r=requests.get(dic['url'])
-            r.encoding=dic['coding']
+            r = requests.get(dic['url'])
+            r.encoding = dic['coding']
             pattern = re.compile(dic['rule'], re.S)
             data_use = []
             it = pattern.finditer(r.text)
@@ -139,15 +145,16 @@ class News(object):
                 data_use.append(i.groupdict())
             for item_dict in data_use:
                 item_dict['link'] = dic['url_main'] + item_dict['link']
-            self.data=data_use
+            self.data = data_use
         except ConnectionError:
             raise ConnectionError("网络连接超时!")
-            self.data=None
+            self.data = []
         except Exception:
             raise Exception("未知错误!")
-            self.data=None
+            self.data = []
         return self.data
-    
+
+
 def get_support_dep():
     """所支持的部门
 
@@ -157,14 +164,15 @@ def get_support_dep():
     >>> get_support_dep()
     ['生命科学学院', '新闻与传播学院', ...]
     """
-    ret=set()
+    ret = set()
     for dic in SPIDER_CONFIG:
         ret.add(dic['department_CN'])
     return list(ret)
 
+
 if __name__ == '__main__':
     print(get_support_dep())
     for i in SPIDER_CONFIG:
-        a=News(i["department_CN"])
+        a = News(i["department_CN"])
         a.get_news()
-        print(a.data[0]) 
+        print(a.data[0])
